@@ -53,7 +53,9 @@ Lane E（raw pile）进 lane 前先走 triage 状态机，不是直接开干：
 
 ## 正身优先：fallback 只留给"未安装"（V2.006）
 
-子 skill 已安装 → 动手前必须先经 Skill 工具加载它（哪怕它只返回文档正文），然后按其正文 inline 代执行——这叫代执行，合法。`references/` 里的速记版 fallback 只允许在对应 skill 未安装时使用。既没调 Skill 工具、也没读正身就干活 = malformed，JOURNAL 必记 deviation（未加载正身）。已装与否以本机技能目录实测为准（`~/.zcode/skills/`），不靠记忆。
+子 skill 已安装 → 动手前必须先经 Skill 工具加载它（哪怕它只返回文档正文），然后按其正文 inline 代执行——这叫代执行，合法。`references/` 里的速记版 fallback 只允许在对应 skill 未安装时使用。既没调 Skill 工具、也没读正身就干活 = malformed，JOURNAL 必记 deviation（未加载正身）。已装与否以本机技能目录实测为准（`<your local skills directory>\`），不靠记忆。
+
+**开工点名（V2.019，连续 5 轮未加载正身换来）：** 动手前在 trace/NOTES 写一行本轮要调的正身清单（例：`正身清单：diagnosing-bugs、tdd、code-review`），然后逐一经 Skill 工具调用；代执行仍先加载再 inline。清单缺一项、或清单有点名但无对应调用痕 = deviation（自觉守不住的，点名替自觉）。
 
 ## research 硬入口（V2.006 立项，V2.010 量化）
 

@@ -16,5 +16,24 @@
    only call `domain-modeling` for genuinely irreversible vocabulary.
 4. Domain red-lines before any value/content change (numbers doc, data-vs-code
    source decision, i18n + save-compat). Record the single source of truth
-   when a constant is duplicated — and fix every copy (see §1 Lane A bar).
+   when a constant is duplicated — and fix every copy (see prelane.md Lane A bar).
+
+## Lane reading list (V2.019: read these, confirm the rest untouched)
+
+Bootstrap reads the full set (§0–§5 split files per SKILL.md). Lane work then
+confirms its list before acting; unlisted files stay closed unless the round's
+evidence forces them open (record the reason in NOTES):
+
+- **Lane B** — `core-triggers.md` (8 core + grill), `feature-flow.md`,
+  `self-answer.md` (STOP list), `verification-gates.md` (red-green + review),
+  `conventions.md` (slug/spec shape).
+- **Lane C** — `core-triggers.md`, `effort-flow.md`, `self-answer.md`,
+  `trace-discipline.md` (map/ticket checkpoints), `conventions.md`.
+- **Lane D** — `bug-flow.md`, `core-triggers.md` (incl. mid-lane grill gates),
+  `verification-gates.md` (§4 gates + §6 no-harness + §7 closing audits),
+  `self-answer.md`.
+- **Lane E** — `core-triggers.md` (triage block), `conventions.md` (ticket shape),
+  `self-answer.md`.
+- **Pure understanding** — ground truth (§0 above) + `self-answer.md` STOP list
+  only; no lane files, no marker, no round counted.
 

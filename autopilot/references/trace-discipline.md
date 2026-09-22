@@ -27,7 +27,10 @@
   AGENTS.md: 若 `.scratch/WORKFLOW-ACTIVE.md` 存在 → 先调 autopilot
   再继续；新任务开局拿不准走哪条路时 → 也先调它分流 — this is how a fresh window re-invokes the driver without the
   user asking, and how an unsure opening routes through T0 without re-reading
-  the whole driver (a dozen words, not 8k tokens).
+  the whole driver (a dozen words, not 8k tokens). **Single-round open-close
+  exemption (V2.019):** a task that opens and closes inside one round (marker
+  would have no cross-window function) skips the marker — note the skip in
+  one line (`单轮开闭，免建标记`) instead of creating and deleting it.
 - No-JOURNAL repos (V2.008): when the workspace has no JOURNAL, write the
   `Skills called:` line at the top of the task's NOTES.md so the grep-level
   audit survives (three-round eval precedent).

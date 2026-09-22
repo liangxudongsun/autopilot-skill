@@ -13,7 +13,7 @@
   only until a fix is approved; commits happen for fixes, one per fix.
 - Implement ticket-by-ticket, frontier order (blockers first), FRESH context
   per ticket = a new turn (or subagent) seeded ONLY by that ticket file. Every
-  ticket must be self-contained: one-line location anchors required (see §4).
+  ticket must be self-contained: one-line location anchors required (see verification-gates.md §4).
 - Never resolve more than one wayfinder decision ticket per turn. Solo repos:
   research serially by default; parallel subagents write only their own ticket
   file, never `map.md` concurrently (the main loop merges).

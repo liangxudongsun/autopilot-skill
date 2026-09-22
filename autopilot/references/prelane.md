@@ -39,7 +39,7 @@ Then pick exactly one lane:
 - **Lane A — trivial**: typo / doc single line / single config or content row
   ONLY when ALL hold: Gate 0 located it, schema-complete, red-line range
   passes, duplicate-count == 1. Numbers are NEVER Lane A. Fix directly, run
-  the per-class gate (§4), commit with a one-line Provenance anchor. No
+  the per-class gate (verification-gates.md), commit with a one-line Provenance anchor. No
   grill/spec/tickets; exempt from tdd red-green + code-review (the gate run is
   the review). Duplicate-count > 1 or schema-incomplete → forced Lane B.
 - **Lane B — well-scoped feature or refactor**: `references/feature-flow.md`.

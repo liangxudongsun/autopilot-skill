@@ -25,8 +25,8 @@ friction for the next upgrade without self-modifying: `references/usage-log.md`
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
-**V2.018: continuous-grilling (frontier-empty opening, six mid-lane hard gates, bare-grilling-only mid-lane).**
-Same V2.017 behaviour, plus: opening grill runs to frontier-empty (soft 4 / hard 6, 空稳净 convergence, divergence brake); six mid-lane moments must re-grill with bare `grilling` (prototype return, research return, spec-external discovery, undecided seam, review-vs-spec, hypothesise ranking) + two soft prompts; mid-lane `grill-with-docs`/`grill-me` = malformed; bug-flow ban annotated (hypothesise narrow-grill is hard gate). Detail in
+**V2.019: load-discipline (roll-call正身, lane reading list, filename refs, single-round marker exemption, structural audit).**
+Same V2.018 behaviour, plus: name the round's正身 roll-call and invoke each via the Skill tool before acting (inline代执行仍先加载); bootstrap reads the full set, lane work confirms its lane list per `ground-truth.md`; stale §N refs repaired to filenames; single-round open-close tasks skip WORKFLOW-ACTIVE; closing audits gain a structural self-edit check. Detail in
 `references/`.
 
 ## Trigger table (one line per skill; fire at its moment, no human prompt)

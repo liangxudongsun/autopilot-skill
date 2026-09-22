@@ -22,7 +22,7 @@
   stats). Unpinned seedable-RNG repro rates are invalid; controlled-rate
   non-seed repros are valid. Targets: loop ≤ ~30s, flake rate from ~20 harness
   runs (`100×` is the stress ceiling, not the minimum), glance = 10 minutes.
-- Every implement (Lanes B and C; Lane A exempt per §1): `tdd` red-green at
+- Every implement (Lanes B and C; Lane A exempt per prelane.md): `tdd` red-green at
   pre-agreed seams (Testing Decisions first; no test at an unconfirmed seam),
   then `code-review` (Standards + Spec axes, parallel; red-line breach = hard
   violation) before commit.
@@ -133,6 +133,13 @@ shipped defect in the field:
 - **Triple-source expected values.** Every invented expectation is checked
   against three independent sources where available (contract comment /
   sibling code / spec section) and hand-computed once — never derived by
-  running the buggy code (see §6 no-harness discipline).
+  running the buggy code (see §6 no-harness discipline above).
+- **Structural self-edit audit (V2.019).** Before every commit, assert the
+  round's own edits did not silently damage structure: version titles strictly
+  decreasing + package version has its title + README version line agrees;
+  no placeholder-shaped leftovers (`X.Y.Z`, `YYYY-MM-DD`, unfinished
+  `TODO(path)`); doc-template links point at real files. A hand edit that
+  deletes what eyes cannot see (swallowed headings, dropped rows) is a defect
+  class of its own — machine-check it, never eyeball it.
 - **Grill-gate audit (V2.018).** Grep JOURNAL `Skills called` at each hard-gate trigger (prototype return / research return / spec-external new system / undecided seam / review-vs-spec / hypothesise ranking) for mid-lane `grilling`; trigger with no grill trace = malformed; mid-lane `grill-with-docs`/`grill-me` hit = malformed; soft-gate trigger with no one-line why = trace debt.
 

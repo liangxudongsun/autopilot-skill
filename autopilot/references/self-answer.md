@@ -88,7 +88,7 @@ STOP and write `.scratch/<slug>/NEEDS-HUMAN.md`, then end the turn, when:
 - It introduces a new system, dependency, pipeline, runner, external service,
   cost, or compliance surface — inside or outside the request. Adopting a test
   framework or CI counts. A single gitignored throwaway assert script plus a
-  handful of fixtures does NOT (whitelist, see §4).
+  handful of fixtures does NOT (whitelist, see verification-gates.md §4).
 - Two options are both irreversible and the repo gives no signal.
 
 Otherwise: no questions, no hedging. Record the call (spec, ticket, or ADR)
