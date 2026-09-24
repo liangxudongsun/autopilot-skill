@@ -25,8 +25,8 @@ friction for the next upgrade without self-modifying: `references/usage-log.md`
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
-**V2.019: load-discipline (roll-call正身, lane reading list, filename refs, single-round marker exemption, structural audit).**
-Same V2.018 behaviour, plus: name the round's正身 roll-call and invoke each via the Skill tool before acting (inline代执行仍先加载); bootstrap reads the full set, lane work confirms its lane list per `ground-truth.md`; stale §N refs repaired to filenames; single-round open-close tasks skip WORKFLOW-ACTIVE; closing audits gain a structural self-edit check. Detail in
+**V2.020: trigger-audit (roll-call trace-check, file-state counting, evidence-vs-log landing).**
+Same V2.019 behaviour, plus: roll-call gains a closing trace-check (grep the JOURNAL `Skills called` line for each named skill, missing trace = deviation logged the same round); reflection counting is file-state (the WORKFLOW-ACTIVE marker), never session memory; landing rule in one line — evidence to the repo, log to the logbook. Detail in
 `references/`.
 
 ## Trigger table (one line per skill; fire at its moment, no human prompt)
