@@ -96,6 +96,8 @@ STOP and write `.scratch/<slug>/NEEDS-HUMAN.md`, then end the turn, when:
 Otherwise: no questions, no hedging. Record the call (spec, ticket, or ADR)
 and continue.
 
+**收尾证据门（V2.024）：** 收尾产物不仅要有，还要**够判读**——按项目域清单留证（逐路 JSON 存档 / POST / identity / 快照窗口等）；**缺关键证据即判不可判**，禁把缺件当绿；事后重跑只作定性、记 `provenance-gap`，不倒填改判（同 `verification-gates.md` 的 Closeout & round settlement V2.024）。
+
 **Token-for-human principle (V2.006, user policy).** The user has plenty of
 tokens and does not want to be involved: whenever extra tokens can replace a
 human step — more verification runs, a background research agent, a wider

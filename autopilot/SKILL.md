@@ -25,9 +25,8 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
-**V2.023: enforcement-trust (hard-trace invocation, lane-entry gates, verdict-trust).**
-Same V2.022 behaviour, plus: Skill-call hard trace + lane-entry checklists + STOP precheck; gates need real-data + independent-implementation verdicts, no swallowing failures, anchors pass mutants. Detail in
-`references/`.
+**V2.024: closeout-trust (self-logging lane, round settlement, closeout evidence).**
+Same V2.023 behaviour, plus: the central entry belongs to the lane that did the work (hygiene lanes cross-check, never ghost-write); an instrument-faulted round is judged INVALID and replaced by a `b` round (no CLEAN, no reset, no gateway blame); cross-round counters subtract ambient drift and single-instance checks pin the listening pid; a closeout missing key evidence is undecidable, and later re-runs never backfill the verdict. Detail in `references/`.
 
 ## Trigger table (one line per skill; fire at its moment, no human prompt)
 
