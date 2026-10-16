@@ -1,6 +1,8 @@
 ---
 name: autopilot
 description: Single-trigger autopilot — full-auto driver over the mattpocock engineering workflow — invoke once and it drives the whole task itself without mid-task questions. Use whenever the user says autopilot, auto-drive, full-auto, full-task autopilot, 全自动, or wants a task done end-to-end — including short Chinese requests like 按钮失效去修一下, 加个小按钮, 做个小项目, 理解一下项目 — feature work, bug fixing, refactors, triage, foggy efforts. Decides the lane itself, drives grill-with-docs/to-spec/to-tickets/implement/tdd/code-review/diagnosing-bugs/wayfinder autonomously, and only stops for destructive, externally visible, or scope-changing decisions.
+metadata:
+  opencode/slash: "true"
 ---
 
 # autopilot
@@ -25,8 +27,8 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
-**V2.024: closeout-trust (self-logging lane, round settlement, closeout evidence).**
-Same V2.023 behaviour, plus: the central entry belongs to the lane that did the work (hygiene lanes cross-check, never ghost-write); an instrument-faulted round is judged INVALID and replaced by a `b` round (no CLEAN, no reset, no gateway blame); cross-round counters subtract ambient drift and single-instance checks pin the listening pid; a closeout missing key evidence is undecidable, and later re-runs never backfill the verdict. Detail in `references/`.
+**V2.025: execution-trust (round protocol, per-round re-anchor, artifact loop, tier discipline).**
+Same V2.024 behaviour, plus: every round emits a kickoff card (task/slug/lane/tier/正身/chain·product/first action) before any lane work — no card, not started; every round opens by reading the 12-line `references/anchor.md`, superseding "later rounds skip the re-read"; no product = that step did not happen; trace notes carry `产物/deviation` lines. Detail in `references/`.
 
 ## Trigger table (one line per skill; fire at its moment, no human prompt)
 
@@ -62,34 +64,55 @@ Trigger detail (entry checklists, cadences, environment honesty) rides in
 `CHANGELOG.md` version blocks and the `references/` split files — the table
 above only routes; the pointed file decides.
 
-## Cross-round resume (read files, not memory)
+## Round protocol (emit, then run — V2.025)
 
-1. Self-bootstrap first: on the first round of a session (or after any
-   compact/clear, or whenever unsure) re-read this SKILL.md and the
-   `references/` files it points at (stale rules in context are worse than no
-   rules); later rounds in the same session skip
-   the re-read and rely on what is already in context. Then read the project
-   convention tail, the last 5 JOURNAL entries, and the last 10 `calls.log`
-   lines before acting. A fresh window that was not invoked checks for
-   `.scratch/WORKFLOW-ACTIVE.md` via the standing AGENTS.md hook (see
+0. **Bootstrap (session's first round / after any compact·clear / version
+   mismatch / unsure):** re-read this SKILL.md and the `references/` files it
+   points at (stale rules in context are worse than no rules). Then read the
+   project convention tail, the last 5 JOURNAL entries, and the last 10
+   `calls.log` lines before acting. A fresh window that was not invoked checks
+   for `.scratch/WORKFLOW-ACTIVE.md` via the standing AGENTS.md hook (see
    `references/trace-discipline.md`) and re-invokes this driver itself.
-2. Open the round with one `ask-matt` T0 call first (Skill-tool call order:
-   T0 leads; a late-added `ask-matt` does not satisfy T0). `ask-matt` is a
-   routing map, not a judge — it returns the same generic doc every time;
-   the lane verdict always comes from your own prelane decision (V2.015).
-   Quote the gate verdict on any round that ran Gate 0 against a fresh change surface
-   (first touch of a repo, or a re-run on new work); `gate n/a (touched)`
-   is only the display shorthand for later rounds in the same session on
-   the same repo — Gate 0 itself still re-runs whenever the change surface
-   is new, and the real verdict goes to NOTES. In a project where T0 already
-   proved verdict-less once, skip re-invoking it after the session's first
-   round and route via prelane directly (V2.015 downshift).
-3. Name every skill called in the JOURNAL `Skills called:` line, in call
-   order; one round = one commit = one JOURNAL entry.
-4. Keep ≥2 distinct skills per round (T0 + one executed lane/support skill);
-   rotate lane/type before 3 identical sets repeat; cap audits at 3 consecutive.
-5. A fresh dialogue resumes from these files alone; when it cannot, file a
-   proposal fixing this driver.
+1. **Step 0 — reconnaissance, then the kickoff card (the round's first
+   product).** Cheap recon first: split → shield grep → Gate 0 → lane verdict →
+   this lane's read-set. Then emit the card; **no card = not started — no lane
+   work, no execution-class Skill call.** Fixed fields, ≤6 lines:
+   - `开工卡｜任务：<one line>｜slug：<slug(s)>｜lane：<A|B|C|D|E|none(纯理解)|STOP>｜档位：full|lite(<why>)|na(<why>)`
+   - `本轮调用：<中文名（一句为什么）→ …>`（原可见首句并入此处，不再另写）
+   - `分流：shield <hit/n-a + grep>｜Gate0 <HIT/BROKEN/NOT-FOUND/MISS @file:line>`
+   - `链·产物：<skill → its minimal product path；…>｜第一动作：<next concrete action>`
+   Chat always shows the card; lane rounds also write it (with file-level
+   read-set detail) at the top of `NOTES.md`. Back-filling a card later is a
+   deviation; a completed round without one is malformed. Tier floors and the
+   never-trim list live in `references/self-answer.md`.
+2. **Step 1 — T0.** One `ask-matt` call leads the Skill-tool order (a late-added
+   `ask-matt` does not satisfy T0). `ask-matt` is a routing map, not a judge —
+   the lane verdict is your own prelane decision (V2.015). Quote the gate verdict
+   on any round that ran Gate 0 against a fresh change surface (first touch of a
+   repo, or a re-run on new work); `gate n/a (touched)` stays the display
+   shorthand for later same-repo rounds — Gate 0 itself still re-runs whenever
+   the change surface is new, and the real verdict goes to NOTES. In a
+   proven-verdictless project, skip re-invoking T0 after the session's first
+   round and note `T0 downshift` on the card.
+3. **Step 2 — lane run.** Call every listed skill in order — call trace + a
+   returned-summary quote, inline substitutions noted — and leave each step's
+   minimal product (spec / issues / red-green / review verdict / verify output;
+   `core-triggers.md` decides). **No product = that step did not happen.**
+4. **Step 3 — gates.** Run the lane's verification gates; quote the verdict.
+5. **Step 4 — close.** `Skills called:` line in call order (grep-audit anchor);
+   closeout per `verification-gates.md`; trace note with its product/deviation
+   lines (this build ships no logbook); delete the marker (single-round open-close
+   exemption unchanged). One round = one commit = one JOURNAL entry; keep ≥2
+   distinct skills per round (T0 + one executed lane/support skill); rotate
+   lane/type before 3 identical sets repeat; cap audits at 3 consecutive.
+
+**Re-anchor (supersedes "later rounds in the same session skip the re-read").**
+Full re-reads still happen per step 0. Every other round opens by reading
+`references/anchor.md` (a real tool call, never a memory check) and emitting one
+`卡刷新｜lane=…｜正身=…｜下一步=…` line; a new task, a new slug, or an
+understanding round turning into work goes back to Step 0 with a fresh full card.
+A round missing its refresh line is a deviation. A fresh dialogue resumes from
+these files alone; when it cannot, file a proposal fixing this driver.
 
 Lane choice (Gate 0 → shield → A/B/C/D/E), self-answer policy with STOP list,
 verification gates, and trace rules are executed from `references/prelane.md`,

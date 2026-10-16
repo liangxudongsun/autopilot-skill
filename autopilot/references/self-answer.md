@@ -98,6 +98,13 @@ and continue.
 
 **收尾证据门（V2.024）：** 收尾产物不仅要有，还要**够判读**——按项目域清单留证（逐路 JSON 存档 / POST / identity / 快照窗口等）；**缺关键证据即判不可判**，禁把缺件当绿；事后重跑只作定性、记 `provenance-gap`，不倒填改判（同 `verification-gates.md` 的 Closeout & round settlement V2.024）。
 
+**档位与显性化（V2.025 execution-trust）：** 开工卡带 `档位：full|lite(因)|na(因)`。
+- **full** = 默认。**lite** = 弱模型/受限 harness 的最小协议，五件地板缺一 = malformed：①开工卡 ②车道 ③一个通道产物（A=commit Provenance 行｜B=spec/slices/红绿｜C=map 或当前票｜D=NOTES+红绿+回归｜E=票+brief）④验证一句（真跑；无 harness 走自发明 seam）⑤日志一行。
+- **永不降清单**：STOP 清单、危险护栏、如实报告、收尾必写、不许编证据——lite 不是省 token 手段；只升不静降（中途做不到当轮补 `AUTO-DOWN：mode=lite｜cause=…`，禁事后静默）；强档走 lite = deviation；连续 lite 收尾日志点名。
+- **na** 仅限三类：纯理解/只读报告（附 file:line＋零改动声明）｜误触发无活可干｜BLOCKED/NEEDS-HUMAN 停。
+- `deviation: <环节>|<类：capability|config|na|skipped>|<补偿|无>|<位置>`——该做未做/降级替代**当轮**写；收尾日志强制 `deviation: none|逐项`。既无动作又无 deviation 行 = 静默跳过（最高坏轮）。
+- **收尾硬序（含审计）**：lane 产物齐 → 派只读审计子代理（三查：开工卡+marker／调用痕×产物双验／lane 产物门；量化找 ≥3 缺口；结论引 file:line；只读盘、不看自述；缺件写「不可判」不许绿）→ 把产物/偏差/审计行写进本轮 trace（本 build 无日志本）→ 删标记。无子代理 harness = 一条 shell 三查、原文贴条目、标 `脚本降级`；审计代理 pin 主会话同款模型；不允许自述顶包。
+
 **Token-for-human principle (V2.006, user policy).** The user has plenty of
 tokens and does not want to be involved: whenever extra tokens can replace a
 human step — more verification runs, a background research agent, a wider

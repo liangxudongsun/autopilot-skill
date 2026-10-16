@@ -6,6 +6,22 @@ Single version scheme: `V2.00N`. (Early private iterations used internal vNN
 numbers — v41=V2.001, v43=V2.002, v44=V2.003, v45=V2.004, v46=V2.005,
 v47=V2.006, v48=V2.007, v49=V2.008. Retired as of V2.008.)
 
+**V2.025** — Execution trust: every round emits a kickoff card (task/lane/tier/
+skill-list/chain·product/first action) before any work — no card, not started;
+per-round re-anchor plus conditional re-read replaces "later rounds skip the
+re-read"; no product = that step did not happen (product/deviation/audit lines);
+full|lite|na tier discipline; read-only/query minimal protocol; closing
+read-only audit pass; trigger-layer templates (global/project hooks, /autopilot
+command, see the repo's deploy/).
+
+**V2.024** — Closeout trust: the central entry belongs to the working lane,
+round settlement (b-round replacement / increment accounting / closeout evidence
+checklist), reflection counting unit.
+
+**V2.023** — Enforcement hardening: hard traces (call trace + returned-summary
+quote), entry hard gate, STOP precheck and per-lane product gate, gate-trust
+continuation (swallow ban / anchor mutants).
+
 **V2.022** — Gate trust: no-subagent review endorsement, gates with red
 baselines on real data and abstaining shadows, brief-and-audit quota.
 

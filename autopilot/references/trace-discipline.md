@@ -14,12 +14,11 @@
 - Never mix lanes or slugs in one commit. Never invent vocabulary: reuse
   `GLOSSARY.md` terms; genuine gaps go to the spec Glossary →
   `domain-modeling`, not synonyms.
-- WORKFLOW-ACTIVE marker (V2.006, V2.011 counter): at the first engineering round of a task,
+- WORKFLOW-ACTIVE marker (V2.006/V2.011 counter, V2.025 lane fields): at the first engineering round of a task,
   write `.scratch/WORKFLOW-ACTIVE.md` (one line: active slug(s) + start date
-  + driver version + `工程轮次: N`); when a prior task closed this session,
-  rebuild the marker with the carried count +1
-  (the count lives in session context — the marker is deleted at every task close, so it is
-  rebuilt per task, never updated in place);
+  + driver version + `工程轮次: N` + `车道:X｜本轮:<first action>`（the lane fields refresh at each engineering round's step 0）); when a prior task closed this session,
+  rebuild the marker with the carried count +1 (the count lives in session context — the marker is deleted at every task close, so it is
+  rebuilt per task, never updated in place *except the lane fields above*);
   delete it again when the task
   closes (delivered/STOP/BLOCKED with the delivery-check triple handed over). setup
   (`setup-matt-pocock-skills`) adds one standing line to the project's

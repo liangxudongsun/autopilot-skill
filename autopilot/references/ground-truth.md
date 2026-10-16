@@ -22,7 +22,7 @@
 
 Bootstrap reads the full set (§0–§5 split files per SKILL.md). Lane work then
 confirms its list before acting; unlisted files stay closed unless the round's
-evidence forces them open (record the reason in NOTES). 确认须留痕（已读 file:块名），无痕开工 = malformed。
+evidence forces them open (record the reason in NOTES). 确认须留痕（已读 file:块名），无痕开工 = malformed。（V2.025：每轮另读 `references/anchor.md`；开工卡写入 NOTES 顶，字段见 SKILL.md Round protocol。）
 
 - **Lane B** — `core-triggers.md` (8 core + grill), `feature-flow.md`,
   `self-answer.md` (STOP list), `verification-gates.md` (red-green + review),
@@ -35,5 +35,6 @@ evidence forces them open (record the reason in NOTES). 确认须留痕（已读
 - **Lane E** — `core-triggers.md` (triage block), `conventions.md` (ticket shape),
   `self-answer.md`.
 - **Pure understanding** — ground truth (§0 above) + `self-answer.md` STOP list
+  + `anchor.md`（每轮再锚；最小协议见 `core-triggers.md` 只读节）
   only; no lane files, no marker, no round counted.
 

@@ -74,3 +74,9 @@ spec section. Each intent quotes its own verify evidence in its own spec.
 Several Lane-B intents may share one commit only when none of them alone
 would touch a red-line file; otherwise split commits (lane mixing stays
 banned).
+
+## V2.025 过程块（卡/刷新/产物/偏差/审计）
+
+- 开工卡四行与 `卡刷新` 单行：字段口径以 `SKILL.md` Round protocol 为唯一定义；每轮再锚文件 `references/anchor.md`。
+- 任务条三行：`产物:`／`deviation:`／`审计:`——语法见 `self-answer.md`（档位与显性化）；本 build 无日志本，三行写进本轮 trace。
+- 新增字段/行名前先登记到本节再使用（防自造词汇）。

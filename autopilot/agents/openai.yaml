@@ -1,5 +1,8 @@
+# Codex-side metadata only — opencode/oh-my-opencode-slim ignore this file
+# (verified against omo v3.0.3 + opencode binaries, 2026-10-16). true = the skill
+# may be implicitly offered on Codex, matching SKILL.md's "use whenever" description.
 interface:
-  display_name: "Mattpocock Skills"
+  display_name: "autopilot"
   short_description: "Drive the full engineering workflow end to end"
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true

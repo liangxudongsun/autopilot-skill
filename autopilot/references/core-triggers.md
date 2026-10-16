@@ -51,6 +51,8 @@ Lane E（raw pile）进 lane 前先走 triage 状态机，不是直接开干：
 
 用户只说理解一下项目、看看代码，没有任何改动要求 → 不进 A/B/C/D/E 任何 lane，不写 spec，不碰仓库文件，不建 WORKFLOW-ACTIVE，不计工程轮次。做法：T0 分流判无 lane → 通读 ground-truth（README/入口/配置）→ 可派一个 Explore 子代理扫全仓 → 对话内给理解报告。setup 的首次进仓也不触发，等首个真实工程轮再做。只读轮无 verify 可贴，按 delivery-check 精神给零改动声明 + 可抽查清单。
 
+**只读/查询轮最小协议（V2.025，四件；豁免不变）：** ①首段=开工卡/卡刷新（无 lane 轮照发，含 T0 downshift 声明）；②分流行：一句分类（纯理解/查询/外部事实/混合）——含「处理意图」判据（「很久没处理 / 该跟进 / 看看新动静」＝要动手的事项，先审 Lane E 或按项目流程另起工程轮）；③证据行：写明查过哪些面（水位线区/archive/JOURNAL/git log/README…），命中给 `file:line`；「看有没有」类强制负证据口径（N 面 × 零命中，`trace-discipline.md` V2.011）；④收尾写中央条（产物=检索清单/零改动声明；偏差按档位语法）。产物只落对话+中央本，不碰仓库文件。用户点名的历史检索不受「中间历史不读」约束（点名即解锁定向 grep）。
+
 **理解→动手边界（V2.016）**：理解轮内出现改动意图（"顺手修了""顺便加了"）→ 停手，另起工程轮（理解报告先交付，改动走新一轮 T0 + Gate 0 + lane）。一轮之内"先理解后动手"必须有书面 transition（"理解结束，转 Lane X"），无 transition 的混合轮 = malformed。反例：同轮先写"判为纯理解轮"又写"走 Lane C 先 chart"——两张皮，必拆两轮。
 
 ## 子 skill 只回文档：inline 执行并注记（V2.005）
@@ -61,7 +63,7 @@ Lane E（raw pile）进 lane 前先走 triage 状态机，不是直接开干：
 
 子 skill 已安装 → 动手前必须先经 Skill 工具加载它（哪怕它只返回文档正文），然后按其正文 inline 代执行——这叫代执行，合法。`references/` 里的速记版 fallback 只允许在对应 skill 未安装时使用。既没调 Skill 工具、也没读正身就干活 = malformed，JOURNAL 必记 deviation（未加载正身）。已装与否以本机技能目录实测为准（`<your local skills directory>\`），不靠记忆。
 
-**开工点名（V2.019，连续 5 轮未加载正身换来）：** 动手前在 trace/NOTES 写一行本轮要调的正身清单（例：`正身清单：diagnosing-bugs、tdd、code-review`），然后逐一经 Skill 工具调用；代执行仍先加载再 inline。清单缺一项、或清单有点名但无对应调用痕 = deviation（自觉守不住的，点名替自觉）。**收尾调用痕自查（V2.020，点名只管写不管调换来）：** 收尾前 grep JOURNAL `Skills called` 行（无 JOURNAL 仓看 NOTES 顶部同名行），清单每项须有对应调用痕；有点名无调用痕 = deviation 当轮补记（v1.182–v1.184 code-review 连犯 3 轮换来）。
+**开工点名（V2.019，连续 5 轮未加载正身换来）：** 动手前在 trace/NOTES 写一行本轮要调的正身清单（例：`正身清单：diagnosing-bugs、tdd、code-review`），然后逐一经 Skill 工具调用；代执行仍先加载再 inline。清单缺一项、或清单有点名但无对应调用痕 = deviation（自觉守不住的，点名替自觉）。**收尾调用痕自查（V2.020，点名只管写不管调换来）：** 收尾前 grep JOURNAL `Skills called` 行（无 JOURNAL 仓看 NOTES 顶部同名行），清单每项须有对应调用痕；有点名无调用痕 = deviation 当轮补记（v1.182–v1.184 code-review 连犯 3 轮换来）。（V2.025：点名并入开工卡「正身」行，不再另写一份。）
 
 **正身硬痕（V2.023，读=调混淆终结）：** 点名清单每项须有Skill工具调用痕＋返回摘要引用（正身版本/行或返回要点一句）；inline代执行须先有调用痕＋注substitution＋正身行号，无痕inline = malformed。收尾从grep JOURNAL文本升为调用痕＋产物双验：清单每项须同时有调用痕与对应产物（spec/ticket/红绿输出/review结论），缺一 = deviation当轮补记。
 
@@ -79,7 +81,7 @@ Lane E（raw pile）进 lane 前先走 triage 状态机，不是直接开干：
 
 ## 自扫清单：15 秒自问（V2.006 立项，V2.008 扩展）
 
-对照**已加载的**判据自问，绝不重新读文件——重读只在会话首轮、compact 后、拿不准时。以下任一时刻命中，就过一遍 8 核心 + research/prototype/handoff/wizard 四支持，命中即调正身：
+对照**已加载的**判据自问，绝不重新读文件——例外：每轮开头必读 `references/anchor.md`（V2.025 每轮再锚）；其余重读只在会话首轮、compact 后、版本不符、拿不准时。以下任一时刻命中，就过一遍 8 核心 + research/prototype/handoff/wizard 四支持，命中即调正身：
 
 - **常规自扫**：每吞完一个 slice（Lane B/C）、每完成一个诊断步骤（Lane D）。
 - **红转绿后**：问"这个缝还锁着别的行为吗？还能再往前锁一步吗？"——邻接行为、边界、护栏用例，值得锁就加（v1.033 日志测试、v1.034 诱饵测试都是绿了之后才发现还能再锁一步）。
@@ -94,7 +96,7 @@ CodeRabbit/人类在 PR 上的意见：**先复现，有效才修，修完在 re
 
 ## 评审与 verify 永不豁免（V2.006，用户政策）
 
-用户政策：宁可多花 token，也不让人参与。code-review（双轴）在每次提交之前必跑，纯静态 UI/展示层改动也不豁免——评审收益小时走快档（单轴 diff 自查 + 全量 verify 贴绿），但不许零评审提交。verify 同理：能自己跑就跑，多跑几遍、多贴几段原文都行；库没有验证命令就自发明 seam 断言 + 冒烟。人的参与只保留在 STOP 清单（高危/外部可见/真缺 token 换不到的信息）里。非 git 仓库：code-review 正身的 git 流程（fixed point/diff）无处安放时，快档就是明文许可的完整替代，不算漏、不必再问人。**无 subagent 的 harness（V2.022，连 5 轮同族换来）：** 双轴子代理派不出时，快档 = 双轴自查（Standards＋Spec 逐条过、HARD 全修）＋全量 verify＋JOURNAL 写明 harness 限制，即完整替代，不算漏、不记 deviation；单轴 diff 自查只够非 git 仓。有真双子代理的 harness 回到双正身，不走本条。
+用户政策：宁可多花 token，也不让人参与。code-review（双轴）在每次提交之前必跑，纯静态 UI/展示层改动也不豁免——评审收益小时走快档（单轴 diff 自查 + 全量 verify 贴绿），但不许零评审提交。verify 同理：能自己跑就跑，多跑几遍、多贴几段原文都行；库没有验证命令就自发明 seam 断言 + 冒烟。人的参与只保留在 STOP 清单（高危/外部可见/真缺 token 换不到的信息）里。非 git 仓库：code-review 正身的 git 流程（fixed point/diff）无处安放时，快档就是明文许可的完整替代，不算漏、不必再问人。**无 subagent 的 harness（V2.022，连 5 轮同族换来）：** 双轴子代理派不出时，快档 = 双轴自查（Standards＋Spec 逐条过、HARD 全修）＋全量 verify＋JOURNAL 写明 harness 限制，即完整替代，不算漏、不记 deviation——但收尾须以一行 `快档：<下单|单轴>｜harness：<限制>｜理由：<…>` 留痕（V2.025 收窄）；单轴 diff 自查只够非 git 仓。有真双子代理的 harness 回到双正身，不走本条。
 
 ## setup 判据（V2.006 立项，V2.010 状态位）
 
