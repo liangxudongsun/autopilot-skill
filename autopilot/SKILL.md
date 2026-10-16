@@ -27,6 +27,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.026: pre-trust (pre-adoption falsification + gate-landing calibration).**
+Same V2.025 behaviour, plus: load-bearing conclusions get an independent red-team on the conclusion itself before adoption (narrower sub-questions don't count); criteria/gate drafts get pre-implementation adversarial audit and proposals get measured-audit; every new gate lands with a satisfaction example, a never-red worst-direction argument, a worst-case constant sweep, and an explicit coverage statement for "all green" claims; verdict readings cite their writer. Detail in `references/`.
+
 **V2.025: execution-trust (round protocol, per-round re-anchor, artifact loop, tier discipline).**
 Same V2.024 behaviour, plus: every round emits a kickoff card (task/slug/lane/tier/正身/chain·product/first action) before any lane work — no card, not started; every round opens by reading the 12-line `references/anchor.md`, superseding "later rounds skip the re-read"; no product = that step did not happen; trace notes carry `产物/deviation` lines. Detail in `references/`.
 
