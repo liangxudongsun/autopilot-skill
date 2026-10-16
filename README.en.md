@@ -96,6 +96,8 @@ zcode|all), `--dry-run`, `--slim`, `--dir`, `--uninstall`.
 </details>
 ## Use
 
+**Opt in per project first** (off by default): add the standalone line `autopilot: on` to the project's `AGENTS.md` (delete it, or use `autopilot: off`, to turn it off). Any time, saying "use autopilot for X" or `/autopilot` forces takeover — no credential needed.
+
 Say it like a human, once:
 
 - The sidebar toggle stopped working — check and fix it.

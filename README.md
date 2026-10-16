@@ -62,6 +62,8 @@ Windows PowerShell（若报执行策略错误，先跑 `Set-ExecutionPolicy -Sco
 
 ## 使用
 
+**先启用要用的项目**（默认关闭）：在该项目的 `AGENTS.md` 里加独占一行 `autopilot: on`（删掉该行、或改成 `autopilot: off` 即关闭）。任何时候说一句「用 autopilot 做 X」或 `/autopilot` 都能强制接管，不需要凭据。
+
 像说话一样说一次就够：
 
 - 切换按钮失效了，去检查修一下。

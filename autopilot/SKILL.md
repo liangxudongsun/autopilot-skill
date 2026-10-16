@@ -1,6 +1,6 @@
 ---
 name: autopilot
-description: Single-trigger autopilot — full-auto driver over the mattpocock engineering workflow — invoke once and it drives the whole task itself without mid-task questions. Use whenever the user says autopilot, auto-drive, full-auto, full-task autopilot, 全自动, or wants a task done end-to-end — including short Chinese requests like 按钮失效去修一下, 加个小按钮, 做个小项目, 理解一下项目 — feature work, bug fixing, refactors, triage, foggy efforts. Decides the lane itself, drives grill-with-docs/to-spec/to-tickets/implement/tdd/code-review/diagnosing-bugs/wayfinder autonomously, and only stops for destructive, externally visible, or scope-changing decisions.
+description: Single-trigger autopilot — full-auto driver over the mattpocock engineering workflow — invoke once and it drives the whole task itself without mid-task questions. Fire unconditionally when the user asks for it by name — autopilot, auto-drive, full-auto, full-task autopilot, 全自动, 自动接管, /autopilot. Fire on ordinary engineering asks (bug fixing, small features, small projects, understand-this-project, refactors, triage, foggy efforts) ONLY when the working project is opted in: an `AGENTS.md` between the cwd and the repo root carries the standalone line `autopilot: on`. Without that line — and without an explicit ask — do not adopt autopilot; leave the task to the host's normal flow. Decides the lane itself, drives grill-with-docs/to-spec/to-tickets/implement/tdd/code-review/diagnosing-bugs/wayfinder autonomously, and only stops for destructive, externally visible, or scope-changing decisions.
 metadata:
   opencode/slash: "true"
 ---
@@ -26,6 +26,9 @@ recorded as deviation notes in the round's trace (driver never edits its own
 files; this build ships no logbook or self-upgrade loop). Version notes v10–v40 live verbatim
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
+
+**V2.027: opt-in-gate (project credential + default-off global gate).**
+Same V2.026 behaviour, plus: autopilot takes over only where the project opted in — a standalone line `autopilot: on` in an `AGENTS.md` between the cwd and the repo root (`autopilot: off` vetoes); the global instruction file is a negative gate with explicit-ask and resume-only exceptions; implicit task-shape triggers in the description now require that credential. Detail in `references/` and `deploy/`.
 
 **V2.026: pre-trust (pre-adoption falsification + gate-landing calibration).**
 Same V2.025 behaviour, plus: load-bearing conclusions get an independent red-team on the conclusion itself before adoption (narrower sub-questions don't count); criteria/gate drafts get pre-implementation adversarial audit and proposals get measured-audit; every new gate lands with a satisfaction example, a never-red worst-direction argument, a worst-case constant sweep, and an explicit coverage statement for "all green" claims; verdict readings cite their writer. Detail in `references/`.

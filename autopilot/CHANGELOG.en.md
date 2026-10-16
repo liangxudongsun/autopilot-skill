@@ -6,6 +6,12 @@ Single version scheme: `V2.00N`. (Early private iterations used internal vNN
 numbers — v41=V2.001, v43=V2.002, v44=V2.003, v45=V2.004, v46=V2.005,
 v47=V2.006, v48=V2.007, v49=V2.008. Retired as of V2.008.)
 
+**V2.027** — Opt-in per project: autopilot takes over only when an `AGENTS.md`
+between the cwd and the repo root carries the standalone line `autopilot: on`
+(`autopilot: off` vetoes); the global instruction becomes a default-off gate;
+the skill description splits explicit asks (unconditional) from implicit task
+shapes (credential required).
+
 **V2.026** — Pre-trust: red-team the conclusion itself before adoption; gate-landing
 checklist (satisfiability example, never-red argument, worst-case constants,
 coverage statement); readings cite their writer; parallel write-boundary rules.
