@@ -6,6 +6,15 @@ Single version scheme: `V2.00N`. (Early private iterations used internal vNN
 numbers — v41=V2.001, v43=V2.002, v44=V2.003, v45=V2.004, v46=V2.005,
 v47=V2.006, v48=V2.007, v49=V2.008. Retired as of V2.008.)
 
+**V2.029** — Log boundary: the central logbook records **skill-side friction
+only** (which skill should have fired, which rule was vague, which gate was
+bypassed, what broke in the logging/reflection machinery); project-domain
+material (root causes, decisions, thresholds, ops details, next-round state)
+lives in the project's own `NOTES.md` / spec / `docs/`, with a single
+`Project notes:` pointer left in the logbook. Every task entry carries a
+`Log ownership: skill` line; reflection entries are headed skill-side and must
+point back at a skill file.
+
 **V2.028** — Packaging fix: the SKILL.md description is now a YAML-legal scalar
 (an unquoted `: ` made strict parsers drop the whole skill — DSH did); a
 frontmatter packaging gate was added.

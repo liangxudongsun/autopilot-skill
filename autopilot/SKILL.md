@@ -27,6 +27,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.029: log-boundary (this build ships no logbook).**
+Same V2.028 behaviour. Friction about the workflow itself (which skill should have fired, which rule was vague or contradictory) is recorded as deviation notes in the round's trace; project-domain material (root causes, decisions, thresholds, ops details) belongs in the project's own notes/docs, never in a shared skill log.
+
 **V2.028: frontmatter fix (YAML-safe description).**
 Same V2.027 behaviour; v2.028 fixes packaging: the SKILL.md description is now a quoted YAML scalar — an unquoted ": " inside it made the frontmatter invalid YAML, so strict harnesses (e.g. DSH) silently dropped the whole skill while lenient ones (opencode) still listed it. `evals/check-frontmatter.mjs` guards this.
 
@@ -110,7 +113,8 @@ above only routes; the pointed file decides.
 4. **Step 3 — gates.** Run the lane's verification gates; quote the verdict.
 5. **Step 4 — close.** `Skills called:` line in call order (grep-audit anchor);
    closeout per `verification-gates.md`; trace note with its product/deviation
-   lines (this build ships no logbook); delete the marker (single-round open-close
+   lines (this build ships no logbook);
+   delete the marker (single-round open-close
    exemption unchanged). One round = one commit = one JOURNAL entry; keep ≥2
    distinct skills per round (T0 + one executed lane/support skill); rotate
    lane/type before 3 identical sets repeat; cap audits at 3 consecutive.
