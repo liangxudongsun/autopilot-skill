@@ -101,6 +101,8 @@ zcode|all), `--dry-run`, `--slim`, `--dir`, `--uninstall`.
 - npm (recommended): `npm install -g automatt` — cross-platform; installs the
   driver and the 27 upstream workflow skills together. Run `automatt doctor`
   afterwards to see where they landed.
+  driver and the 27 upstream workflow skills together. Run `automatt doctor`
+  afterwards to see where they landed.
 - `npx skills`: `npx skills@latest add zkkk9555/automatt-skill -g -a zcode -y`
   (`-a`: claude-code|codex|cursor), then `npx skills@latest add
   mattpocock/skills -g -a zcode --skill '*' -y` for upstream. It installs
