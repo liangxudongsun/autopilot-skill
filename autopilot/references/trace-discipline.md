@@ -32,6 +32,11 @@
 - No-JOURNAL repos (V2.008): when the workspace has no JOURNAL, write the
   `Skills called:` line at the top of the task's NOTES.md so the grep-level
   audit survives (three-round eval precedent).
+- Invocation surfaces (V2.030): `Skills called:` marks every refused-but-inlined
+  skill as `name(inline)`, and the round card carries a `调用面:` line. A
+  `(inline)` entry without `inline(read <path>:<line>)` + one quoted clause +
+  `substitution` is malformed; retrying a refused tool call is a deviation
+  (idle spin). See `references/invocation.md`.
 - External PRs / forks (V2.008): upstream OSS PR work (fork → branch → push →
   CodeRabbit loop) counts as engineering rounds in the WORKFLOW-ACTIVE
   counter; PR follow-up rounds re-using an existing evidence chain stay

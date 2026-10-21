@@ -6,6 +6,8 @@ Single version scheme: `V2.00N`. (Early private iterations used internal vNN
 numbers — v41=V2.001, v43=V2.002, v44=V2.003, v45=V2.004, v46=V2.005,
 v47=V2.006, v48=V2.007, v49=V2.008. Retired as of V2.008.)
 
+**V2.030** — Invocation capability: when a harness honors `disable-model-invocation` (DSH), a refused Skill-tool call does not mean the skill is missing — the driver reads the installed body inline, records `调用面:` + `name(inline)` + `file:line`, and never retries the refused call. T0 belongs to `ask-matt` (tool or inline); loading autopilot itself is not T0.
+
 **V2.029** — Log boundary: the central logbook records **skill-side friction
 only** (which skill should have fired, which rule was vague, which gate was
 bypassed, what broke in the logging/reflection machinery); project-domain

@@ -2,7 +2,9 @@
 
 Well-scoped feature or refactor that fits in one session. Prefer the installed
 `grill-with-docs`, `to-spec`, `implement`, `tdd`, `code-review` skills via the
-Skill tool; this file is the fallback order if any is missing.
+Skill tool; if the harness refuses a call (`disable-model-invocation`), read
+the installed body inline (`references/invocation.md`); this file is the
+fallback order only if the body is missing.
 
 1. **Grill (self-answered, to frontier-empty: soft 4 / hard 6, V2.018).** Work the design tree (whole frontier
    per round), answering per the SKILL.md self-answer policy. Mandatory checks

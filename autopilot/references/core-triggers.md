@@ -55,17 +55,21 @@ Lane E（raw pile）进 lane 前先走 triage 状态机，不是直接开干：
 
 **理解→动手边界（V2.016）**：理解轮内出现改动意图（"顺手修了""顺便加了"）→ 停手，另起工程轮（理解报告先交付，改动走新一轮 T0 + Gate 0 + lane）。一轮之内"先理解后动手"必须有书面 transition（"理解结束，转 Lane X"），无 transition 的混合轮 = malformed。反例：同轮先写"判为纯理解轮"又写"走 Lane C 先 chart"——两张皮，必拆两轮。
 
+## 调用面：工具被拒 ≠ 未安装（V2.030）
+
+harness 遵守子 skill 的 `disable-model-invocation: true` 时（DSH），Skill 工具会回 `not available for model invocation`——该 skill 已安装，只是不能模型调用。此时按 `references/invocation.md`：读已安装正文 inline 执行，`Skills called:` 标 `name(inline)`，开工卡写 `调用面:` ＋ 正文 `file:line`；不记 deviation。只有安装目录里也没有正文，才按 `missing` 走 bundled fallback + deviation。同一 skill 被拒后不重试工具（重试 = 空转，记 deviation）。T0 `ask-matt` 被拒 = inline 读正文并作为本轮第一动作；**加载 autopilot 本身不是 T0**。
+
 ## 子 skill 只回文档：inline 执行并注记（V2.005）
 
 子 skill 经 Skill 工具调用只返回文档文本、不实际执行 → 按文档步骤 inline 手动执行，效果等同调用，并在 trace/JOURNAL 注记 substitution。T0 ask-matt 若只回通用文档、无 Lane 裁决，Gate 0/shield/lane 判定按 prelane/bug-flow 自行落子并记录。
 
 ## 正身优先：fallback 只留给"未安装"（V2.006）
 
-子 skill 已安装 → 动手前必须先经 Skill 工具加载它（哪怕它只返回文档正文），然后按其正文 inline 代执行——这叫代执行，合法。`references/` 里的速记版 fallback 只允许在对应 skill 未安装时使用。既没调 Skill 工具、也没读正身就干活 = malformed，JOURNAL 必记 deviation（未加载正身）。已装与否以本机技能目录实测为准（`<your local skills directory>\`），不靠记忆。
+子 skill 已安装 → 动手前先经 Skill 工具加载它（哪怕它只返回文档正文），然后按其正文 inline 代执行——这叫代执行，合法；工具因 harness 过滤被拒 → 按 `references/invocation.md` 读已安装正文 inline（`name(inline)`＋`调用面:`＋file:line），同样合法。`references/` 里的速记版 fallback 只允许在对应 skill 未安装（或正文缺失）时使用。既没调工具、也没读正身就干活 = malformed，JOURNAL 必记 deviation（未加载正身）。已装与否以本机技能目录实测为准（`<your local skills directory>\`），不靠记忆。
 
-**开工点名（V2.019，连续 5 轮未加载正身换来）：** 动手前在 trace/NOTES 写一行本轮要调的正身清单（例：`正身清单：diagnosing-bugs、tdd、code-review`），然后逐一经 Skill 工具调用；代执行仍先加载再 inline。清单缺一项、或清单有点名但无对应调用痕 = deviation（自觉守不住的，点名替自觉）。**收尾调用痕自查（V2.020，点名只管写不管调换来）：** 收尾前 grep JOURNAL `Skills called` 行（无 JOURNAL 仓看 NOTES 顶部同名行），清单每项须有对应调用痕；有点名无调用痕 = deviation 当轮补记（v1.182–v1.184 code-review 连犯 3 轮换来）。（V2.025：点名并入开工卡「正身」行，不再另写一份。）
+**开工点名（V2.019，连续 5 轮未加载正身换来）：** 动手前在 trace/NOTES 写一行本轮要调的正身清单（例：`正身清单：diagnosing-bugs、tdd、code-review`），然后逐一经 Skill 工具调用（被拒则读已安装正文 inline，见 `references/invocation.md`）；代执行仍先加载再 inline。清单缺一项、或清单有点名但无对应调用痕 = deviation（自觉守不住的，点名替自觉）。**收尾调用痕自查（V2.020，点名只管写不管调换来）：** 收尾前 grep JOURNAL `Skills called` 行（无 JOURNAL 仓看 NOTES 顶部同名行），清单每项须有对应调用痕；有点名无调用痕 = deviation 当轮补记（v1.182–v1.184 code-review 连犯 3 轮换来）。（V2.025：点名并入开工卡「正身」行，不再另写一份。）
 
-**正身硬痕（V2.023，读=调混淆终结）：** 点名清单每项须有Skill工具调用痕＋返回摘要引用（正身版本/行或返回要点一句）；inline代执行须先有调用痕＋注substitution＋正身行号，无痕inline = malformed。收尾从grep JOURNAL文本升为调用痕＋产物双验：清单每项须同时有调用痕与对应产物（spec/ticket/红绿输出/review结论），缺一 = deviation当轮补记。
+**正身硬痕（V2.023，读=调混淆终结）：** 点名清单每项须有调用痕＋正文引用：Skill 工具返回（正身版本/行或返回要点一句），或 `inline(read <path>:<line>)`＋一句正文引用（工具被 harness 拒绝时）；inline 代执行须先有调用痕（工具或 inline 读）＋注 substitution ＋正身行号，无痕 inline = malformed。收尾从grep JOURNAL文本升为调用痕＋产物双验：清单每项须同时有调用痕与对应产物（spec/ticket/红绿输出/review结论），缺一 = deviation当轮补记。
 
 ## research 硬入口（V2.006 立项，V2.010 量化）
 
@@ -134,7 +138,7 @@ tdd 吞缝之前先问一句"缝的位置和接口形状定了吗"——没定�
 
 ## 编排铁律：user-invoked 不互调（V2.010，官方原文）
 
-官方规则：user-invoked skill 只编排，可调 model-invoked，但永远不调另一个 user-invoked。driver 自己是编排者，调谁都行；但被调的 user-invoked skill（to-spec、to-tickets、implement、implement-spec、grill-with-docs、wayfinder、triage 等）不许再调另一个 user-invoked——to-spec 里不许调 implement，implement 里不许调 code-review（implement 正文的"/tdd…/code-review"指运行其纪律，不是调其 skill）。model-invoked（tdd、code-review、diagnosing-bugs、prototype、research、codebase-design、`grilling`、`domain-modeling` 等）可由任何人调——其中裸 `grilling` 与 `domain-modeling` consult 中途任何上下文可调；`grill-me`/`grill-with-docs` 是 user-invoked（正身 `disable-model-invocation: true`），中途禁调（见中途 grill 专节 V2.018）。违反 = malformed。
+官方规则：user-invoked skill 只编排，可调 model-invoked，但永远不调另一个 user-invoked。driver 自己是编排者，调谁都行；但被调的 user-invoked skill（to-spec、to-tickets、implement、implement-spec、grill-with-docs、wayfinder、triage 等）不许再调另一个 user-invoked——to-spec 里不许调 implement，implement 里不许调 code-review（implement 正文的"/tdd…/code-review"指运行其纪律，不是调其 skill）。model-invoked（tdd、code-review、diagnosing-bugs、prototype、research、codebase-design、`grilling`、`domain-modeling` 等）可由任何人调——其中裸 `grilling` 与 `domain-modeling` consult 中途任何上下文可调；`grill-me`/`grill-with-docs` 是 user-invoked（正身 `disable-model-invocation: true`），中途禁调（见中途 grill 专节 V2.018）。违反 = malformed。V2.030 补充：harness 拒绝模型调用时，inline 读正身属于「读数据」，不算 user-invoked 互调；`ask-matt` 的 inline 读是 T0 的合法形态。
 
 ## 长任务 spec 演进位：冻结基线 + issues 增量（V2.009）
 

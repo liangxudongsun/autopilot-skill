@@ -81,5 +81,5 @@ with `Anchors: path :: symbol` + verify command? ② Any cross-system change,
 new mechanism, or undecided numbers? ③ Multiple turns/sessions? ② or ③ =
 Yes, or ① unwritable → **C**. A session = one window, one goal.
 
-**入口硬门（V2.023，V2.025 并入开工卡）：** 开工前先发开工卡（字段与硬序见 SKILL.md Round protocol；进 lane 轮另在 NOTES 顶写文件级明细：本lane必读集已读 file:块名＋shield关键词grep结论＋Gate 0 file:line + parity证据＋档位）；缺一件不得进lane，缺 = malformed。downshift收紧：免的是T0调用，不是分流判定——每轮仍须开工卡/卡刷新、Gate 0 verdict＋lane落子quote，无quote = malformed。
+**入口硬门（V2.023，V2.025 并入开工卡）：** 开工前先发开工卡（字段与硬序见 SKILL.md Round protocol；进 lane 轮另在 NOTES 顶写文件级明细：本lane必读集已读 file:块名＋shield关键词grep结论＋Gate 0 file:line + parity证据＋档位）；缺一件不得进lane，缺 = malformed。downshift收紧：免的是T0的**工具调用**（harness 拒绝时走 inline 读，见 `invocation.md`），不是T0内容与分流判定——每轮仍须开工卡/卡刷新、Gate 0 verdict＋lane落子quote，无quote = malformed。
 

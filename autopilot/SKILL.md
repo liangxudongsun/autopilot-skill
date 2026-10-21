@@ -13,7 +13,9 @@ understand, spec, split, build, verify. Ask nothing mid-task unless the
 decision is destructive, externally visible, or changes scope. Everything else:
 pick the sensible default, record it, keep going.
 
-Sub-skills (27 total) are invoked via the Skill tool. If one is not installed,
+Sub-skills (27 total) are invoked via the Skill tool. If the tool refuses a
+call because the harness honors `disable-model-invocation` (DSH), read the
+installed body inline — `references/invocation.md`; if one is not installed,
 run the bundled fallback in `references/` and note the substitution in the
 trace. Naming, templates, and commit rules live in
 `references/conventions.md` — follow it. **When to fire which skill and what
@@ -26,6 +28,9 @@ recorded as deviation notes in the round's trace (driver never edits its own
 files; this build ships no logbook or self-upgrade loop). Version notes v10–v40 live verbatim
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
+
+**V2.030: invocation-capability (tool refusal is not "missing").**
+Same V2.029 behaviour, plus: some harnesses honor a sub-skill's `disable-model-invocation: true` and refuse the Skill-tool call (DSH does; 16 of 27 sub-skills carry the flag, including 5 of the 8 core). The driver now has a legal, auditable inline path: on refusal it reads the installed `SKILL.md` body as the round's first *skill* action for T0 (`ask-matt`) and as `name(inline)` for every other skill, records `调用面:` + `file:line` + substitution, never retries the refused call, and treats a body-less skill as `missing`. Loading this driver is never T0. Detail in `references/invocation.md`.
 
 **V2.029: log-boundary (this build ships no logbook).**
 Same V2.028 behaviour. Friction about the workflow itself (which skill should have fired, which rule was vague or contradictory) is recorded as deviation notes in the round's trace; project-domain material (root causes, decisions, thresholds, ops details) belongs in the project's own notes/docs, never in a shared skill log.
@@ -98,7 +103,11 @@ above only routes; the pointed file decides.
    deviation; a completed round without one is malformed. Tier floors and the
    never-trim list live in `references/self-answer.md`.
 2. **Step 1 — T0.** One `ask-matt` call leads the Skill-tool order (a late-added
-   `ask-matt` does not satisfy T0). `ask-matt` is a routing map, not a judge —
+   `ask-matt` does not satisfy T0; loading this driver is not T0). If the
+   harness refuses the call (`not available for model invocation`), inline-read
+   the installed `ask-matt/SKILL.md` as the round's first *skill* action
+   (driver load and Step 0 recon excepted), record `ask-matt(inline)` on the
+   card, and continue (see `references/invocation.md`). `ask-matt` is a routing map, not a judge —
    the lane verdict is your own prelane decision (V2.015). Quote the gate verdict
    on any round that ran Gate 0 against a fresh change surface (first touch of a
    repo, or a re-run on new work); `gate n/a (touched)` stays the display
