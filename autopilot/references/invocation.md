@@ -7,7 +7,7 @@
 | 面 | 判定 | 合法动作 | 痕迹 |
 |---|---|---|---|
 | `tool` | Skill 工具返回正文 | 按正文执行 | `Skills called:` 写名字 |
-| `inline` | 工具返回 `is not available for model invocation`；或 `unknown or no longer available` 但已安装目录里有正文 | 读已安装的 `SKILL.md` 正文，按正文 inline 执行 | `Skills called:` 写 `name(inline)` ＋ `调用面:` 行 ＋ 正文 `file:line` |
+| `inline` | 工具返回 `is not available for model invocation`；或 `unknown or no longer available` 但已安装目录里有正文 | 读已安装的 `SKILL.md` 正文（优先装目录 `.dsh/skills/`、`.codex/skills/`；读到仓内同内容副本也合法，但开工卡 `调用面:` 必须写**实际读到的那个路径**，V2.040），按正文 inline 执行 | `Skills called:` 写 `name(inline)` ＋ `调用面:` 行 ＋ 正文 `file:line` |
 | `missing` | 工具拒绝/未知，**且** `<skills-root>/<name>/SKILL.md` 确实不存在（用 `test -f` 复核，别凭印象） | 用 `references/` 的 bundled fallback，记 deviation | `deviation:` 逐项 |
 
 **拒绝串识别（原样匹配，别猜）**：

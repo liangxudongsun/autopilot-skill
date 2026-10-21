@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.040: ledger-mechanics (every product path must exist; script-downgraded audits say so; a deviation forces a reflection card).**
+Same V2.039 behaviour, plus: each `产物:` path must pass `test -f` — no compressed stand-ins like `test/x.s1-3.test.js` for three real files (⑦b); `审计:` accepts a `(脚本降级)` suffix so "no subagent harness" is machine-readable; `deviation:` non-none forces a `摩擦:` line **and** a `## [反思]` card (⑨ M5b); and a repo-local logbook (eval/hermetic) must be committed after append, while an installed out-of-repo logbook commits nothing. Detail in `references/usage-log.md`.
+
 **V2.039: round-bookkeeping (probe-then-card is legal; chains carry skill names only; read-only rounds have a legal audit anchor).**
 Same V2.038 behaviour, plus: T0 may run **before** the kickoff card (the card is not a skill action — probe `ask-matt`, then fill `调用面:`), and the card gains the fixed `正身/必读集` line (`core-triggers.md`「开工点名」no longer needs a self-invented row); `链:`/`Skills called:` list **skill names only** — no `autopilot`, no lane label; read-only rounds point `审计:` at `.scratch/<slug>/audit.log` and put the `Skills called:` anchor in the final message (no NOTES). Detail in `references/usage-log.md`.
 
