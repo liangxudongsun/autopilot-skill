@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.031: log-evidence (this build ships no logbook).**
+Same V2.030 behaviour. Friction about the workflow itself is recorded as a trace note carrying a rule reference (`file:line`) and a candidate change; narrative five-aspect entries and marker-based reflection counting are retired.
+
 **V2.030: invocation-capability (tool refusal is not "missing").**
 Same V2.029 behaviour, plus: some harnesses honor a sub-skill's `disable-model-invocation: true` and refuse the Skill-tool call (DSH does; 16 of 27 sub-skills carry the flag, including 5 of the 8 core). The driver now has a legal, auditable inline path: on refusal it reads the installed `SKILL.md` body as the round's first *skill* action for T0 (`ask-matt`) and as `name(inline)` for every other skill, records `调用面:` + `file:line` + substitution, never retries the refused call, and treats a body-less skill as `missing`. Loading this driver is never T0. Detail in `references/invocation.md`.
 
@@ -120,11 +123,10 @@ above only routes; the pointed file decides.
    minimal product (spec / issues / red-green / review verdict / verify output;
    `core-triggers.md` decides). **No product = that step did not happen.**
 4. **Step 3 — gates.** Run the lane's verification gates; quote the verdict.
-5. **Step 4 — close.** `Skills called:` line in call order (grep-audit anchor);
-   closeout per `verification-gates.md`; trace note with its product/deviation
-   lines (this build ships no logbook);
-   delete the marker (single-round open-close
-   exemption unchanged). One round = one commit = one JOURNAL entry; keep ≥2
+5. **Step 4 — close.** Append the trace note (product/deviation lines; this build ships no
+   logbook), then write the `Skills called:` line in call order
+   (grep-audit anchor); closeout per `verification-gates.md`; delete the marker
+   (single-round open-close exemption unchanged). One round = one commit = one JOURNAL entry; keep ≥2
    distinct skills per round (T0 + one executed lane/support skill); rotate
    lane/type before 3 identical sets repeat; cap audits at 3 consecutive.
 

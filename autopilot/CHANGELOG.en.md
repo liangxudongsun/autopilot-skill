@@ -6,6 +6,8 @@ Single version scheme: `V2.00N`. (Early private iterations used internal vNN
 numbers — v41=V2.001, v43=V2.002, v44=V2.003, v45=V2.004, v46=V2.005,
 v47=V2.006, v48=V2.007, v49=V2.008. Retired as of V2.008.)
 
+**V2.031** — Log evidence: the task entry becomes a receipt ledger (chain / artifact map / rule-level blockers with file:line / landed receipt / log ownership); friction tickets are written only when something went wrong; reflections become event-triggered observation cards (recovery / declared-vs-executed / conflicting rules / uncovered paths / decidability). Closeout must read the `landed` line back; child sessions write a receipt. The narrative five aspects and the “gap/other” questions are retired.
+
 **V2.030** — Invocation capability: when a harness honors `disable-model-invocation` (DSH), a refused Skill-tool call does not mean the skill is missing — the driver reads the installed body inline, records `调用面:` + `name(inline)` + `file:line`, and never retries the refused call. T0 belongs to `ask-matt` (tool or inline); loading autopilot itself is not T0.
 
 **V2.029** — Log boundary: the central logbook records **skill-side friction
