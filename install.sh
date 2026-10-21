@@ -102,6 +102,8 @@ else
 fi
 
 ALL_NAMES="automatt $UPSTREAM_NAMES"
+# 旧名安装目录：改名后残留 = 老版本 driver 还在目录里（会按旧规则干活）⇒ 装新名时顺手清掉
+LEGACY_NAMES="autopilot"
 [ "$SLIM" = 1 ] && WANT="automatt" || WANT="$ALL_NAMES"
 
 if [ "$DRY" = 1 ]; then
@@ -115,7 +117,7 @@ if [ "$UNINST" = 1 ]; then
   if [ "$ndirs" -ge 2 ] && [ "$YES" != 1 ]; then echo "refusing: $ndirs targets without --yes"; exit 1; fi
   for t in $TARGETS; do
     case "$t" in /|"$HOME") echo "refusing dangerous target: $t"; exit 1;; esac
-    for n in $ALL_NAMES; do [ -e "$t/$n" ] && { rm -rf "$t/$n"; echo "removed $t/$n"; }; done
+    for n in $ALL_NAMES $LEGACY_NAMES; do [ -e "$t/$n" ] && { rm -rf "$t/$n"; echo "removed $t/$n"; }; done
   done
   exit 0
 fi
@@ -138,6 +140,9 @@ fail=0
 for t in $TARGETS; do
   mkdir -p "$t" || { echo "ERROR: not writable: $t (set AUTOMATT_SKILLS_DIR)"; exit 1; }
   rm -rf "$t/automatt"; cp -r "$TMP/automatt-skill-main/automatt" "$t/automatt"
+  for n in $LEGACY_NAMES; do
+    [ -e "$t/$n" ] && { rm -rf "$t/$n"; echo "removed legacy install $t/$n (superseded by automatt)"; }
+  done
   if [ "$SLIM" != 1 ]; then
     for d in "$TMP"/skills-main/skills/*/*/; do
       name="$(basename "$d")"; [ -f "$d/SKILL.md" ] || continue

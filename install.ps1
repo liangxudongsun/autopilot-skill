@@ -80,7 +80,7 @@ if ($Uninstall) {
   if ($Targets.Count -ge 2 -and -not $Yes) { Write-Host 'refusing: 2+ targets without -Yes'; return }
   foreach ($t in $Targets) {
     if ($t -in @('/', $HOME, 'C:\')) { Write-Host "refusing dangerous target: $t"; return }
-    foreach ($n in (@('automatt') + $UpstreamNames)) { $p = Join-Path $t $n; if (Test-Path $p) { Remove-Item -Recurse -Force $p; Write-Host "removed $p" } }
+    foreach ($n in (@('automatt','autopilot') + $UpstreamNames)) { $p = Join-Path $t $n; if (Test-Path $p) { Remove-Item -Recurse -Force $p; Write-Host "removed $p" } }
   }
   return
 }
@@ -105,6 +105,8 @@ try {
     New-Item -ItemType Directory -Force -Path $t | Out-Null
     if (Test-Path "$t\automatt") { Remove-Item -Recurse -Force "$t\automatt" }
     Copy-Item -Recurse -Force "$Tmp\automatt-skill-main\automatt" "$t\automatt"
+    # 旧名安装目录：改名后残留 = 老版本 driver 还在目录里（会按旧规则干活）⇒ 装新名时顺手清掉
+    if (Test-Path "$t\autopilot") { Remove-Item -Recurse -Force "$t\autopilot"; Write-Host "removed legacy install $t\autopilot (superseded by automatt)" }
     if (-not $Slim) {
       Get-ChildItem "$Tmp\skills-main\skills" -Directory | ForEach-Object {
         Get-ChildItem $_.FullName -Directory | ForEach-Object {
