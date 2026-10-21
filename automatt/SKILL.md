@@ -1,11 +1,11 @@
 ---
-name: autopilot
-description: "Single-trigger autopilot — full-auto driver over the mattpocock engineering workflow — invoke once and it drives the whole task itself without mid-task questions. Fire unconditionally when the user asks for it by name — autopilot, auto-drive, full-auto, full-task autopilot, 全自动, 自动接管, /autopilot. Fire on ordinary engineering asks (bug fixing, small features, small projects, understand-this-project, refactors, triage, foggy efforts) ONLY when the working project is opted in — that is, an AGENTS.md between the cwd and the repo root carries the standalone line autopilot: on. Without that line — and without an explicit ask — do not adopt autopilot; leave the task to the host's normal flow. Decides the lane itself, drives grill-with-docs/to-spec/to-tickets/implement/tdd/code-review/diagnosing-bugs/wayfinder autonomously, and only stops for destructive, externally visible, or scope-changing decisions."
+name: automatt
+description: "Single-trigger automatt — full-auto driver over the mattpocock engineering workflow — invoke once and it drives the whole task itself without mid-task questions. Fire unconditionally when the user asks for it by name — automatt, auto-drive, full-auto, full-task auto-drive, 全自动, 自动接管, /automatt. Fire on ordinary engineering asks (bug fixing, small features, small projects, understand-this-project, refactors, triage, foggy efforts) ONLY when the working project is opted in — that is, an AGENTS.md between the cwd and the repo root carries the standalone line automatt: on. Without that line — and without an explicit ask — do not adopt automatt; leave the task to the host's normal flow. Decides the lane itself, drives grill-with-docs/to-spec/to-tickets/implement/tdd/code-review/diagnosing-bugs/wayfinder autonomously, and only stops for destructive, externally visible, or scope-changing decisions."
 metadata:
   opencode/slash: "true"
 ---
 
-# autopilot
+# automatt
 
 You are the autonomous driver over the mattpocock engineering skills for the
 repo you are running in. The user is AFK. Do the whole loop yourself:
@@ -29,11 +29,14 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.045: rename-to-automatt (the skill is now named `automatt`; the opt-in credential is `automatt: on`, the command is `/automatt`, the logbook is `automatt-USAGE-LOG.md`).**
+Same V2.044 behaviour — **no rule changes**: this release only renames the skill and everything keyed to its name (package directory, frontmatter `name:`, display name, opt-in credential `automatt: on|off`, slash command `/automatt`, central logbook and its pointer directory `.autopilot/` → `.automatt/`, install directory and harness junctions, public package directory and repo slug). Detail in `CHANGELOG.md` and `deploy/`.
+
 **V2.044: bookkeeping-calibration (chain = execution order; gate scan scope; survey has no HTML dashboard).**
 Same V2.043 behaviour, plus: `链:` records the **execution** order, not the order skills were *loaded* (pre-loading a body before executing it is legal and invisible to the chain; a review→fix→retest→re-review loop lists each skill once), so item ⑤ is judged against execution order; the typo/version/number gates grep **product files only** and exclude driver-owned artefacts (`.scratch/`, the ledger) so old-string citations in NOTES/audit do not fake a red; read-only survey rounds never build an HTML dashboard or dispatch sub-agents even if the survey skill's body asks for them (the driver wins — list + `file:line` in chat); and a request whose object exists only inside the host (parent-session source, host config, plugin, GUI panel) is a **host scenario** → `NEEDS-HUMAN.md`, never a self-authorised install. Detail in `references/usage-log.md`, `references/verification-gates.md`, `references/prelane.md`.
 
 **V2.043: ledger-target (confirm the workspace before you write; absolute log paths).**
-Same V2.042 behaviour, plus: before appending the ledger entry, confirm the workspace (`pwd` — the shell's default directory may be the session's start directory, not this round's workspace) and resolve the logbook in the order *workspace pointer → workspace-local `autopilot-USAGE-LOG.md` → installer's fixed path*; the `落本:` line carries an **absolute** path, and writing to any other book is contamination that must be rolled back and recorded in `deviation:` (V2.043 field: a read-only round appended its entry to the production logbook because the shell sat in the driver repo). Detail in `references/usage-log.md`.
+Same V2.042 behaviour, plus: before appending the ledger entry, confirm the workspace (`pwd` — the shell's default directory may be the session's start directory, not this round's workspace) and resolve the logbook in the order *workspace pointer → workspace-local `automatt-USAGE-LOG.md` → installer's fixed path*; the `落本:` line carries an **absolute** path, and writing to any other book is contamination that must be rolled back and recorded in `deviation:` (V2.043 field: a read-only round appended its entry to the production logbook because the shell sat in the driver repo). Detail in `references/usage-log.md`.
 
 **V2.042: change-boundary (project workspace only; harness and host profile are read-only).**
 Same V2.041 behaviour, plus: the round may only modify the **current project workspace** — harness/host/user-profile paths (`~/.dsh/`, `~/.codex/`, global `node_modules/`, plugin dirs, `cordis.patch.yml`, registry, `app.asar`) are read-only; a request like "add a button" means the project's own UI unless the user names the host, and even then it goes to STOP (`NEEDS-HUMAN.md`) instead of self-authorising an install. Deliverables outside the project = malformed (no entry = not landed), and any out-of-scope host edit must be rolled back and recorded in `deviation:`. Detail in `references/prelane.md`.
@@ -45,7 +48,7 @@ Same V2.040 behaviour, plus: a Skill call **or** an inline read of a body counts
 Same V2.039 behaviour, plus: each `产物:` path must pass `test -f` — no compressed stand-ins like `test/x.s1-3.test.js` for three real files (⑦b); `审计:` accepts a `(脚本降级)` suffix so "no subagent harness" is machine-readable; `deviation:` non-none forces a `摩擦:` line **and** a `## [反思]` card (⑨ M5b); and a repo-local logbook (eval/hermetic) must be committed after append, while an installed out-of-repo logbook commits nothing. Detail in `references/usage-log.md`.
 
 **V2.039: round-bookkeeping (probe-then-card is legal; chains carry skill names only; read-only rounds have a legal audit anchor).**
-Same V2.038 behaviour, plus: T0 may run **before** the kickoff card (the card is not a skill action — probe `ask-matt`, then fill `调用面:`), and the card gains the fixed `正身/必读集` line (`core-triggers.md`「开工点名」no longer needs a self-invented row); `链:`/`Skills called:` list **skill names only** — no `autopilot`, no lane label; read-only rounds point `审计:` at `.scratch/<slug>/audit.log` and put the `Skills called:` anchor in the final message (no NOTES). Detail in `references/usage-log.md`.
+Same V2.038 behaviour, plus: T0 may run **before** the kickoff card (the card is not a skill action — probe `ask-matt`, then fill `调用面:`), and the card gains the fixed `正身/必读集` line (`core-triggers.md`「开工点名」no longer needs a self-invented row); `链:`/`Skills called:` list **skill names only** — no `automatt`, no lane label; read-only rounds point `审计:` at `.scratch/<slug>/audit.log` and put the `Skills called:` anchor in the final message (no NOTES). Detail in `references/usage-log.md`.
 
 **V2.038: chain-coverage-and-audit-path (list every skill you called; the audit path must exist).**
 Same V2.037 behaviour, plus: `链:` and `Skills called:` must both list **every skill actually invoked in the round** — including support skills used only for verification (browser-act, improve-codebase-architecture) — in call order; a chain that reads as a "logical order" or silently drops a verification skill is a ⑤ failure. The `审计:` receipt path must exist on disk (repo-relative or absolute); a path to a missing file is a ⑦b failure. Detail in `references/usage-log.md`.
@@ -81,7 +84,7 @@ Same V2.028 behaviour. Friction about the workflow itself (which skill should ha
 Same V2.027 behaviour; v2.028 fixes packaging: the SKILL.md description is now a quoted YAML scalar — an unquoted ": " inside it made the frontmatter invalid YAML, so strict harnesses (e.g. DSH) silently dropped the whole skill while lenient ones (opencode) still listed it. `evals/check-frontmatter.mjs` guards this.
 
 **V2.027: opt-in-gate (project credential + default-off global gate).**
-Same V2.026 behaviour, plus: autopilot takes over only where the project opted in — a standalone line `autopilot: on` in an `AGENTS.md` between the cwd and the repo root (`autopilot: off` vetoes); the global instruction file is a negative gate with explicit-ask and resume-only exceptions; implicit task-shape triggers in the description now require that credential. Detail in `references/` and `deploy/`.
+Same V2.026 behaviour, plus: automatt takes over only where the project opted in — a standalone line `automatt: on` in an `AGENTS.md` between the cwd and the repo root (`automatt: off` vetoes); the global instruction file is a negative gate with explicit-ask and resume-only exceptions; implicit task-shape triggers in the description now require that credential. Detail in `references/` and `deploy/`.
 
 **V2.026: pre-trust (pre-adoption falsification + gate-landing calibration).**
 Same V2.025 behaviour, plus: load-bearing conclusions get an independent red-team on the conclusion itself before adoption (narrower sub-questions don't count); criteria/gate drafts get pre-implementation adversarial audit and proposals get measured-audit; every new gate lands with a satisfaction example, a never-red worst-direction argument, a worst-case constant sweep, and an explicit coverage statement for "all green" claims; verdict readings cite their writer. Detail in `references/`.
@@ -174,7 +177,7 @@ above only routes; the pointed file decides.
    logbook), then write the `Skills called:` line in call order (grep-audit anchor: top of `NOTES.md`, or the **final
    message** on read-only rounds that write no NOTES). `链:` and
    `Skills called:` carry **skill names only** — never the driver name
-   `autopilot`, never a lane label (`lane-a`, `LaneA`) (V2.039). Read-only
+   `automatt`, never a lane label (`lane-a`, `LaneA`) (V2.039). Read-only
    rounds point `审计:` at `.scratch/<slug>/audit.log` — driver-owned, not a
    repo file (V2.039). Closeout per
    `verification-gates.md`; delete the marker (single-round open-close

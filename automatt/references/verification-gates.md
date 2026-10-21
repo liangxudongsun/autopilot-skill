@@ -32,7 +32,7 @@
   cross-file consistency; numbers → red-line range check.
   **扫描面（V2.044）**：typo/version/number 门的 grep **只扫产品文件**
   （源码、文档、配置、测试等本轮交付面），**排除 driver 自有产物**
-  （`.scratch/`、`autopilot-USAGE-LOG.md`、NOTES/audit/receipt）——那些文件里的旧串是
+  （`.scratch/`、`automatt-USAGE-LOG.md`、NOTES/audit/receipt）——那些文件里的旧串是
   「改前证据」，算进扫描面必然假红（V2.044 现场：r7 s6 / r9 s6 / r13 s6 三次都把
   `.scratch/` 里对旧串的溯源引用判成产品残留）。门脚本要显式写清排除项。
 - Display-wiring gate (v8): pure format-string/call-site changes (new `%`

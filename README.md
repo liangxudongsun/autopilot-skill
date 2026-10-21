@@ -1,6 +1,8 @@
 [English](./README.en.md) | 简体中文
 
-# autopilot
+# automatt
+
+> **改名说明**：本 skill 原名 `autopilot`，现更名为 `automatt`（同名易记、避免与其他 skill 撞名）；命令、启用凭据 `automatt: on` 与安装器同步改名。
 
 **点一次，说句人话，剩下的全自动。** 一个包着 [mattpocock/skills](https://github.com/mattpocock/skills) 工作流（27 个子 skill）的全自动 driver：用户说一句日常人话（中英文都行），它就把整个任务自己做完——分流、打磨、写 spec、拆票、实现、红绿测试、双轴评审、验证交付，中途不需要人参与。
 
@@ -21,10 +23,10 @@
 > **一句话安装**：复制下面这段话发给你的 Agent，它会装好一切：
 >
 > ```
-> 帮我装一下这个 skill：https://github.com/zkkk9555/autopilot-skill
-> 要求：driver（autopilot）+ 上游 27 个工作流 skill 共 28 个必需项，一个不能少；
+> 帮我装一下这个 skill：https://github.com/zkkk9555/automatt-skill
+> 要求：driver（automatt）+ 上游 27 个工作流 skill 共 28 个必需项，一个不能少；
 > 装到当前 harness 的用户级 skills 目录；上游新增的 skill 照单全收；
-> 装完逐个确认这 28 个都在：autopilot, ask-matt, code-review, codebase-design, diagnosing-bugs, domain-modeling, grill-me, grill-with-docs, grilling, handoff, implement, implement-spec, improve-codebase-architecture, pr, prototype, research, retro, setup-matt-pocock-skills, tdd, teach, to-questionnaire, to-spec, to-tickets, triage, wait-what, wayfinder, wizard, writing-for-agents；缺哪个、装到哪了，告诉我。
+> 装完逐个确认这 28 个都在：automatt, ask-matt, code-review, codebase-design, diagnosing-bugs, domain-modeling, grill-me, grill-with-docs, grilling, handoff, implement, implement-spec, improve-codebase-architecture, pr, prototype, research, retro, setup-matt-pocock-skills, tdd, teach, to-questionnaire, to-spec, to-tickets, triage, wait-what, wayfinder, wizard, writing-for-agents；缺哪个、装到哪了，告诉我。
 > ```
 >
 > 上面这段话发给 Agent 即可安装。下面是给想自己动手的进阶内容，看不懂直接跳过。
@@ -37,32 +39,32 @@
 bash（macOS / Linux / Git Bash）：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/zkkk9555/autopilot-skill/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/zkkk9555/automatt-skill/main/install.sh | bash
 ```
 
 Windows PowerShell（若报执行策略错误，先跑 `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`）：
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/zkkk9555/autopilot-skill/main/install.ps1)))
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/zkkk9555/automatt-skill/main/install.ps1)))
 ```
 
-默认装到 `~/.agents/skills/`；脚本会自动探测当前 harness，命中且唯一时多写一份。装完**必须去工具里确认 skill 列表出现了 autopilot**。常用变体：`--harness zcode` 指定 harness，`--dry-run` 预览，`--slim` 只要 driver，`--dir` 自定义目录，`--uninstall` 卸载。怕装错？先 `--dry-run` 预览。
+默认装到 `~/.agents/skills/`；脚本会自动探测当前 harness，命中且唯一时多写一份。装完**必须去工具里确认 skill 列表出现了 automatt**。常用变体：`--harness zcode` 指定 harness，`--dry-run` 预览，`--slim` 只要 driver，`--dir` 自定义目录，`--uninstall` 卸载。怕装错？先 `--dry-run` 预览。
 
 </details>
 
 <details>
 <summary>进阶：其他装法（npx / 插件市场 / 手动）</summary>
 
-- `npx skills`（备选）：`npx skills@latest add zkkk9555/autopilot-skill -g -a zcode -y`（`-a` 换 claude-code|codex|cursor），再 `npx skills@latest add mattpocock/skills -g -a zcode --skill '*' -y` 装上游。注意它按 harness 分目录装。
-- Claude Code 插件市场：`/plugin marketplace add zkkk9555/autopilot-skill` 后 `/plugin install autopilot`。
-- 手动（未知 harness）：找你的 skills 目录 → clone 两仓库 → `autopilot/` 拷过去，上游 `skills/*/*/` 按最后一级目录名装平 → 验证 28 个 → 重启说“切换按钮失效了，去检查修一下”。
+- `npx skills`（备选）：`npx skills@latest add zkkk9555/automatt-skill -g -a zcode -y`（`-a` 换 claude-code|codex|cursor），再 `npx skills@latest add mattpocock/skills -g -a zcode --skill '*' -y` 装上游。注意它按 harness 分目录装。
+- Claude Code 插件市场：`/plugin marketplace add zkkk9555/automatt-skill` 后 `/plugin install automatt`。
+- 手动（未知 harness）：找你的 skills 目录 → clone 两仓库 → `automatt/` 拷过去，上游 `skills/*/*/` 按最后一级目录名装平 → 验证 28 个 → 重启说“切换按钮失效了，去检查修一下”。
 - 目录对照：`~/.agents/skills/`（ZCode/Cursor/OpenCode 等）|`~/.zcode/skills/`（ZCode）|`~/.claude/skills/`（Claude Code）|`~/.codex/skills/`（Codex）|`<项目>/.agents/skills/`（仅当前项目）。没有任何目录是全宇宙通用的，装完必须确认。
 
 </details>
 
 ## 使用
 
-**先启用要用的项目**（默认关闭）：在该项目的 `AGENTS.md` 里加独占一行 `autopilot: on`（删掉该行、或改成 `autopilot: off` 即关闭）。任何时候说一句「用 autopilot 做 X」或 `/autopilot` 都能强制接管，不需要凭据。
+**先启用要用的项目**（默认关闭）：在该项目的 `AGENTS.md` 里加独占一行 `automatt: on`（删掉该行、或改成 `automatt: off` 即关闭）。任何时候说一句「用 automatt 做 X」或 `/automatt` 都能强制接管，不需要凭据。
 
 像说话一样说一次就够：
 
@@ -76,14 +78,14 @@ driver 自己选路：报错/症状 → 先建反馈环再修的 bug 流；小�
 
 > 本 skill 处于**早期开发阶段**，还可能存在触发时机不准、子 skill 衔接不顺之类的问题。欢迎：
 >
-> - 在 [Issues](https://github.com/zkkk9555/autopilot-skill/issues) 提交问题（附上你的使用场景和 driver 的实际行为）。
-> - 在 [Pull Requests](https://github.com/zkkk9555/autopilot-skill/pulls) 提交修复（基于 `main` 分支）。
+> - 在 [Issues](https://github.com/zkkk9555/automatt-skill/issues) 提交问题（附上你的使用场景和 driver 的实际行为）。
+> - 在 [Pull Requests](https://github.com/zkkk9555/automatt-skill/pulls) 提交修复（基于 `main` 分支）。
 >
 > 任何反馈都有帮助——正是来自真实使用的反馈，才推动了从 V2.001 走到现在。
 
 ## 版本
 
-单一版本号 `V2.00N`，见 [`autopilot/CHANGELOG.md`](./autopilot/CHANGELOG.md)。
+单一版本号 `V2.00N`，见 [`automatt/CHANGELOG.md`](./automatt/CHANGELOG.md)。
 
 ## 许可
 

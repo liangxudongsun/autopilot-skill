@@ -1,6 +1,8 @@
 English | [简体中文](./CHANGELOG.md)
 
-# CHANGELOG — autopilot
+# CHANGELOG — automatt
+
+**V2.045** — Renamed: the skill is now `automatt` (previously `autopilot`) — the old name was hard to remember and easy to collide with other skills. **No rule changes**: only identifiers move — package directory and frontmatter `name:`, opt-in credential `autopilot: on|off` → `automatt: on|off`, command `/autopilot` → `/automatt`, central logbook `autopilot-USAGE-LOG.md` → `automatt-USAGE-LOG.md` (and its pointer directory `.autopilot/` → `.automatt/`), install directory and the skills mount name in every harness, plus the public package directory and repo address (`user/automatt-skill`, the old address redirects).
 
 Single version scheme: `V2.00N`. (Early private iterations used internal vNN
 numbers — v41=V2.001, v43=V2.002, v44=V2.003, v45=V2.004, v46=V2.005,

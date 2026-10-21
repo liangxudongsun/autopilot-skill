@@ -1,6 +1,6 @@
 # invocation — 调用面：tool / inline / missing（V2.030）
 
-> 为什么要有这一页：有的 harness 会严格遵守子 skill 的 `disable-model-invocation: true`（DSH 就是），把 Skill 工具调用直接拒掉。这不是「没装」，也不是「skill 坏了」，是**调用面**问题。规则不认这条路，driver 就只能在「违规 inline」和「空转补调」之间二选一（真实现场：ask-matt 被拒后先干活、收尾才补 T0；档案里另有 5 条开工卡把 autopilot 冒名成 T0）。
+> 为什么要有这一页：有的 harness 会严格遵守子 skill 的 `disable-model-invocation: true`（DSH 就是），把 Skill 工具调用直接拒掉。这不是「没装」，也不是「skill 坏了」，是**调用面**问题。规则不认这条路，driver 就只能在「违规 inline」和「空转补调」之间二选一（真实现场：ask-matt 被拒后先干活、收尾才补 T0；档案里另有 5 条开工卡把 automatt 冒名成 T0）。
 
 ## 三种调用面（每个 skill 只判一次，判完缓存在本轮 trace）
 
@@ -34,7 +34,7 @@
 
 ## T0 特别条款
 
-T0 只能是 `ask-matt`（`tool` 或 `inline`）——**加载 autopilot 本身不是 T0**。T0 必须是本轮**第一个 skill 动作**（加载 driver 与 Step 0 侦察/必读集不算），且在任何 lane skill、任何改文件之前；被拒或已知会被拒时直接 inline 读 `ask-matt/SKILL.md`，不许先干活再补。inline 读属于「把正文当路由表读」，不是「调用 user-invoked skill」，不违反编排铁律。
+T0 只能是 `ask-matt`（`tool` 或 `inline`）——**加载 automatt 本身不是 T0**。T0 必须是本轮**第一个 skill 动作**（加载 driver 与 Step 0 侦察/必读集不算），且在任何 lane skill、任何改文件之前；被拒或已知会被拒时直接 inline 读 `ask-matt/SKILL.md`，不许先干活再补。inline 读属于「把正文当路由表读」，不是「调用 user-invoked skill」，不违反编排铁律。
 
 ## 与既有条款的关系
 

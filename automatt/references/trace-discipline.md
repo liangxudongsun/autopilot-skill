@@ -23,7 +23,7 @@
   closes (delivered/STOP/BLOCKED with the delivery-check triple handed over). The
   marker count is for continuity only. setup
   (`setup-matt-pocock-skills`) adds one standing line to the project's
-  AGENTS.md: 若 `.scratch/WORKFLOW-ACTIVE.md` 存在 → 先调 autopilot
+  AGENTS.md: 若 `.scratch/WORKFLOW-ACTIVE.md` 存在 → 先调 automatt
   再继续；新任务开局拿不准走哪条路时 → 也先调它分流 — this is how a fresh window re-invokes the driver without the
   user asking, and how an unsure opening routes through T0 without re-reading
   the whole driver (a dozen words, not 8k tokens). **Single-round open-close

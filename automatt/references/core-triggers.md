@@ -61,7 +61,7 @@ Lane E（raw pile）进 lane 前先走 triage 状态机，不是直接开干：
 
 ## 调用面：工具被拒 ≠ 未安装（V2.030）
 
-harness 遵守子 skill 的 `disable-model-invocation: true` 时（DSH），Skill 工具会回 `not available for model invocation`——该 skill 已安装，只是不能模型调用。此时按 `references/invocation.md`：读已安装正文 inline 执行，`Skills called:` 标 `name(inline)`，开工卡写 `调用面:` ＋ 正文 `file:line`；不记 deviation。只有安装目录里也没有正文，才按 `missing` 走 bundled fallback + deviation。同一 skill 被拒后不重试工具（重试 = 空转，记 deviation）。T0 `ask-matt` 被拒 = inline 读正文并作为本轮第一动作；**加载 autopilot 本身不是 T0**。
+harness 遵守子 skill 的 `disable-model-invocation: true` 时（DSH），Skill 工具会回 `not available for model invocation`——该 skill 已安装，只是不能模型调用。此时按 `references/invocation.md`：读已安装正文 inline 执行，`Skills called:` 标 `name(inline)`，开工卡写 `调用面:` ＋ 正文 `file:line`；不记 deviation。只有安装目录里也没有正文，才按 `missing` 走 bundled fallback + deviation。同一 skill 被拒后不重试工具（重试 = 空转，记 deviation）。T0 `ask-matt` 被拒 = inline 读正文并作为本轮第一动作；**加载 automatt 本身不是 T0**。
 
 ## 子 skill 只回文档：inline 执行并注记（V2.005）
 

@@ -1,4 +1,4 @@
-# autopilot installer (Windows PowerShell) — harness-aware, verifying, idempotent.
+# automatt installer (Windows PowerShell) — harness-aware, verifying, idempotent.
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 param(
   [ValidateSet('auto','claude','codex','cursor','opencode','zcode','all')][string]$Harness = 'auto',
@@ -11,10 +11,10 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 # Usage:
-#   & ([scriptblock]::Create((irm https://raw.githubusercontent.com/zkkk9555/autopilot-skill/main/install.ps1)))
-#   & ([scriptblock]::Create((irm https://raw.githubusercontent.com/zkkk9555/autopilot-skill/main/install.ps1))) -Harness zcode -DryRun
+#   & ([scriptblock]::Create((irm https://raw.githubusercontent.com/zkkk9555/automatt-skill/main/install.ps1)))
+#   & ([scriptblock]::Create((irm https://raw.githubusercontent.com/zkkk9555/automatt-skill/main/install.ps1))) -Harness zcode -DryRun
 
-$PubUrl = 'https://github.com/zkkk9555/autopilot-skill'
+$PubUrl = 'https://github.com/zkkk9555/automatt-skill'
 $UpstreamUrl = 'https://github.com/mattpocock/skills'
 $UpstreamNames = @('ask-matt','code-review','codebase-design','diagnosing-bugs','domain-modeling','grill-me','grill-with-docs','grilling','handoff','implement','implement-spec','improve-codebase-architecture','pr','prototype','research','retro','setup-matt-pocock-skills','tdd','teach','to-questionnaire','to-spec','to-tickets','triage','wait-what','wayfinder','wizard','writing-for-agents')
 
@@ -39,7 +39,7 @@ function Detect-Harness {
 }
 
 $Targets = @((Join-Path $HOME '.agents\skills'))
-if ($env:AUTOPILOT_SKILLS_DIR -and -not $Dir) { $Dir = $env:AUTOPILOT_SKILLS_DIR }
+if ($env:AUTOMATT_SKILLS_DIR -and -not $Dir) { $Dir = $env:AUTOMATT_SKILLS_DIR }
 if ($Dir) { $Targets = @($Dir) }
 elseif ($Harness -eq 'all') { $Targets += @('claude','codex','cursor','opencode','zcode' | ForEach-Object { Harness-Dir $_ }) }
 elseif ($Harness -ne 'auto') { $d = Harness-Dir $Harness; if ($d -and ($Targets -notcontains $d)) { $Targets += $d } }
@@ -48,7 +48,7 @@ else {
   try {
     $isTty = (-not [Console]::IsInputRedirected)
   } catch { $isTty = $false }
-  if ($isTty -and -not $env:AUTOPILOT_NO_MENU) {
+  if ($isTty -and -not $env:AUTOMATT_NO_MENU) {
     $def = 2; if ($det) { $def = 1 }
     Write-Host '请选择安装位置（默认装通用目录；探测命中标 ★）：'
     if ($det) { Write-Host "1) ★ 检测到：$det ($(Harness-Dir $det))" } else { Write-Host '1) 自动检测（未命中）' }
@@ -70,7 +70,7 @@ else {
   } elseif ($det) { $d = Harness-Dir $det; if ($Targets -notcontains $d) { $Targets += $d } }
 }
 
-$Want = @('autopilot'); if (-not $Slim) { $Want += $UpstreamNames }
+$Want = @('automatt'); if (-not $Slim) { $Want += $UpstreamNames }
 
 if ($DryRun) {
   Write-Host "plan: targets: $($Targets -join ', ')"; Write-Host "plan: skills: $($Want -join ' ')"
@@ -80,19 +80,19 @@ if ($Uninstall) {
   if ($Targets.Count -ge 2 -and -not $Yes) { Write-Host 'refusing: 2+ targets without -Yes'; return }
   foreach ($t in $Targets) {
     if ($t -in @('/', $HOME, 'C:\')) { Write-Host "refusing dangerous target: $t"; return }
-    foreach ($n in (@('autopilot') + $UpstreamNames)) { $p = Join-Path $t $n; if (Test-Path $p) { Remove-Item -Recurse -Force $p; Write-Host "removed $p" } }
+    foreach ($n in (@('automatt') + $UpstreamNames)) { $p = Join-Path $t $n; if (Test-Path $p) { Remove-Item -Recurse -Force $p; Write-Host "removed $p" } }
   }
   return
 }
 
-$Tmp = Join-Path ([System.IO.Path]::GetTempPath()) ('autopilot-' + [Guid]::NewGuid().ToString('N'))
+$Tmp = Join-Path ([System.IO.Path]::GetTempPath()) ('automatt-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Force -Path $Tmp | Out-Null
 try {
-  Write-Host '==> Downloading autopilot'
+  Write-Host '==> Downloading automatt'
   $retry = 0; $ok = $false
   while (-not $ok -and $retry -lt 3) { try { Invoke-WebRequest "$PubUrl/archive/refs/heads/main.tar.gz" -OutFile "$Tmp\pub.tar.gz"; $ok = $true } catch { $retry++; if ($retry -ge 3) { throw } } }
   tar -xzf "$Tmp\pub.tar.gz" -C $Tmp
-  if (-not (Test-Path "$Tmp\autopilot-skill-main\autopilot\SKILL.md")) { throw 'driver payload broken' }
+  if (-not (Test-Path "$Tmp\automatt-skill-main\automatt\SKILL.md")) { throw 'driver payload broken' }
   if (-not $Slim) {
     Write-Host '==> Downloading upstream 27 workflow skills'
     $retry = 0; $ok = $false
@@ -103,8 +103,8 @@ try {
   $fail = $false
   foreach ($t in $Targets) {
     New-Item -ItemType Directory -Force -Path $t | Out-Null
-    if (Test-Path "$t\autopilot") { Remove-Item -Recurse -Force "$t\autopilot" }
-    Copy-Item -Recurse -Force "$Tmp\autopilot-skill-main\autopilot" "$t\autopilot"
+    if (Test-Path "$t\automatt") { Remove-Item -Recurse -Force "$t\automatt" }
+    Copy-Item -Recurse -Force "$Tmp\automatt-skill-main\automatt" "$t\automatt"
     if (-not $Slim) {
       Get-ChildItem "$Tmp\skills-main\skills" -Directory | ForEach-Object {
         Get-ChildItem $_.FullName -Directory | ForEach-Object {
@@ -116,14 +116,14 @@ try {
         }
       }
     }
-    $head = Get-Content "$t\autopilot\SKILL.md" -TotalCount 5 -Raw
-    if ($head -notmatch '(?m)^name: autopilot') { Write-Host "ERROR: $t\autopilot\SKILL.md frontmatter wrong"; $fail = $true }
+    $head = Get-Content "$t\automatt\SKILL.md" -TotalCount 5 -Raw
+    if ($head -notmatch '(?m)^name: automatt') { Write-Host "ERROR: $t\automatt\SKILL.md frontmatter wrong"; $fail = $true }
     $have = 0; $miss = @()
     foreach ($n in $Want) { if (Test-Path "$t\$n\SKILL.md") { $have++ } else { $miss += $n } }
     if ($have -eq $Want.Count) { Write-Host "OK ${t}: required $have/$($Want.Count) SKILL.md (plus any new upstream extras)" }
     else { Write-Host "WARNING ${t}: only $have/$($Want.Count) (missing: $($miss -join ',')) — rerun full install" }
   }
-  Write-Host ''; Write-Host '==> Done. Restart your agent and check the skill list shows autopilot,'
+  Write-Host ''; Write-Host '==> Done. Restart your agent and check the skill list shows automatt,'
   Write-Host '    then say: "The sidebar toggle stopped working - check and fix it."'
   if ($fail) { throw 'verification failed' }
 } finally {

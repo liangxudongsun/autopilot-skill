@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# autopilot installer — harness-aware, verifying, idempotent.
+# automatt installer — harness-aware, verifying, idempotent.
 # Targets: ~/.agents/skills/ always + detected harness dir (never project-local unless --dir).
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/zkkk9555/autopilot-skill/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/zkkk9555/automatt-skill/main/install.sh | bash
 #   curl -fsSL .../install.sh | bash -s -- --harness zcode --dry-run
 #   curl -fsSL .../install.sh | bash -s -- --slim --dir /my/harness/skills
 # Flags: --harness auto|claude|codex|cursor|opencode|zcode|all  --dir PATH
 #        --slim (driver only)  --with-upstream (legacy alias, default is full)
 #        --dry-run  --uninstall  --yes  -h|--help
-# Env: AUTOPILOT_SKILLS_DIR (alias: explicit --dir wins)
+# Env: AUTOMATT_SKILLS_DIR (alias: explicit --dir wins)
 set -euo pipefail
 
-PUB_URL="https://github.com/zkkk9555/autopilot-skill"
+PUB_URL="https://github.com/zkkk9555/automatt-skill"
 UPSTREAM_URL="https://github.com/mattpocock/skills"
 # 27 upstream names, hardcoded manifest for count verification
 UPSTREAM_NAMES="ask-matt code-review codebase-design diagnosing-bugs domain-modeling grill-me grill-with-docs grilling handoff implement implement-spec improve-codebase-architecture pr prototype research retro setup-matt-pocock-skills tdd teach to-questionnaire to-spec to-tickets triage wait-what wayfinder wizard writing-for-agents"
@@ -30,7 +30,7 @@ while [ $# -gt 0 ]; do
     *) echo "unknown flag: $1 (see --help)"; exit 1;;
   esac
 done
-[ -n "${AUTOPILOT_SKILLS_DIR:-}" ] && [ -z "$DIR" ] && DIR="$AUTOPILOT_SKILLS_DIR"
+[ -n "${AUTOMATT_SKILLS_DIR:-}" ] && [ -z "$DIR" ] && DIR="$AUTOMATT_SKILLS_DIR"
 
 harness_dir() { # name -> dir or empty
   case "$1" in
@@ -101,8 +101,8 @@ else
   fi
 fi
 
-ALL_NAMES="autopilot $UPSTREAM_NAMES"
-[ "$SLIM" = 1 ] && WANT="autopilot" || WANT="$ALL_NAMES"
+ALL_NAMES="automatt $UPSTREAM_NAMES"
+[ "$SLIM" = 1 ] && WANT="automatt" || WANT="$ALL_NAMES"
 
 if [ "$DRY" = 1 ]; then
   echo "plan: targets:$TARGETS"
@@ -124,10 +124,10 @@ fetch() { # url outfile: retry 3
   curl -fsSL --retry 3 --retry-all-errors "$1" -o "$2"
 }
 TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT
-echo "==> Downloading autopilot"
+echo "==> Downloading automatt"
 fetch "$PUB_URL/archive/refs/heads/main.tar.gz" "$TMP/pub.tar.gz"
 tar -xzf "$TMP/pub.tar.gz" -C "$TMP"
-[ -f "$TMP/autopilot-skill-main/autopilot/SKILL.md" ] || { echo "ERROR: driver payload broken"; exit 1; }
+[ -f "$TMP/automatt-skill-main/automatt/SKILL.md" ] || { echo "ERROR: driver payload broken"; exit 1; }
 if [ "$SLIM" != 1 ]; then
   echo "==> Downloading upstream 27 workflow skills ($UPSTREAM_URL)"
   fetch "$UPSTREAM_URL/archive/refs/heads/main.tar.gz" "$TMP/up.tar.gz"
@@ -136,8 +136,8 @@ fi
 
 fail=0
 for t in $TARGETS; do
-  mkdir -p "$t" || { echo "ERROR: not writable: $t (set AUTOPILOT_SKILLS_DIR)"; exit 1; }
-  rm -rf "$t/autopilot"; cp -r "$TMP/autopilot-skill-main/autopilot" "$t/autopilot"
+  mkdir -p "$t" || { echo "ERROR: not writable: $t (set AUTOMATT_SKILLS_DIR)"; exit 1; }
+  rm -rf "$t/automatt"; cp -r "$TMP/automatt-skill-main/automatt" "$t/automatt"
   if [ "$SLIM" != 1 ]; then
     for d in "$TMP"/skills-main/skills/*/*/; do
       name="$(basename "$d")"; [ -f "$d/SKILL.md" ] || continue
@@ -145,7 +145,7 @@ for t in $TARGETS; do
     done
   fi
   # verify: driver frontmatter + count
-  head -n 5 "$t/autopilot/SKILL.md" | grep -q "^name: autopilot" || { echo "ERROR: $t/autopilot/SKILL.md frontmatter wrong"; fail=1; }
+  head -n 5 "$t/automatt/SKILL.md" | grep -q "^name: automatt" || { echo "ERROR: $t/automatt/SKILL.md frontmatter wrong"; fail=1; }
   have=0; missing=""
   for n in $WANT; do
     if [ -f "$t/$n/SKILL.md" ]; then have=$((have + 1)); else missing="$missing $n"; fi
@@ -155,11 +155,11 @@ for t in $TARGETS; do
     echo "OK $t: required $have/$want_n SKILL.md (plus any new upstream extras)"
   else
     echo "WARNING $t: only $have/$want_n (missing:$missing) — rerun full install"
-    [ "$SLIM" = 1 ] || fail=0 # degraded but exit 0; driver alone still works only if autopilot OK
-    [ -f "$t/autopilot/SKILL.md" ] || fail=1
+    [ "$SLIM" = 1 ] || fail=0 # degraded but exit 0; driver alone still works only if automatt OK
+    [ -f "$t/automatt/SKILL.md" ] || fail=1
   fi
 done
 
-echo; echo "==> Done. Restart your agent and check the skill list shows autopilot,"
+echo; echo "==> Done. Restart your agent and check the skill list shows automatt,"
 echo "    then say: \"The sidebar toggle stopped working — check and fix it.\""
 [ "$fail" != 0 ] && exit 1 || true

@@ -1,6 +1,8 @@
 [English](./CHANGELOG.en.md) | 简体中文
 
-# CHANGELOG — autopilot
+# CHANGELOG — automatt
+
+**V2.045** — 改名：skill 由 `autopilot` 更名为 `automatt`（原名易记错、且易与其他 skill 撞名）。**规则零改动**，只换标识：包目录与 frontmatter 名、启用凭据 `autopilot: on|off` → `automatt: on|off`、命令 `/autopilot` → `/automatt`、中央日志本 `autopilot-USAGE-LOG.md` → `automatt-USAGE-LOG.md`（及其指针目录 `.autopilot/` → `.automatt/`）、安装目录与各 harness 的 skills 挂载名、公开仓包目录与仓库地址（`user/automatt-skill`，旧地址自动跳转）。
 
 单一版本号 `V2.00N`。（早期私有迭代使用内部 vNN 编号——v41=V2.001、v43=V2.002、v44=V2.003、v45=V2.004、v46=V2.005、v47=V2.006、v48=V2.007、v49=V2.008。V2.008 起退役。）
 

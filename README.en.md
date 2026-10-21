@@ -1,8 +1,10 @@
 English | [简体中文](./README.md)
 
-# autopilot
+# automatt
 
-**One invocation, full autopilot.** A driver skill wrapping the
+> **Rename note**: this skill was previously named `autopilot` and is now named `automatt` (easier to remember, and it no longer collides with other skills). The command, the `automatt: on` opt-in credential and the installer were renamed accordingly.
+
+**One invocation, full auto-drive.** A driver skill wrapping the
 [mattpocock/skills](https://github.com/mattpocock/skills) workflow (27
 sub-skills): one plain-language request — in English or Chinese — turns into a
 complete, verified, delivered task. Routing, sharpening, spec, tickets,
@@ -36,12 +38,12 @@ discipline" into "quality by process":
 > **One-line install**: copy this prompt to your agent and it handles everything:
 >
 > ```
-> Install this skill: https://github.com/zkkk9555/autopilot-skill
-> Requirements: driver (autopilot) + 27 upstream workflow skills, 28 required
+> Install this skill: https://github.com/zkkk9555/automatt-skill
+> Requirements: driver (automatt) + 27 upstream workflow skills, 28 required
 > items total, none missing; install into the current harness
 > user-level skills
 > directory; take new upstream skills as they come; verify these 28 exist one
-> by one: autopilot, ask-matt, code-review, codebase-design, diagnosing-bugs, domain-modeling, grill-me, grill-with-docs, grilling, handoff, implement, implement-spec, improve-codebase-architecture, pr, prototype, research, retro, setup-matt-pocock-skills, tdd, teach, to-questionnaire, to-spec, to-tickets, triage, wait-what, wayfinder, wizard, writing-for-agents; report any missing and where they landed.
+> by one: automatt, ask-matt, code-review, codebase-design, diagnosing-bugs, domain-modeling, grill-me, grill-with-docs, grilling, handoff, implement, implement-spec, improve-codebase-architecture, pr, prototype, research, retro, setup-matt-pocock-skills, tdd, teach, to-questionnaire, to-spec, to-tickets, triage, wait-what, wayfinder, wizard, writing-for-agents; report any missing and where they landed.
 > ```
 >
 > Send the prompt above to your agent to install. Advanced options below —
@@ -58,19 +60,19 @@ discipline.
 bash (macOS / Linux / Git Bash):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/zkkk9555/autopilot-skill/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/zkkk9555/automatt-skill/main/install.sh | bash
 ```
 
 Windows PowerShell (if execution policy blocks, run
 `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` first):
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/zkkk9555/autopilot-skill/main/install.ps1)))
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/zkkk9555/automatt-skill/main/install.ps1)))
 ```
 
 Default target is `~/.agents/skills/`; the script also writes to your detected
 harness dir when unambiguous. **Verify in your tool that the skill list shows
-autopilot.** Variants: `--harness zcode` (auto|claude|codex|cursor|opencode|
+automatt.** Variants: `--harness zcode` (auto|claude|codex|cursor|opencode|
 zcode|all), `--dry-run`, `--slim`, `--dir`, `--uninstall`.
 
 </details>
@@ -78,14 +80,14 @@ zcode|all), `--dry-run`, `--slim`, `--dir`, `--uninstall`.
 <details>
 <summary>Advanced: other methods (npx / marketplace / manual)</summary>
 
-- `npx skills`: `npx skills@latest add zkkk9555/autopilot-skill -g -a zcode -y`
+- `npx skills`: `npx skills@latest add zkkk9555/automatt-skill -g -a zcode -y`
   (`-a`: claude-code|codex|cursor), then `npx skills@latest add
   mattpocock/skills -g -a zcode --skill '*' -y` for upstream. It installs
   per-harness directories.
-- Claude Code marketplace: `/plugin marketplace add zkkk9555/autopilot-skill`,
-  then `/plugin install autopilot`.
+- Claude Code marketplace: `/plugin marketplace add zkkk9555/automatt-skill`,
+  then `/plugin install automatt`.
 - Manual (unknown harness): find your skills dir → clone both repos → driver
-  `autopilot/` over, upstream `skills/*/*/` flattened by last segment →
+  `automatt/` over, upstream `skills/*/*/` flattened by last segment →
   verify 28+ → restart and say "The sidebar toggle stopped working — check
   and fix it."
 - Directory map: `~/.agents/skills/` (ZCode/Cursor/OpenCode…)
@@ -96,7 +98,7 @@ zcode|all), `--dry-run`, `--slim`, `--dir`, `--uninstall`.
 </details>
 ## Use
 
-**Opt in per project first** (off by default): add the standalone line `autopilot: on` to the project's `AGENTS.md` (delete it, or use `autopilot: off`, to turn it off). Any time, saying "use autopilot for X" or `/autopilot` forces takeover — no credential needed.
+**Opt in per project first** (off by default): add the standalone line `automatt: on` to the project's `AGENTS.md` (delete it, or use `automatt: off`, to turn it off). Any time, saying "use automatt for X" or `/automatt` forces takeover — no credential needed.
 
 Say it like a human, once:
 
@@ -114,8 +116,8 @@ externally-visible, or scope-changing decisions.
 > This skill is in **early development** — trigger timing may be off and
 > sub-skill handoffs may be rough. You are welcome to:
 >
-> - File an [issue](https://github.com/zkkk9555/autopilot-skill/issues) with your scenario and what the driver actually did.
-> - Open a [pull request](https://github.com/zkkk9555/autopilot-skill/pulls) against `main`.
+> - File an [issue](https://github.com/zkkk9555/automatt-skill/issues) with your scenario and what the driver actually did.
+> - Open a [pull request](https://github.com/zkkk9555/automatt-skill/pulls) against `main`.
 >
 > Every report helps — real-world feedback is exactly what carried it from
 > V2.001 to where it is now.
@@ -123,9 +125,9 @@ externally-visible, or scope-changing decisions.
 ## Versioning
 
 Single scheme: `V2.00N` (see
-[`autopilot/CHANGELOG.md`](./autopilot/CHANGELOG.md),
+[`automatt/CHANGELOG.md`](./automatt/CHANGELOG.md),
 English version at
-[`CHANGELOG.en.md`](./autopilot/CHANGELOG.en.md)).
+[`CHANGELOG.en.md`](./automatt/CHANGELOG.en.md)).
 
 ## License
 

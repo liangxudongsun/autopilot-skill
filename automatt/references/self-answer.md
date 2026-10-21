@@ -2,7 +2,7 @@
 
 > 来源：瘦身前 SKILL.md §2（第 449–540 行） 逐字拆出（仅加本文件头两行）。行为以此为准，SKILL 主体只保留指针。
 
-## 2. Self-answer policy (what makes this autopilot)
+## 2. Self-answer policy (what makes this automatt)
 
 `grill-with-docs` / `grilling` normally interview the user. Here the user is
 AFK: work the design tree in rounds but answer each frontier question yourself:
