@@ -5,6 +5,8 @@
 [![npm](https://img.shields.io/npm/v/automatt.svg)](https://www.npmjs.com/package/automatt)
 
 > **改名说明**：本 skill 原名 `autopilot`，现更名为 `automatt`（同名易记、避免与其他 skill 撞名）；命令、启用凭据 `automatt: on` 与安装器同步改名。
+>
+> **升级后不用你手改**：V2.049 起，driver 会**自动把项目里残留的旧名引用改成新名**（启用凭据行 `autopilot: on` → `automatt: on`、文档/脚本里的旧名、旧命令 `/autopilot`、旧本名 `autopilot-USAGE-LOG.md`、旧指针目录 `.autopilot/`），并在条目里逐条列出改了哪些路径；迁移期内旧凭据行仍算已接入，所以升级后**不会突然不工作**。
 
 **点一次，说句人话，剩下的全自动。** 一个包着 [mattpocock/skills](https://github.com/mattpocock/skills) 工作流（27 个子 skill）的全自动 driver：用户说一句日常人话（中英文都行），它就把整个任务自己做完——分流、打磨、写 spec、拆票、实现、红绿测试、双轴评审、验证交付，中途不需要人参与。
 

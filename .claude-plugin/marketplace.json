@@ -1,0 +1,1 @@
+{"name": "automatt-registry", "owner": {"name": "zkkk9555"}, "plugins": [{"description": "Single-trigger automatt driver over the mattpocock engineering workflow", "name": "automatt", "source": "./"}]}

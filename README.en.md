@@ -5,6 +5,8 @@ English | [简体中文](./README.md)
 [![npm](https://img.shields.io/npm/v/automatt.svg)](https://www.npmjs.com/package/automatt)
 
 > **Rename note**: this skill was previously named `autopilot` and is now named `automatt` (easier to remember, and it no longer collides with other skills). The command, the `automatt: on` opt-in credential and the installer were renamed accordingly.
+>
+> **Nothing to migrate by hand**: since V2.049 the driver **rewrites leftover old-name references inside your project** (the credential line `autopilot: on` → `automatt: on`, old names in docs/scripts, the old `/autopilot` command, the old `autopilot-USAGE-LOG.md` book name, the old `.autopilot/` pointer dir) and lists every changed path in the ledger entry; the legacy credential line still counts as opted in during the migration window, so upgrading will not silently stop the driver.
 
 **One invocation, full auto-drive.** A driver skill wrapping the
 [mattpocock/skills](https://github.com/mattpocock/skills) workflow (27

@@ -2,6 +2,15 @@ English | [简体中文](./CHANGELOG.md)
 
 # CHANGELOG — automatt
 
+**V2.049** — Rename migration + goal rounds + stale-book immunity: after a rename the driver **rewrites the old-name references inside your project** (the opt-in credential line, old names in docs/scripts/config, the old `/autopilot` command, the old `autopilot-USAGE-LOG.md` book name, the old `.autopilot/` pointer dir) and lists every changed path; the legacy credential line `autopilot: on` still counts as opted in during the migration window (a rename must not silently unhook a project); a harness goal continuation is a **round of its own** (re-read the anchor, open with a card refresh, close with its own ledger entry), so "one entry per round + a reflection card every N entries" now holds inside goal loops; a book path quoted in project docs is not authority and never justifies creating a second ledger.
+
+**V2.048** — Run git **inside the project directory**: an empty or "everything ignored" view in the parent repo does not mean the project has no version control — re-check in the project directory before concluding that.
+
+**V2.047** — Installed-copy parity: at bootstrap, compare the version of the body you actually loaded with the source repo `VERSION` (the harness loads an installed copy); a relative logbook pointer resolves against **this round\u2019s workspace**.
+
+**V2.046** — Delete granularity: unrecoverable deletions stop and ask; tracked + named + enumerable + recoverable deletions proceed but list every removed path; the logbook pointer may be a workspace-relative filename, and a stale pointer falls back by the resolution order.
+
+
 **V2.045** — Renamed: the skill is now `automatt` (previously `autopilot`) — the old name was hard to remember and easy to collide with other skills. **No rule changes**: only identifiers move — package directory and frontmatter `name:`, opt-in credential `autopilot: on|off` → `automatt: on|off`, command `/autopilot` → `/automatt`, central logbook `autopilot-USAGE-LOG.md` → `automatt-USAGE-LOG.md` (and its pointer directory `.autopilot/` → `.automatt/`), install directory and the skills mount name in every harness, plus the public package directory and repo address (`user/automatt-skill`, the old address redirects).
 
 Single version scheme: `V2.00N`. (Early private iterations used internal vNN

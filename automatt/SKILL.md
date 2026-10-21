@@ -1,6 +1,6 @@
 ---
 name: automatt
-description: "Single-trigger automatt — full-auto driver over the mattpocock engineering workflow — invoke once and it drives the whole task itself without mid-task questions. Fire unconditionally when the user asks for it by name — automatt, auto-drive, full-auto, full-task auto-drive, 全自动, 自动接管, /automatt. Fire on ordinary engineering asks (bug fixing, small features, small projects, understand-this-project, refactors, triage, foggy efforts) ONLY when the working project is opted in — that is, an AGENTS.md between the cwd and the repo root carries the standalone line automatt: on. Without that line — and without an explicit ask — do not adopt automatt; leave the task to the host's normal flow. Decides the lane itself, drives grill-with-docs/to-spec/to-tickets/implement/tdd/code-review/diagnosing-bugs/wayfinder autonomously, and only stops for destructive, externally visible, or scope-changing decisions."
+description: "Single-trigger automatt — full-auto driver over the mattpocock engineering workflow — invoke once and it drives the whole task itself without mid-task questions. Fire unconditionally when the user asks for it by name — automatt, auto-drive, full-auto, full-task auto-drive, 全自动, 自动接管, /automatt. Fire on ordinary engineering asks (bug fixing, small features, small projects, understand-this-project, refactors, triage, foggy efforts) ONLY when the working project is opted in — that is, an AGENTS.md between the cwd and the repo root carries the standalone line automatt: on (the pre-rename line autopilot: on still counts as opted in during the V2.049 grace window: a rename must not silently unhook a project — and when the project still carries old-name references, rewrite them to the new name in the same round: credential line, old command, old logbook filename, old pointer dir). Without either line — and without an explicit ask — do not adopt automatt; leave the task to the host's normal flow. Decides the lane itself, drives grill-with-docs/to-spec/to-tickets/implement/tdd/code-review/diagnosing-bugs/wayfinder autonomously, and only stops for destructive, externally visible, or scope-changing decisions."
 metadata:
   opencode/slash: "true"
 ---
@@ -28,6 +28,9 @@ recorded as deviation notes in the round's trace (driver never edits its own
 files; this build ships no logbook or self-upgrade loop). Version notes v10–v40 live verbatim
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
+
+**V2.049: rename-grace + goal-round-autonomy + stale-book-immunity (a rename must not silently unhook a project; a goal continuation is a round of its own; a stale book path in project docs is not authority).**
+Same V2.048 behaviour, plus: ① **rename migration — rewrite every old-name reference, don't merely tolerate it** — this skill was renamed (`autopilot` → `automatt`); the credential is now `automatt: on`, and the pre-rename line `autopilot: on` still counts as opted in during the migration window (a rename must not silently unhook a project). Every old-name reference **inside the working project** — the credential line, docs/scripts/config, the old command `/autopilot`, the old logbook filename `autopilot-USAGE-LOG.md`, the old pointer dir `.autopilot/` — is rewritten to the new name **in the same round** (mechanical, enumerable, git-recoverable ⇒ just do it, but list every changed path in the ledger entry); references **outside** the workspace (host config, other repos, `~/.dsh/` install copies) stay read-only under V2.042 ⇒ report them with a one-line migration hint instead of writing. Scan for them during Step 0 recon (V2.049 field: the user's own project still carried the old credential line after the V2.045 rename, so ordinary engineering asks silently stopped being driven, and its AGENTS.md pointed at a logbook filename that no longer existed). ② **goal rounds are rounds** — a harness goal continuation (`<goal_round>`, "继续执行目标", a scheduled continuation) is a **new round**, not the tail of the previous card: re-read `references/anchor.md` (a tool call), open with a `卡刷新`/full card, and close with **its own ledger entry** (`触发=resume`); a goal objective asking for "每轮记录 / 每 N 次反思" is satisfied only when every continuation round lands one entry (V2.049 field: 32 continuation rounds ran with zero skill calls and zero entries, so the ledger and the reflection counter stood still). ③ **stale book names are not authority** — a logbook path quoted in project docs, handoff files or another session's notes (e.g. `autopilot-USAGE-LOG.md`) never overrides the resolution order in `references/usage-log.md`, and a document naming a missing book never justifies creating a second one (two books = a split ledger): resolve by the order and record a 卡点. Detail in `references/usage-log.md`, `references/anchor.md`.
 
 **V2.048: git-in-project-dir (check version control inside the project, not the parent).
 Same V2.047 behaviour, plus: run `git status/log` **inside the project directory** (explicit `workdir` or `-C <project>`); an empty output or an "everything ignored" view does **not** mean the project has no version control — re-check in the project directory before concluding that (V2.048 field: a round saw only the parent's ignore list, decided there was no VCS, and shipped an uncommitted delivery). Detail in `references/usage-log.md`.
@@ -199,7 +202,13 @@ Full re-reads still happen per step 0. Every other round opens by reading
 `references/anchor.md` (a real tool call, never a memory check) and emitting one
 `卡刷新｜lane=…｜正身=…｜下一步=…` line; a new task, a new slug, or an
 understanding round turning into work goes back to Step 0 with a fresh full card.
-A round missing its refresh line is a deviation. A fresh dialogue resumes from
+A round missing its refresh line is a deviation. A goal continuation is a
+round, not a tail (V2.049): when the harness resumes the objective by itself
+(`<goal_round>`, "继续执行目标", a scheduled continuation), treat it as a fresh
+round — re-read `references/anchor.md` as a tool call, open with one
+`卡刷新｜lane=…｜正身=…｜下一步=…` line, and close with its own ledger entry
+(`触发=resume`). Resuming the goal does not resume the previous round's
+bookkeeping: an entry belongs to the round that produced it. A fresh dialogue resumes from
 these files alone; when it cannot, file a proposal fixing this driver.
 
 Lane choice (Gate 0 → shield → A/B/C/D/E), self-answer policy with STOP list,
