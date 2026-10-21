@@ -7,6 +7,15 @@
 ## 8 core
 
 - **`grill-with-docs`** — 入口（开局专用）：想法还模糊，有工作目录可以留痕（要改仓库里的东西、需求超过一句话能说清）。产物：打磨后的结论进 `spec.md` 或 `NOTES.md`，模糊点收敛到可写的程度。不调即 malformed：带着模糊需求直接写 spec/拆票。中途（已进 ticket/implement/resolve 上下文）一律用裸 `grilling`，调 `grill-with-docs`/`grill-me` = malformed（user-invoked 互调，见编排铁律 + 中途 grill 专节）。
+- **三个 grill 的真实分工（V2.051：「调不动」不是跳过的理由）**：`grill-with-docs` 的正文就是「调 `grilling` + `domain-modeling`」，`grill-me` 的正文就是「调 `grilling`」——**它们是包装，不是另一种能力**。DSH 遵守 `disable-model-invocation`，用 Skill 工具调这两个会被拒（`not available for model invocation`）⇒ **直接调 `grilling`（需要 ADR/词表时再加 `domain-modeling`）就等价**，不必 inline 读它们的正文，也不构成「user-invoked 互调」（V2.030 已明确：inline 读正身属「读数据」）。**实测（r19/r20 共 20 轮）：只有 2 轮真烤过（都在 Lane B），其余多轮是「user-invoked 调不动 ⇒ 省了」** —— 这就是「grill 系列几乎看不到」的真实原因，不是 taste 问题。
+- **烤多深按赌注分档（V2.051，用户现场诉求）**：现行只有轮次**上限**（软 4/硬 6），没有**下限** ⇒ 烤一轮就收工 ⇒ 做出来「字面满足」但真实场景一用就露馅。按赌注定档：
+  | 档 | 什么算 | 轮次下限 | 必问清单（缺一项 = 没烤透） |
+  | --- | --- | --- | --- |
+  | 低 | 单行 typo/doc、可逆、只影响本机、不进真实流程 | 0（写一句跳过理由） | — |
+  | 中 | 新功能/一个模块/改既有行为，可回滚、影响面可控 | ≥2 轮 | 边界值 / 失败会怎样 / 要不要留痕 |
+  | **高** | **会被真实使用**（上线/交付给他人/长期维护）、**不可逆**（迁移/删数据/改对外接口）、**对外可见**（发布/改契约） | **≥4 轮**（软上限提到 8） | **真实场景五问**：①谁在什么场景用、数据是不是脏的 ②并发/重复提交/离线怎么办 ③失败路径长什么样、怎么发现 ④怎么撤销回滚、谁来撤 ⑤以后怎么扩展、这次写法会不会挡住下一个人 |
+  **「我会长期用/给别人用/上线了」＝高赌注**，哪怕代码只有几十行 —— 不许按「改动小」降档。
+- **「我不清楚要什么」的诉求（V2.051）**：用户给的是**目标或症状**而不是可执行需求（「做得更可靠点」「像个产品」「以后好扩展」「长期用」）⇒ 需求本身就得烤：**先烤出可判定的成功标准**（什么算做到了、能怎么验），再烤实现。这种轮**不许跳过 grill 直接写 spec**；烤出来的验收标准必须能落成「红→绿」的命令或断言，否则只是漂亮话。
 - **grill→prototype 出口（V2.012，作者主循环）**：grill 中遇到 ungrillable 问题（手感/外观/状态机行为——"how should it look / how should it behave 是关键问题"，聊天答不上来）→ handoff 开原型会话 → 跑完 handoff 回来继续 grill。低保真问题（URL 放哪、字段叫啥）聊天答；高保真问题非跑起来看不见，硬烤 = malformed。
 - **`to-spec`** — 入口：要动手写代码/改数据，且还没有可照着做的 spec。产物：`.scratch/<slug>/spec.md`（Problem/Solution/User-Stories/Implementation/Testing/Out-of-Scope/Glossary/Notes + `Checks:` 三行）。不调即 malformed：无 spec 直接 implement。
 - **`to-tickets`** — 入口：spec 里超过 1 个可独立演示的行为，或跨文件、跨系统、有先后顺序。产物：`issues/NN-<slug>.md`（What-to-build/Anchors/Blocked-by/Status/验收项），blocker 在前。不调即 malformed：大活一锅烩在一个 ticket 里做。
