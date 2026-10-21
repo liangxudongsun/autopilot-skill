@@ -53,6 +53,8 @@ Lane E（raw pile）进 lane 前先走 triage 状态机，不是直接开干：
 
 **只读/查询轮最小协议（V2.025，四件；V2.036 补硬门）：** ①首段=开工卡/卡刷新（无 lane 轮照发，含 T0 downshift 声明）；②分流行：一句分类（纯理解/查询/外部事实/混合）——含「处理意图」判据（「很久没处理 / 该跟进 / 看看新动静」＝要动手的事项，先审 Lane E 或按项目流程另起工程轮）；③证据行：写明查过哪些面（水位线区/archive/JOURNAL/git log/README…），命中给 `file:line`；「看有没有」类强制负证据口径（N 面 × 零命中，`trace-discipline.md` V2.011）；④收尾在对话内给检索清单（产物=检索面 + 命中计数 + 零改动声明；偏差按档位语法；只写 skill 侧；本 build 无日志本）。产物只落对话，不碰仓库文件。用户点名的历史检索不受「中间历史不读」约束（点名即解锁定向 grep）。
 
+**只读轮的三处合法落点（V2.039，别再每轮重新发明）：** ①开工卡（含 `正身：…｜必读集：…` 行）在对话里——只读轮不写 NOTES，卡就是卡本身；②`审计:` 指 `.scratch/<slug>/audit.log`（driver 自有审计日志，不算仓库文件，路径真实存在）；③`Skills called:` 锚点 = 最终消息里一行 + 条目内同序 `链:`。三处都不算「碰仓库文件」，与「产物只落对话」不冲突（V2.039 现场：s4/s5 各自为「审计指哪」「正身写哪」重开一次讨论）。
+
 **理解→动手边界（V2.016）**：理解轮内出现改动意图（"顺手修了""顺便加了"）→ 停手，另起工程轮（理解报告先交付，改动走新一轮 T0 + Gate 0 + lane）。一轮之内"先理解后动手"必须有书面 transition（"理解结束，转 Lane X"），无 transition 的混合轮 = malformed。反例：同轮先写"判为纯理解轮"又写"走 Lane C 先 chart"——两张皮，必拆两轮。
 
 ## 调用面：工具被拒 ≠ 未安装（V2.030）
@@ -67,7 +69,7 @@ harness 遵守子 skill 的 `disable-model-invocation: true` 时（DSH），Skil
 
 子 skill 已安装 → 动手前先经 Skill 工具加载它（哪怕它只返回文档正文），然后按其正文 inline 代执行——这叫代执行，合法；工具因 harness 过滤被拒 → 按 `references/invocation.md` 读已安装正文 inline（`name(inline)`＋`调用面:`＋file:line），同样合法。`references/` 里的速记版 fallback 只允许在对应 skill 未安装（或正文缺失）时使用。既没调工具、也没读正身就干活 = malformed，JOURNAL 必记 deviation（未加载正身）。已装与否以本机技能目录实测为准（`<your local skills directory>\`），不靠记忆。
 
-**开工点名（V2.019，连续 5 轮未加载正身换来）：** 动手前在 trace/NOTES 写一行本轮要调的正身清单（例：`正身清单：diagnosing-bugs、tdd、code-review`），然后逐一经 Skill 工具调用（被拒则读已安装正文 inline，见 `references/invocation.md`）；代执行仍先加载再 inline。清单缺一项、或清单有点名但无对应调用痕 = deviation（自觉守不住的，点名替自觉）。**收尾调用痕自查（V2.020，点名只管写不管调换来）：** 收尾前 grep JOURNAL `Skills called` 行（无 JOURNAL 仓看 NOTES 顶部同名行），清单每项须有对应调用痕；有点名无调用痕 = deviation 当轮补记（v1.182–v1.184 code-review 连犯 3 轮换来）。（V2.025：点名并入开工卡「正身」行，不再另写一份。）
+**开工点名（V2.019，连续 5 轮未加载正身换来）：** 动手前在 trace/NOTES 写一行本轮要调的正身清单（例：`正身清单：diagnosing-bugs、tdd、code-review`），然后逐一经 Skill 工具调用（被拒则读已安装正文 inline，见 `references/invocation.md`）；代执行仍先加载再 inline。清单缺一项、或清单有点名但无对应调用痕 = deviation（自觉守不住的，点名替自觉）。**收尾调用痕自查（V2.020，点名只管写不管调换来）：** 收尾前 grep JOURNAL `Skills called` 行（无 JOURNAL 仓看 NOTES 顶部同名行），清单每项须有对应调用痕；有点名无调用痕 = deviation 当轮补记（v1.182–v1.184 code-review 连犯 3 轮换来）。（V2.025：点名并入开工卡「正身」行，不再另写一份；V2.039 起该行是卡的固定字段 `正身：<skill 清单>｜必读集：<paths:lines>`，不必再自造行。）
 
 **正身硬痕（V2.023，读=调混淆终结）：** 点名清单每项须有调用痕＋正文引用：Skill 工具返回（正身版本/行或返回要点一句），或 `inline(read <path>:<line>)`＋一句正文引用（工具被 harness 拒绝时）；inline 代执行须先有调用痕（工具或 inline 读）＋注 substitution ＋正身行号，无痕 inline = malformed。收尾从grep JOURNAL文本升为调用痕＋产物双验：清单每项须同时有调用痕与对应产物（spec/ticket/红绿输出/review结论），缺一 = deviation当轮补记。
 

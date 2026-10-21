@@ -6,6 +6,8 @@ Single version scheme: `V2.00N`. (Early private iterations used internal vNN
 numbers — v41=V2.001, v43=V2.002, v44=V2.003, v45=V2.004, v46=V2.005,
 v47=V2.006, v48=V2.007, v49=V2.008. Retired as of V2.008.)
 
+**V2.038** — Chain coverage and audit path: `链`/`Skills called` must list every skill invoked in the round (including verification-only support skills) in call order; the `审计` receipt path must exist on disk.
+
 **V2.037** — Closeout order and scope: the central entry is appended and read back before the final message; “what is worth improving / review this repo” is a read-only survey; setup may ship as a same-round chore commit; a harness-refused skill is inline, not missing.
 
 **V2.036** — Read-only is a task: read-only/query rounds still need T0 (ask-matt tool/inline), the card/refresh, and a central entry; lane=none is not an exemption.

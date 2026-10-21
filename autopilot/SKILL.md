@@ -29,6 +29,12 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.039: round-bookkeeping (probe-then-card is legal; chains carry skill names only; read-only rounds have a legal audit anchor).**
+Same V2.038 behaviour, plus: T0 may run **before** the kickoff card (the card is not a skill action — probe `ask-matt`, then fill `调用面:`), and the card gains the fixed `正身/必读集` line (`core-triggers.md`「开工点名」no longer needs a self-invented row); `链:`/`Skills called:` list **skill names only** — no `autopilot`, no lane label; read-only rounds point `审计:` at `.scratch/<slug>/audit.log` and put the `Skills called:` anchor in the final message (no NOTES). Detail in `references/usage-log.md`.
+
+**V2.038: chain-coverage-and-audit-path (list every skill you called; the audit path must exist).**
+Same V2.037 behaviour, plus: `链:` and `Skills called:` must both list **every skill actually invoked in the round** — including support skills used only for verification (browser-act, improve-codebase-architecture) — in call order; a chain that reads as a "logical order" or silently drops a verification skill is a ⑤ failure. The `审计:` receipt path must exist on disk (repo-relative or absolute); a path to a missing file is a ⑦b failure. Detail in `references/usage-log.md`.
+
 **V2.037: closeout-order-and-scope (land the entry before the final message; survey requests stay read-only).**
 Same V2.036 behaviour, plus: the ledger entry is appended and read back **before** the final closeout message (and may ride along in its own chore commit) — code, NOTES and audit without an entry is “not landed”; “what is worth improving / any problems / review this repo” is a **read-only survey** (ranked list + file:line), not an instruction to change code; `setup` may ship as a same-round chore commit (only running it *after* implementation is scope creep); and a skill refused by the harness is `inline`, not `missing` (prove `missing` with `test -f` on the installed body). Detail in `references/usage-log.md` and `references/invocation.md`.
 
@@ -111,18 +117,25 @@ above only routes; the pointed file decides.
    `calls.log` lines before acting. A fresh window that was not invoked checks
    for `.scratch/WORKFLOW-ACTIVE.md` via the standing AGENTS.md hook (see
    `references/trace-discipline.md`) and re-invokes this driver itself.
-1. **Step 0 — reconnaissance, then the kickoff card (the round's first
-   product).** Cheap recon first: split → shield grep → Gate 0 → lane verdict →
-   this lane's read-set. Then emit the card; **no card = not started — no lane
-   work, no execution-class Skill call.** Fixed fields, ≤7 lines:
+1. **Step 0 — reconnaissance, then the kickoff card (the round's first visible
+   deliverable).** Cheap recon first: split → shield grep → Gate 0 → lane verdict →
+   this lane's read-set. Then emit the card; **no card = no lane work.** Fixed
+   fields, ≤8 lines:
    - `开工卡｜任务：<one line>｜slug：<slug(s)>｜lane：<A|B|C|D|E|none(纯理解)|STOP>｜档位：full|lite(<why>)|na(<why>)`
    - `本轮调用：<中文名（一句为什么）→ …>`（原可见首句并入此处，不再另写）
    - `调用面：<skill=tool|inline(read path:line)|missing；…>`（V2.034；只列本轮要用的 skill）
    - `分流：shield <hit/n-a + grep>｜Gate0 <HIT/BROKEN/NOT-FOUND/MISS @file:line>`
+   - `正身：<本轮点名的 skill 清单>｜必读集：<paths:lines>`（V2.039；`core-triggers.md`「开工点名」要的那两样就落这一行，别再自造行）
    - `链·产物：<skill → its minimal product path；…>｜第一动作：<next concrete action>`
+   **Order against T0 (V2.039):** the card is not a skill action, so T0 may run
+   first — probe `ask-matt` (tool call, or the inline read when the harness
+   refuses), then emit the card with the probe result filled into `调用面:`.
+   Probing before the card is **not** a deviation. What *is* a deviation:
+   reaching lane work or any execution-class skill before the card lands, and
+   emitting a card whose `调用面:` line is left empty.
    Chat always shows the card; lane rounds also write it (with file-level
-   read-set detail) at the top of `NOTES.md`. Back-filling a card later is a
-   deviation; a completed round without one is malformed. Tier floors and the
+   read-set detail) at the top of `NOTES.md` (read-only rounds: chat only).
+   A completed round without a card is malformed. Tier floors and the
    never-trim list live in `references/self-answer.md`.
 2. **Step 1 — T0.** One `ask-matt` call leads the Skill-tool order (a late-added
    `ask-matt` does not satisfy T0; loading this driver is not T0). If the
@@ -143,7 +156,12 @@ above only routes; the pointed file decides.
    `core-triggers.md` decides). **No product = that step did not happen.**
 4. **Step 3 — gates.** Run the lane's verification gates; quote the verdict.
 5. **Step 4 — close.** Append the trace note (product/deviation lines; this build ships no
-   logbook), then write the `Skills called:` line in call order (grep-audit anchor); closeout per
+   logbook), then write the `Skills called:` line in call order (grep-audit anchor: top of `NOTES.md`, or the **final
+   message** on read-only rounds that write no NOTES). `链:` and
+   `Skills called:` carry **skill names only** — never the driver name
+   `autopilot`, never a lane label (`lane-a`, `LaneA`) (V2.039). Read-only
+   rounds point `审计:` at `.scratch/<slug>/audit.log` — driver-owned, not a
+   repo file (V2.039). Closeout per
    `verification-gates.md`; delete the marker (single-round open-close
    exemption unchanged). One round = one commit = one JOURNAL entry; keep ≥2
    distinct skills per round (T0 + one executed lane/support skill); rotate
