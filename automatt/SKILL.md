@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.050: kickoff-card layout (six fixed lines, one field per line, no inline bold).**
+Same V2.049 behaviour, plus: the kickoff card is **six lines, one field per line, in a fixed order** (`开工卡｜…` / `本轮调用：` / `调用面：` / `分流：` / `正身：` / `链·产物：`) — never several fields crammed into one line (V2.050 field: a round collapsed all six into a single paragraph with stray `**` in it, and nobody could tell which fragment was which field); the card carries **no `**` bolding** (fields are separated with `｜`); an over-long value may continue on an indented line, but its field label stays at the start of its own line; when the chat surface may swallow newlines, send the whole card inside a ````` fence. `references/conventions.md` and `references/anchor.md` point at the same layout, and the template lives in Step 0 below. Detail in `SKILL.md` Step 0.
+
 **V2.049: rename-grace + goal-round-autonomy + stale-book-immunity (a rename must not silently unhook a project; a goal continuation is a round of its own; a stale book path in project docs is not authority).**
 Same V2.048 behaviour, plus: ① **rename migration — rewrite every old-name reference, don't merely tolerate it** — this skill was renamed (`autopilot` → `automatt`); the credential is now `automatt: on`, and the pre-rename line `autopilot: on` still counts as opted in during the migration window (a rename must not silently unhook a project). Every old-name reference **inside the working project** — the credential line, docs/scripts/config, the old command `/autopilot`, the old logbook filename `autopilot-USAGE-LOG.md`, the old pointer dir `.autopilot/` — is rewritten to the new name **in the same round** (mechanical, enumerable, git-recoverable ⇒ just do it, but list every changed path in the ledger entry); references **outside** the workspace (host config, other repos, `~/.dsh/` install copies) stay read-only under V2.042 ⇒ report them with a one-line migration hint instead of writing. Scan for them during Step 0 recon (V2.049 field: the user's own project still carried the old credential line after the V2.045 rename, so ordinary engineering asks silently stopped being driven, and its AGENTS.md pointed at a logbook filename that no longer existed). ② **goal rounds are rounds** — a harness goal continuation (`<goal_round>`, "继续执行目标", a scheduled continuation) is a **new round**, not the tail of the previous card: re-read `references/anchor.md` (a tool call), open with a `卡刷新`/full card, and close with **its own ledger entry** (`触发=resume`); a goal objective asking for "每轮记录 / 每 N 次反思" is satisfied only when every continuation round lands one entry (V2.049 field: 32 continuation rounds ran with zero skill calls and zero entries, so the ledger and the reflection counter stood still). ③ **「这个 skill / 这个项目」refers to the workspace project, and packaging happens inside the workspace** — the object of a request is the project in the current working directory; if the candidate object lives **outside** it (another repo, the driver repo, the host, a same-named published package), that is an out-of-scope candidate: look read-only at most, then deliver in the workspace or hand the choice to the human — never edit that repo, never bump its version, never package or publish it (V2.049 field: a publish request about "this skill" was aimed at the sandbox project, and the round instead edited the driver repo's `public-claude-plugin.json` version, rewrote `public-npm/bin/automatt.js`, tarballed the real package and started `npm login` — out-of-scope edits rolled back by the parent, and the real package nearly shipped). ④ **stale book names are not authority** — a logbook path quoted in project docs, handoff files or another session's notes (e.g. `autopilot-USAGE-LOG.md`) never overrides the resolution order in `references/usage-log.md`, and a document naming a missing book never justifies creating a second one (two books = a split ledger): resolve by the order and record a 卡点. Detail in `references/usage-log.md`, `references/anchor.md`.
 
@@ -157,6 +160,22 @@ above only routes; the pointed file decides.
    - `分流：shield <hit/n-a + grep>｜Gate0 <HIT/BROKEN/NOT-FOUND/MISS @file:line>｜setup <done|needed|n/a>`（V2.041：setup 状态位必须在 Step 0 查掉——`docs/agents/` 标记在不在；needed 就在进 lane 前跑，别等实现完才想起）
    - `正身：<本轮点名的 skill 清单>｜必读集：<paths:lines>`（V2.039；`core-triggers.md`「开工点名」要的那两样就落这一行，别再自造行）
    - `链·产物：<skill → its minimal product path；…>｜第一动作：<next concrete action>`
+   **卡片排版（V2.050，硬门）**：**六行、每行一个字段、顺序固定**，不许把多个字段挤进同一行
+   （现场：某轮把六行并成一段、中间还夹着 `**` ⇒ 糊成一堵墙，读者看不出哪个字段是哪���）。
+   - ① 每行行首必须是字段名（`开工卡｜…` / `本轮调用：` / `调用面：` / `分流：` / `正身：` / `链·产物：`），**一行只允许一个字段名**；
+   - ② 卡内**不写 `**` 加粗**（行内加粗 + 长行 = 渲染成糊墙）；字段间分隔用 `｜`；
+   - ③ 值太长（如必读集一串路径）可以**续行**，续行缩进两格并以 `·` 起头，字段名仍留在自己的行首；
+   - ④ 聊天端可能吞换行时，**整卡包在 ``` 围栏里发**；NOTES.md 里同样按这六行写（围栏可不留）。
+   照抄这个模板（尖括号换成实际值）：
+
+   ```
+   开工卡｜任务：<一句话>｜slug：<slug>｜lane：<A|B|C|D|E|none(纯理解)|STOP>｜档位：full|lite(<why>)|na(<why>)>
+   本轮调用：<skill（一句为什么）→ skill（一句为什么）>
+   调用面：<skill=tool|inline(read <path>:<line>)|missing>｜<skill=…>
+   分流：shield <hit/n-a>｜Gate0 <HIT|BROKEN|NOT-FOUND|MISS @file:line>｜setup <done|needed|n-a>
+   正身：<skill 清单>｜必读集：<path:line、path:line>
+   链·产物：<skill → <产物路径>>｜第一动作：<下一个具体动作>
+   ```
    **Order against T0 (V2.039):** the card is not a skill action, so T0 may run
    first — probe `ask-matt` (tool call, or the inline read when the harness
    refuses), then emit the card with the probe result filled into `调用面:`.
