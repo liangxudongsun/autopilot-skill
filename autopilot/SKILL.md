@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.041: chain-boundary-and-read-only-fields (reading a body is a call; setup state is checked in Step 0; read-only rounds get their own field).**
+Same V2.040 behaviour, plus: a Skill call **or** an inline read of a body counts as an invocation and must appear in `链:`/`Skills called:` — judging it n/a afterwards still keeps the name in the chain, with the reason in `未用:` (⑤); the card's `分流:` line carries `setup <done|needed|n/a>` so the setup marker is checked before lane work, not after implementation; and read-only/query rounds write `产物: …=对话内报告` (no `test -f`) plus a `检索面: …｜命中=<n>｜零改动=<是|否>` line instead of inventing fields. Detail in `references/usage-log.md`.
+
 **V2.040: ledger-mechanics (every product path must exist; script-downgraded audits say so; a deviation forces a reflection card).**
 Same V2.039 behaviour, plus: each `产物:` path must pass `test -f` — no compressed stand-ins like `test/x.s1-3.test.js` for three real files (⑦b); `审计:` accepts a `(脚本降级)` suffix so "no subagent harness" is machine-readable; `deviation:` non-none forces a `摩擦:` line **and** a `## [反思]` card (⑨ M5b); and a repo-local logbook (eval/hermetic) must be committed after append, while an installed out-of-repo logbook commits nothing. Detail in `references/usage-log.md`.
 
@@ -127,7 +130,7 @@ above only routes; the pointed file decides.
    - `开工卡｜任务：<one line>｜slug：<slug(s)>｜lane：<A|B|C|D|E|none(纯理解)|STOP>｜档位：full|lite(<why>)|na(<why>)`
    - `本轮调用：<中文名（一句为什么）→ …>`（原可见首句并入此处，不再另写）
    - `调用面：<skill=tool|inline(read path:line)|missing；…>`（V2.034；只列本轮要用的 skill）
-   - `分流：shield <hit/n-a + grep>｜Gate0 <HIT/BROKEN/NOT-FOUND/MISS @file:line>`
+   - `分流：shield <hit/n-a + grep>｜Gate0 <HIT/BROKEN/NOT-FOUND/MISS @file:line>｜setup <done|needed|n/a>`（V2.041：setup 状态位必须在 Step 0 查掉——`docs/agents/` 标记在不在；needed 就在进 lane 前跑，别等实现完才想起）
    - `正身：<本轮点名的 skill 清单>｜必读集：<paths:lines>`（V2.039；`core-triggers.md`「开工点名」要的那两样就落这一行，别再自造行）
    - `链·产物：<skill → its minimal product path；…>｜第一动作：<next concrete action>`
    **Order against T0 (V2.039):** the card is not a skill action, so T0 may run
