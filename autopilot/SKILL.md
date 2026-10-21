@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.044: bookkeeping-calibration (chain = execution order; gate scan scope; survey has no HTML dashboard).**
+Same V2.043 behaviour, plus: `链:` records the **execution** order, not the order skills were *loaded* (pre-loading a body before executing it is legal and invisible to the chain; a review→fix→retest→re-review loop lists each skill once), so item ⑤ is judged against execution order; the typo/version/number gates grep **product files only** and exclude driver-owned artefacts (`.scratch/`, the ledger) so old-string citations in NOTES/audit do not fake a red; read-only survey rounds never build an HTML dashboard or dispatch sub-agents even if the survey skill's body asks for them (the driver wins — list + `file:line` in chat); and a request whose object exists only inside the host (parent-session source, host config, plugin, GUI panel) is a **host scenario** → `NEEDS-HUMAN.md`, never a self-authorised install. Detail in `references/usage-log.md`, `references/verification-gates.md`, `references/prelane.md`.
+
 **V2.043: ledger-target (confirm the workspace before you write; absolute log paths).**
 Same V2.042 behaviour, plus: before appending the ledger entry, confirm the workspace (`pwd` — the shell's default directory may be the session's start directory, not this round's workspace) and resolve the logbook in the order *workspace pointer → workspace-local `autopilot-USAGE-LOG.md` → installer's fixed path*; the `落本:` line carries an **absolute** path, and writing to any other book is contamination that must be rolled back and recorded in `deviation:` (V2.043 field: a read-only round appended its entry to the production logbook because the shell sat in the driver repo). Detail in `references/usage-log.md`.
 

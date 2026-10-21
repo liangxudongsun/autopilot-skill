@@ -29,7 +29,7 @@
 1. 有没有工作目录可留痕？没有 → `grill-me`（无目录打磨）或 `grilling`（还要零副作用、一次性、无 carry-over 才用 bare primitive）。本条只定开局路由；中途（已进 ticket/implement/resolve）一律裸 `grilling`，见中途 grill 专节（V2.018）。
 2. 要不要查外部事实？要 → `research` 丢给后台，继续手头活。
 3. 要不要跑个一次性验证？要 → `prototype`（网页看 UI/状态机看 LOGIC/引擎看 headless 数字时间线），`handoff` 双向摆渡。**入口放宽（V2.012）**：不只"两方案争执"，"how should it look / how should it behave 是关键问题"就跑——wayfinder 的 prototype 票种同理，关键问题需高保真答案时默认放一张 prototype 票。
-4. 是不是人墙/边界？发版花钱 credential 合规 → `wizard` 先 scope 后 STOP；跨目录/同事或版本级换 harness（见 handoff 版本交接包） → `handoff`；等别人脑子里的答案 → `to-questionnaire`（具名收件人 + 问题 + 回填钩子）；词含糊 → `domain-modeling`；两实现打架/缝错层 → `codebase-design`；闲时巡检 → `improve-codebase-architecture`（只建议不改，**产出 deepening 候选必须落 issue 等人拍板，不许 driver 自答拍板**——作者原话：人是 strategic programmer，agent 是 tactical）；第一次进仓 → `setup-matt-pocock-skills`（一次）；学东西 → `teach`；话没说明白 → `wait-what`；写 agent 文档 → `writing-for-agents`；一堆 raw 输入 → `triage`（见 triage 全套规则，永不 triage `to-tickets` 的输出）。
+4. 是不是人墙/边界？发版花钱 credential 合规 → `wizard` 先 scope 后 STOP；跨目录/同事或版本级换 harness（见 handoff 版本交接包） → `handoff`；等别人脑子里的答案 → `to-questionnaire`（具名收件人 + 问题 + 回填钩子）；词含糊 → `domain-modeling`；两实现打架/缝错层 → `codebase-design`；闲时巡检 → `improve-codebase-architecture`（只建议不改，**产出 deepening 候选必须落 issue 等人拍板，不许 driver 自答拍板**——作者原话：人是 strategic programmer，agent 是 tactical）；**该 skill 正文要求出 temp HTML 报告/派子代理/让用户挑一个，与 `delivery-check.md:17`「HTML 看板不建」和「全程不问人」相反——本 driver 一律以其为准：只读巡检轮出对话内分级清单 + file:line，不建 HTML 看板、不派子代理、不问人，把降级写进 `deviation:`**（V2.044 现场：r7 s10 / r11 s10 / r13 s10 三次记下同一条互斥）；第一次进仓 → `setup-matt-pocock-skills`（一次）；学东西 → `teach`；话没说明白 → `wait-what`；写 agent 文档 → `writing-for-agents`；一堆 raw 输入 → `triage`（见 triage 全套规则，永不 triage `to-tickets` 的输出）。
 
 ## handoff 版本交接包：版本级换 harness（V2.013）
 
