@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.032: log-instrumentation (evaluation-side tooling + two driver tightenings).**
+Same V2.031 behaviour, plus evaluation-side tooling (multi-frame transcript decode, canary self-check, two-rate log metrics) and two text tightenings: `审计: PASS-gaps(n)` counts the failed closeout-gate checks, and every `规则:` line in a friction ticket / observation card must carry a verbatim quote of at least 8 characters.
+
 **V2.031: log-evidence (this build ships no logbook).**
 Same V2.030 behaviour. Friction about the workflow itself is recorded as a trace note carrying a rule reference (`file:line`) and a candidate change; narrative five-aspect entries and marker-based reflection counting are retired.
 
