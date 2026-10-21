@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.046: delete-granularity (what counts as "deleting data" — unrecoverable deletions stop and ask; tracked, named, enumerable, recoverable deletions are done with a written list of what was removed).**
+Same V2.045 behaviour, plus: the STOP list's "删数据" means deletions that **cannot be recovered from version control** (untracked local data, credentials, user output, anything outside the repo) → write `.scratch/<slug>/NEEDS-HUMAN.md` and stop. Deleting **version-controlled files the user explicitly named, whose scope you can enumerate and can recover from git** is allowed to proceed — but you must list every deleted path in the ledger entry/receipt and note the collateral edits (emptied directories, doc sections that only pointed at the removed files). If you cannot tell which side of the line a request is on, stop and ask. Detail in `references/delivery-check.md`.
+
 **V2.045: rename-to-automatt (the skill is now named `automatt`; the opt-in credential is `automatt: on`, the command is `/automatt`, the logbook is `automatt-USAGE-LOG.md`).**
 Same V2.044 behaviour — **no rule changes**: this release only renames the skill and everything keyed to its name (package directory, frontmatter `name:`, display name, opt-in credential `automatt: on|off`, slash command `/automatt`, central logbook and its pointer directory `.autopilot/` → `.automatt/`, install directory and harness junctions, public package directory and repo slug). Detail in `CHANGELOG.md` and `deploy/`.
 
