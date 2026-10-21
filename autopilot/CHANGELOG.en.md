@@ -6,6 +6,16 @@ Single version scheme: `V2.00N`. (Early private iterations used internal vNN
 numbers — v41=V2.001, v43=V2.002, v44=V2.003, v45=V2.004, v46=V2.005,
 v47=V2.006, v48=V2.007, v49=V2.008. Retired as of V2.008.)
 
+**V2.037** — Closeout order and scope: the central entry is appended and read back before the final message; “what is worth improving / review this repo” is a read-only survey; setup may ship as a same-round chore commit; a harness-refused skill is inline, not missing.
+
+**V2.036** — Read-only is a task: read-only/query rounds still need T0 (ask-matt tool/inline), the card/refresh, and a central entry; lane=none is not an exemption.
+
+**V2.035** — Order and isolation: code-review closes the chain (tdd/implement before it); a single-round subagent may put the card in NOTES and repeat it in the final message; delegation depth 0 counts as no-subagent harness; Lane B self-answered grill does not require calling grilling/domain-modeling; eval material is moved out of the repo during test windows.
+
+**V2.034** — Log discipline: typo/doc/single config-row work is Lane A, never na; even na rounds write and commit; Audit must not point at LOGBOOK-RECEIPT; PASS-gaps(n) counts the 6-step gate list; an installed-but-refused skill is inline-read, never bundled-fallback; the card carries an invocation-surface line.
+
+**V2.033** — Log consistency: read-only/query rounds no longer write a child receipt; `chain` must equal `Skills called` in order and cover every artifact skill; B–E need ≥2, Lane A/read-only may run one; the ledger gains a `self-check` line; the project-notes pointer must be an existing file; repo-state/central-log queries use the read-only protocol; setup only in the first round before implementation.
+
 **V2.032** — Log instrumentation: a hermetic logbook via `.autopilot/usage-log-path` (evals never touch the production book), a multi-frame transcript decoder, a canary self-check (rubric ⑩; a broken judge invalidates the run), and two-rate log metrics; tightened `PASS-gaps(n)` and reflection quote requirements.
 
 **V2.031** — Log evidence: the task entry becomes a receipt ledger (chain / artifact map / rule-level blockers with file:line / landed receipt / log ownership); friction tickets are written only when something went wrong; reflections become event-triggered observation cards (recovery / declared-vs-executed / conflicting rules / uncovered paths / decidability). Closeout must read the `landed` line back; child sessions write a receipt. The narrative five aspects and the “gap/other” questions are retired.

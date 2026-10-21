@@ -8,7 +8,7 @@
 |---|---|---|---|
 | `tool` | Skill 工具返回正文 | 按正文执行 | `Skills called:` 写名字 |
 | `inline` | 工具返回 `is not available for model invocation`；或 `unknown or no longer available` 但已安装目录里有正文 | 读已安装的 `SKILL.md` 正文，按正文 inline 执行 | `Skills called:` 写 `name(inline)` ＋ `调用面:` 行 ＋ 正文 `file:line` |
-| `missing` | 工具拒绝/未知，且已安装目录里也没有正文 | 用 `references/` 的 bundled fallback，记 deviation | `deviation:` 逐项 |
+| `missing` | 工具拒绝/未知，**且** `<skills-root>/<name>/SKILL.md` 确实不存在（用 `test -f` 复核，别凭印象） | 用 `references/` 的 bundled fallback，记 deviation | `deviation:` 逐项 |
 
 **拒绝串识别（原样匹配，别猜）**：
 
@@ -16,7 +16,9 @@
 - `skill "<name>" is unknown or no longer available` → 先查已安装目录：有正文 = `inline`，无 = `missing`
 - 没有 Skill 工具 / 工具整体不可用 → 按 `inline` / `missing` 处理，判据不变
 
-**最多探一次**：同一个 skill 在同一会话最多试一次工具；被拒后直接用缓存的面，后续轮次不再试。已知 harness 会拒绝（如 DSH）时可以直接读正文、连探都不探；探过再探 = 空转，记 deviation。
+**被拒 ≠ missing（V2.037 现场：把 harness 过滤掉的 skill 记成 missing，于是走了 bundled fallback 而不是 inline 读）**：判 missing 前必须 `test -f <skills-root>/<name>/SKILL.md`；文件存在就是 inline，文件不存在才是 missing。
+
+**最多探一次**：同一个 skill 在同一会话最多试一次工具；被拒后直接用缓存的面，后续轮次不再试。已知 harness 会拒绝（如 DSH）时可以直接读正文、连探都不探；探过再探 = 空转，记 deviation。**已安装但被拒 ≠ `missing`**：目录里有正文就必须 inline 读，**不得用 bundled fallback 代替**（V2.034 现场：ask-matt 被拒后误记 bundled-fallback）；bundled 只在目录里确实没有正文时使用。
 
 ## 痕迹格式（机器可查）
 

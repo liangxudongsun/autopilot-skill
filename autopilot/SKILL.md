@@ -29,6 +29,21 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.037: closeout-order-and-scope (land the entry before the final message; survey requests stay read-only).**
+Same V2.036 behaviour, plus: the ledger entry is appended and read back **before** the final closeout message (and may ride along in its own chore commit) — code, NOTES and audit without an entry is “not landed”; “what is worth improving / any problems / review this repo” is a **read-only survey** (ranked list + file:line), not an instruction to change code; `setup` may ship as a same-round chore commit (only running it *after* implementation is scope creep); and a skill refused by the harness is `inline`, not `missing` (prove `missing` with `test -f` on the installed body). Detail in `references/usage-log.md` and `references/invocation.md`.
+
+**V2.036: read-only-is-a-task (lane=none is not a protocol exemption).**
+Same V2.035 behaviour, plus: every round — including `lane=none`, pure understanding, and read-only/query — starts with T0 (`ask-matt` tool or inline) and ends with a central ledger entry; loading this driver is not T0 and never replaces it. A read-only round that skips the card or the entry is malformed. (V2.036 field: a diary-query round loaded the driver, skipped T0, wrote no entry.)
+
+**V2.035: order-and-isolation (review is last; single-round cards are legal; eval material stays out of reach).**
+Same V2.034 behaviour, plus: `code-review` is always the **last** skill in `链`; any `tdd`/`implement` runs before it, otherwise record a deviation; a single-round subagent with no intermediate visible message may put the card at the top of NOTES and repeat its first paragraph in the final message; a delegation depth of 0 counts as “no subagent harness” for fast-track review/audit; Lane B's self-answered grill does not require calling `grilling`/`domain-modeling` (the `grill-with-docs` body's “call twice” applies to the skill's own session form).
+
+**V2.034: log-discipline (na is not a free pass).**
+Same V2.033 behaviour, plus: typo/doc/single config-row work is **Lane A, never `na`**; even a `na` round writes the ledger and commits (non-git excepted) — “the parent will log it” is malformed; `审计:` must point at an audit receipt, never `LOGBOOK-RECEIPT`; `PASS-gaps(n)` counts the 6-step closeout list; an installed-but-refused skill must be inline-read, never bundled-fallback; the kickoff card carries an explicit `调用面:` line.
+
+**V2.033: log-consistency (this build ships no logbook).**
+Same V2.032 behaviour. Read-only/query rounds no longer write a child receipt; the ledger's chain must equal `Skills called` in order; a self-check line records version/watermark/chain-product; the project-notes pointer must be an existing file; setup may run only in the first engineering round before implementation.
+
 **V2.032: log-instrumentation (evaluation-side tooling + two driver tightenings).**
 Same V2.031 behaviour, plus evaluation-side tooling (multi-frame transcript decode, canary self-check, two-rate log metrics) and two text tightenings: `审计: PASS-gaps(n)` counts the failed closeout-gate checks, and every `规则:` line in a friction ticket / observation card must carry a verbatim quote of at least 8 characters.
 
@@ -99,9 +114,10 @@ above only routes; the pointed file decides.
 1. **Step 0 — reconnaissance, then the kickoff card (the round's first
    product).** Cheap recon first: split → shield grep → Gate 0 → lane verdict →
    this lane's read-set. Then emit the card; **no card = not started — no lane
-   work, no execution-class Skill call.** Fixed fields, ≤6 lines:
+   work, no execution-class Skill call.** Fixed fields, ≤7 lines:
    - `开工卡｜任务：<one line>｜slug：<slug(s)>｜lane：<A|B|C|D|E|none(纯理解)|STOP>｜档位：full|lite(<why>)|na(<why>)`
    - `本轮调用：<中文名（一句为什么）→ …>`（原可见首句并入此处，不再另写）
+   - `调用面：<skill=tool|inline(read path:line)|missing；…>`（V2.034；只列本轮要用的 skill）
    - `分流：shield <hit/n-a + grep>｜Gate0 <HIT/BROKEN/NOT-FOUND/MISS @file:line>`
    - `链·产物：<skill → its minimal product path；…>｜第一动作：<next concrete action>`
    Chat always shows the card; lane rounds also write it (with file-level
@@ -127,9 +143,9 @@ above only routes; the pointed file decides.
    `core-triggers.md` decides). **No product = that step did not happen.**
 4. **Step 3 — gates.** Run the lane's verification gates; quote the verdict.
 5. **Step 4 — close.** Append the trace note (product/deviation lines; this build ships no
-   logbook), then write the `Skills called:` line in call order
-   (grep-audit anchor); closeout per `verification-gates.md`; delete the marker
-   (single-round open-close exemption unchanged). One round = one commit = one JOURNAL entry; keep ≥2
+   logbook), then write the `Skills called:` line in call order (grep-audit anchor); closeout per
+   `verification-gates.md`; delete the marker (single-round open-close
+   exemption unchanged). One round = one commit = one JOURNAL entry; keep ≥2
    distinct skills per round (T0 + one executed lane/support skill); rotate
    lane/type before 3 identical sets repeat; cap audits at 3 consecutive.
 

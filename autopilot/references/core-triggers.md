@@ -49,9 +49,9 @@ Lane E（raw pile）进 lane 前先走 triage 状态机，不是直接开干：
 
 ## 纯理解任务：不进 lane（V2.005，不改仓，不建标记，不计工程轮）
 
-用户只说理解一下项目、看看代码，没有任何改动要求 → 不进 A/B/C/D/E 任何 lane，不写 spec，不碰仓库文件，不建 WORKFLOW-ACTIVE，不计工程轮次。做法：T0 分流判无 lane → 通读 ground-truth（README/入口/配置）→ 可派一个 Explore 子代理扫全仓 → 对话内给理解报告。setup 的首次进仓也不触发，等首个真实工程轮再做。只读轮无 verify 可贴，按 delivery-check 精神给零改动声明 + 可抽查清单。
+用户只说理解一下项目、看看代码，没有任何改动要求 → 不进 A/B/C/D/E 任何 lane，不写 spec，不碰仓库文件，不建 WORKFLOW-ACTIVE，不计工程轮次。**「这个项目有什么值得改进 / 有什么问题 / 帮我巡检 / 体检一下」＝只读清单请求**：给分级清单与 file:line 证据，不动文件；用户说「改 / 修 / 做 / 顺手」才另起工程轮（V2.037 现场：同一句巡检问法，round1 只读出清单、round5 直接动手改了 3 个文件还建了仓库）。做法：T0 分流判无 lane → 通读 ground-truth（README/入口/配置）→ 可派一个 Explore 子代理扫全仓 → 对话内给理解报告。setup 的首次进仓也不触发，等首个真实工程轮再做。只读轮无 verify 可贴，按 delivery-check 精神给零改动声明 + 可抽查清单。
 
-**只读/查询轮最小协议（V2.025，四件；豁免不变）：** ①首段=开工卡/卡刷新（无 lane 轮照发，含 T0 downshift 声明）；②分流行：一句分类（纯理解/查询/外部事实/混合）——含「处理意图」判据（「很久没处理 / 该跟进 / 看看新动静」＝要动手的事项，先审 Lane E 或按项目流程另起工程轮）；③证据行：写明查过哪些面（水位线区/archive/JOURNAL/git log/README…），命中给 `file:line`；「看有没有」类强制负证据口径（N 面 × 零命中，`trace-discipline.md` V2.011）；④收尾在对话内给检索清单（产物=检索面 + 命中计数 + 零改动声明；偏差按档位语法；只写 skill 侧；本 build 无日志本）。产物只落对话，不碰仓库文件。用户点名的历史检索不受「中间历史不读」约束（点名即解锁定向 grep）。
+**只读/查询轮最小协议（V2.025，四件；V2.036 补硬门）：** ①首段=开工卡/卡刷新（无 lane 轮照发，含 T0 downshift 声明）；②分流行：一句分类（纯理解/查询/外部事实/混合）——含「处理意图」判据（「很久没处理 / 该跟进 / 看看新动静」＝要动手的事项，先审 Lane E 或按项目流程另起工程轮）；③证据行：写明查过哪些面（水位线区/archive/JOURNAL/git log/README…），命中给 `file:line`；「看有没有」类强制负证据口径（N 面 × 零命中，`trace-discipline.md` V2.011）；④收尾在对话内给检索清单（产物=检索面 + 命中计数 + 零改动声明；偏差按档位语法；只写 skill 侧；本 build 无日志本）。产物只落对话，不碰仓库文件。用户点名的历史检索不受「中间历史不读」约束（点名即解锁定向 grep）。
 
 **理解→动手边界（V2.016）**：理解轮内出现改动意图（"顺手修了""顺便加了"）→ 停手，另起工程轮（理解报告先交付，改动走新一轮 T0 + Gate 0 + lane）。一轮之内"先理解后动手"必须有书面 transition（"理解结束，转 Lane X"），无 transition 的混合轮 = malformed。反例：同轮先写"判为纯理解轮"又写"走 Lane C 先 chart"——两张皮，必拆两轮。
 
@@ -108,13 +108,13 @@ CodeRabbit/人类在 PR 上的意见：**先复现，有效才修，修完在 re
 
 ## 评审与 verify 永不豁免（V2.006，用户政策）
 
-用户政策：宁可多花 token，也不让人参与。code-review（双轴）在每次提交之前必跑，纯静态 UI/展示层改动也不豁免——评审收益小时走快档（单轴 diff 自查 + 全量 verify 贴绿），但不许零评审提交。verify 同理：能自己跑就跑，多跑几遍、多贴几段原文都行；库没有验证命令就自发明 seam 断言 + 冒烟。人的参与只保留在 STOP 清单（高危/外部可见/真缺 token 换不到的信息）里。非 git 仓库：code-review 正身的 git 流程（fixed point/diff）无处安放时，快档就是明文许可的完整替代，不算漏、不必再问人。**无 subagent 的 harness（V2.022，连 5 轮同族换来）：** 双轴子代理派不出时，快档 = 双轴自查（Standards＋Spec 逐条过、HARD 全修）＋全量 verify＋JOURNAL 写明 harness 限制，即完整替代，不算漏、不记 deviation——但收尾须以一行 `快档：<下单|单轴>｜harness：<限制>｜理由：<…>` 留痕（V2.025 收窄）；单轴 diff 自查只够非 git 仓。有真双子代理的 harness 回到双正身，不走本条。
+用户政策：宁可多花 token，也不让人参与。code-review（双轴）在每次提交之前必跑，纯静态 UI/展示层改动也不豁免——评审收益小时走快档（单轴 diff 自查 + 全量 verify 贴绿），但不许零评审提交。verify 同理：能自己跑就跑，多跑几遍、多贴几段原文都行；库没有验证命令就自发明 seam 断言 + 冒烟。人的参与只保留在 STOP 清单（高危/外部可见/真缺 token 换不到的信息）里。非 git 仓库：code-review 正身的 git 流程（fixed point/diff）无处安放时，快档就是明文许可的完整替代，不算漏、不必再问人。**无 subagent 的 harness（V2.022，连 5 轮同族换来；V2.035：delegation depth 0 / 子会话额度用尽同判）：** 双轴子代理派不出时，快档 = 双轴自查（Standards＋Spec 逐条过、HARD 全修）＋全量 verify＋JOURNAL 写明 harness 限制，即完整替代，不算漏、不记 deviation——但收尾须以一行 `快档：<下单|单轴>｜harness：<限制>｜理由：<…>` 留痕（V2.025 收窄）；单轴 diff 自查只够非 git 仓。有真双子代理的 harness 回到双正身，不走本条。
 
 ## setup 判据（V2.006 立项，V2.010 状态位）
 
-**状态位**：setup 跑完必须在项目里留下机器可查的标记——`docs/agents/` 目录存在即视为已跑（setup 的官方产物）。driver 不猜、不问、不看记忆：标记存在 → 跳过；标记不存在 → 本轮先跑 setup，再进 lane。
+**状态位**：setup 跑完必须在项目里留下机器可查的标记——`docs/agents/` 目录存在即视为已跑（setup 的官方产物）。driver 不猜、不问、不看记忆：标记存在 → 跳过；标记不存在 → 本轮先跑 setup，再进 lane。**同轮 chore 提交（V2.037）**：setup 可以作为**同轮的独立 chore 提交**完成（chore 提交不 bump 版本、不算 lane 交付），所以「首个工程轮先跑 setup」与「一轮一提交」不冲突；只有**实现之后**才补 setup 才是 scope 越界（V2.037 现场：两条旧句互相夹逼，agent 只能记 deviation 把 setup 无限推迟）。
 
-**新项目默认先跑**：空仓、无 AGENTS.md、无 tracker 痕迹 → 等同于"setup 没跑过"，进门第一轮先跑 setup（AFK 自答默认值：local-markdown tracker + 默认 triage 标签 + 单上下文 + 自答建 AGENTS.md）。纯理解轮（只读+汇报）不算 first touch、不触发 setup，但也不许动代码。连续推迟 = deviation 必记。
+**新项目默认先跑**：空仓、无 AGENTS.md、无 tracker 痕迹 → 等同于"setup 没跑过"，进门第一轮先跑 setup（AFK 自答默认值：local-markdown tracker + 默认 triage 标签 + 单上下文 + 自答建 AGENTS.md）。纯理解轮（只读+汇报）不算 first touch、不触发 setup，但也不许动代码。连续推迟 = deviation 必记。**顺序（V2.033）**：setup 只允许在**首个工程轮、任何实现动作之前**运行；实现后再补 setup / 改 AGENTS.md、docs 属 scope 越界，必须记 deviation 并在条目 `skill 侧卡点` 指明，不得静默。
 
 ## grill 方向盘：每次改动先打磨（V2.010，向官方靠拢；V2.018 放宽到 frontier-empty）
 

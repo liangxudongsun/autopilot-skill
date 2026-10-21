@@ -176,5 +176,7 @@ shipped defect in the field:
   `TODO(path)`); doc-template links point at real files. A hand edit that
   deletes what eyes cannot see (swallowed headings, dropped rows) is a defect
   class of its own — machine-check it, never eyeball it.
+- **Review-last (V2.035).** `code-review` closes the chain: every `tdd`/`implement` entry precedes it; review-before-tests is a deviation and must be recorded in the ledger. Single-round subagent: card at NOTES top + repeated as the final message's first paragraph is legal (no intermediate visible channel).
+
 - **Grill-gate audit (V2.018).** Grep JOURNAL `Skills called` at each hard-gate trigger (prototype return / research return / spec-external new system / undecided seam / review-vs-spec / hypothesise ranking) for mid-lane `grilling`; trigger with no grill trace = malformed; mid-lane `grill-with-docs`/`grill-me` hit = malformed; soft-gate trigger with no one-line why = trace debt.
 

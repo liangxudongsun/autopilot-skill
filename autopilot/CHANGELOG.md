@@ -4,6 +4,16 @@
 
 单一版本号 `V2.00N`。（早期私有迭代使用内部 vNN 编号——v41=V2.001、v43=V2.002、v44=V2.003、v45=V2.004、v46=V2.005、v47=V2.006、v48=V2.007、v49=V2.008。V2.008 起退役。）
 
+**V2.037** — 收尾顺序与范围：中央条必须在收尾消息之前落本并回读；「值得改进/巡检」类问法＝只读清单请求，不动文件；setup 可作同轮独立 chore 提交；被 harness 拒绝的 skill 是 inline 而不是 missing。
+
+**V2.036** — 只读也是任务：只读/查询轮也必须 T0（ask-matt tool/inline）＋卡/刷新＋收尾中央条，lane=none 不是免记理由。
+
+**V2.035** — 顺序与隔离：code-review 必须链尾（tdd/implement 在其前）；单轮子代理卡落 NOTES＋最终消息复述合法；delegation depth 0 视为无 subagent harness；Lane B 自答 grill 不要求调 grilling/domain-modeling；评测材料在测试窗口移出仓库。
+
+**V2.034** — 日志纪律：typo/文案/单行 config 属 Lane A（不是 na）；na 轮也必须落本＋提交；审计不得指向 LOGBOOK-RECEIPT；PASS-gaps(n) 按 6 条硬门计；已安装但被拒必须 inline 读、不得 bundled-fallback；开工卡加调用面行。
+
+**V2.033** — 日志一致性：只读/查询轮免子会话回执；`链` 必须与 `Skills called` 同序且覆盖产物；B–E 链 ≥2、Lane A/只读允许单 skill；账本新增 `自检` 行；`项目落点` 必须是已存在文件；查本仓状态/中央本明确走只读协议；setup 只许首轮且先于实现。
+
 **V2.032** — 日志仪器：`.autopilot/usage-log-path` 隔离日志本（评测不污染生产本）、多帧 transcript 解码器、canary 自检（rubric ⑩，判据坏则本次作废）、日志两率统计脚本；审计 `PASS-gaps(n)` 与反思原文引用收紧。
 
 **V2.031** — 日志证据：任务条改回执式账本（链/产物映射/卡点 file:line/落本/日志归属），只在出问题时写摩擦条（现象/规则/证据/候选），反思改事件触发的观察卡（回收/声明执行差/规则互斥/未覆盖路径/可判性）；收尾必须回读 `落本:` 行号，子会话写回执；删散文五方面与「差距/其他」。

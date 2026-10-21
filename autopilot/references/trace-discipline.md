@@ -33,12 +33,14 @@
 - No-JOURNAL repos (V2.008): when the workspace has no JOURNAL, write the
   `Skills called:` line at the top of the task's NOTES.md so the grep-level
   audit survives (three-round eval precedent).
-- Closeout receipt (V2.031): append the central entry, then read `落本:` back
-  (`sed -n '<range>p'` must hit the entry title) before writing
-  `Skills called:` or sending the final message. A child session writes
+- Closeout receipt (V2.031/V2.033): append the central entry, then read `落本:`
+  back (`sed -n '<range>p'` must hit the entry title) before writing
+  `Skills called:` or sending the final message. A B–E child session writes
   `.scratch/<slug>/LOGBOOK-RECEIPT.md` (`central: <path> | appended: <title> |
-  at: <ISO>`); a missing receipt is a deviation, never a reason for the parent
-  to ghost-write.
+  at: <ISO>`); read-only/query rounds skip it (use the entry's `readback:`).
+  `链:` must equal `Skills called:` in order; emit the entry's `自检:` line
+  (`v` / watermark / chain×product). A missing receipt or self-check is a
+  deviation, never a reason for the parent to ghost-write.
 - Invocation surfaces (V2.030): `Skills called:` marks every refused-but-inlined
   skill as `name(inline)`, and the round card carries a `调用面:` line. A
   `(inline)` entry without `inline(read <path>:<line>)` + one quoted clause +
