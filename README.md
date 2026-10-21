@@ -2,8 +2,6 @@
 
 # automatt
 
-[![npm](https://img.shields.io/npm/v/automatt.svg)](https://www.npmjs.com/package/automatt)
-
 > **改名说明**：本 skill 原名 `autopilot`，现更名为 `automatt`（同名易记、避免与其他 skill 撞名）；命令、启用凭据 `automatt: on` 与安装器同步改名。
 >
 > **升级后不用你手改**：V2.049 起，driver 会**自动把项目里残留的旧名引用改成新名**（启用凭据行 `autopilot: on` → `automatt: on`、文档/脚本里的旧名、旧命令 `/autopilot`、旧本名 `autopilot-USAGE-LOG.md`、旧指针目录 `.autopilot/`），并在条目里逐条列出改了哪些路径；迁移期内旧凭据行仍算已接入，所以升级后**不会突然不工作**。
@@ -40,14 +38,6 @@
 
 本 driver 是指挥官，真正干活的是上游 27 个工作流 skill（[mattpocock/skills](https://github.com/mattpocock/skills)）。必须连上游一起装（driver + 上游 27 个核心共 28 个必需，上游新增照单全收，少必需项才是残的）；只装 driver 也能跑（内置速记版兜底），但过程纪律会打折。
 
-npm（推荐；Windows / macOS / Linux 都一样，一条命令装齐 driver + 上游）：
-
-```bash
-npm install -g automatt
-```
-
-装完就有 `automatt` 命令：它把 driver 和上游 workflow skill 一起装进你的用户级 skills 目录（默认 `~/.agents/skills/`，命中 harness 时多写一份）。装歪了随时 `automatt install --dry-run` 预览、`automatt install` 重装、`automatt doctor` 看状态、`automatt uninstall` 卸掉；`--slim` 只装 driver，`--refresh` 拉最新版上游。
-
 bash（macOS / Linux / Git Bash）：
 
 ```bash
@@ -67,7 +57,6 @@ Windows PowerShell（若报执行策略错误，先跑 `Set-ExecutionPolicy -Sco
 <details>
 <summary>进阶：其他装法（npx / 插件市场 / 手动）</summary>
 
-- npm（推荐）：`npm install -g automatt`——跨平台，driver + 上游 27 个 workflow skill 一起装；装完 `automatt doctor` 看装到哪了。
 - `npx skills`（备选）：`npx skills@latest add zkkk9555/automatt-skill -g -a zcode -y`（`-a` 换 claude-code|codex|cursor），再 `npx skills@latest add mattpocock/skills -g -a zcode --skill '*' -y` 装上游。注意它按 harness 分目录装。
 - Claude Code 插件市场：`/plugin marketplace add zkkk9555/automatt-skill` 后 `/plugin install automatt`。
 - 手动（未知 harness）：找你的 skills 目录 → clone 两仓库 → `automatt/` 拷过去，上游 `skills/*/*/` 按最后一级目录名装平 → 验证 28 个 → 重启说“切换按钮失效了，去检查修一下”。
