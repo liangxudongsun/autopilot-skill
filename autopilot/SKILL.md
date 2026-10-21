@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.043: ledger-target (confirm the workspace before you write; absolute log paths).**
+Same V2.042 behaviour, plus: before appending the ledger entry, confirm the workspace (`pwd` — the shell's default directory may be the session's start directory, not this round's workspace) and resolve the logbook in the order *workspace pointer → workspace-local `autopilot-USAGE-LOG.md` → installer's fixed path*; the `落本:` line carries an **absolute** path, and writing to any other book is contamination that must be rolled back and recorded in `deviation:` (V2.043 field: a read-only round appended its entry to the production logbook because the shell sat in the driver repo). Detail in `references/usage-log.md`.
+
 **V2.042: change-boundary (project workspace only; harness and host profile are read-only).**
 Same V2.041 behaviour, plus: the round may only modify the **current project workspace** — harness/host/user-profile paths (`~/.dsh/`, `~/.codex/`, global `node_modules/`, plugin dirs, `cordis.patch.yml`, registry, `app.asar`) are read-only; a request like "add a button" means the project's own UI unless the user names the host, and even then it goes to STOP (`NEEDS-HUMAN.md`) instead of self-authorising an install. Deliverables outside the project = malformed (no entry = not landed), and any out-of-scope host edit must be rolled back and recorded in `deviation:`. Detail in `references/prelane.md`.
 
