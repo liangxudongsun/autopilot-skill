@@ -16,6 +16,10 @@ publish / submit / upload / release / spend / credential / store / compliance
 `.scratch/<slug>/NEEDS-HUMAN.md`, end the turn. "Draft only, won't submit"
 counts as a release-artifact change — same STOP. No spec/map/ticket first.
 
+**改动边界：项目工作区之外，harness/宿主只读（V2.042）。** 本轮能改的只有**当前项目工作区**（cwd 及其项目内路径）。**禁止改动** harness/宿主/用户 profile 的一切位置：`~/.dsh/`、`~/.codex/`、`~/.claude/`、全局 `node_modules/`、插件目录、`app.asar`、注册表、`cordis.patch.yml` 等宿主配置。理由：本仓的用户只让你在**这个项目**里干活；改宿主 = 改用户环境，超出请求且不易回滚。
+- **歧义消解**：用户说「加个按钮 / 改界面 / 加个功能」默认指**当前项目**里的界面与代码；只有用户**点名宿主**（GUI / 插件 / 宿主 / harness）才允许动宿主，且即便如此也要走 STOP（写 `.scratch/<slug>/NEEDS-HUMAN.md` 交人决定），不许自答「我帮你装上」。
+- **判定**：交付物落在项目外 = 本轮 malformed：仓内零改动、无中央条 = 落本缺失；且越界改动**必须回滚**（删掉自己建的插件/配置/链接、恢复被改文件）并在条目 `deviation:` 记明（V2.042 现场：s2 把「加个小按钮」做成 DSH 客户端插件——写 `~/.dsh/profiles/desktop/cordis.patch.yml`、建插件目录与 junction，项目仓零改动、无中央条；已由父会话回滚）。
+
 **Gate 0 — already-implemented check (runs before any lane).** Grep keywords +
 read red-line docs. The hit claim must cite `file:line + behaviour-parity
 assertion`; semantic duplicates (same table, same trigger channel, same

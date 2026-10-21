@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.042: change-boundary (project workspace only; harness and host profile are read-only).**
+Same V2.041 behaviour, plus: the round may only modify the **current project workspace** — harness/host/user-profile paths (`~/.dsh/`, `~/.codex/`, global `node_modules/`, plugin dirs, `cordis.patch.yml`, registry, `app.asar`) are read-only; a request like "add a button" means the project's own UI unless the user names the host, and even then it goes to STOP (`NEEDS-HUMAN.md`) instead of self-authorising an install. Deliverables outside the project = malformed (no entry = not landed), and any out-of-scope host edit must be rolled back and recorded in `deviation:`. Detail in `references/prelane.md`.
+
 **V2.041: chain-boundary-and-read-only-fields (reading a body is a call; setup state is checked in Step 0; read-only rounds get their own field).**
 Same V2.040 behaviour, plus: a Skill call **or** an inline read of a body counts as an invocation and must appear in `链:`/`Skills called:` — judging it n/a afterwards still keeps the name in the chain, with the reason in `未用:` (⑤); the card's `分流:` line carries `setup <done|needed|n/a>` so the setup marker is checked before lane work, not after implementation; and read-only/query rounds write `产物: …=对话内报告` (no `test -f`) plus a `检索面: …｜命中=<n>｜零改动=<是|否>` line instead of inventing fields. Detail in `references/usage-log.md`.
 
