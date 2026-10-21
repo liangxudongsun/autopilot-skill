@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.048: git-in-project-dir (check version control inside the project, not the parent).
+Same V2.047 behaviour, plus: run `git status/log` **inside the project directory** (explicit `workdir` or `-C <project>`); an empty output or an "everything ignored" view does **not** mean the project has no version control — re-check in the project directory before concluding that (V2.048 field: a round saw only the parent's ignore list, decided there was no VCS, and shipped an uncommitted delivery). Detail in `references/usage-log.md`.
+
 **V2.047: installed-copy-parity (check the body you actually loaded; relative logbook pointers resolve against the workspace).**
 Same V2.046 behaviour, plus: bootstrap also checks that the body it is running matches the source repo's `VERSION` — the harness loads an **installed copy** (`~/.dsh/skills/<name>`, `~/.codex/skills/<name>`), so a lagging install means you are running stale rules (V2.047 field: the installed copy was V2.045 while the repo was already V2.046). Helper: `evals/check-install.mjs` exits non-zero when any installed copy lags. A relative logbook pointer resolves against **this round's workspace**, never the shell's default directory. Detail in `references/usage-log.md`.
 
