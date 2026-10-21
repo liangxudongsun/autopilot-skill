@@ -2,6 +2,8 @@ English | [简体中文](./README.md)
 
 # automatt
 
+[![npm](https://img.shields.io/npm/v/automatt.svg)](https://www.npmjs.com/package/automatt)
+
 > **Rename note**: this skill was previously named `autopilot` and is now named `automatt` (easier to remember, and it no longer collides with other skills). The command, the `automatt: on` opt-in credential and the installer were renamed accordingly.
 >
 > **Nothing to migrate by hand**: since V2.049 the driver **rewrites leftover old-name references inside your project** (the credential line `autopilot: on` → `automatt: on`, old names in docs/scripts, the old `/autopilot` command, the old `autopilot-USAGE-LOG.md` book name, the old `.autopilot/` pointer dir) and lists every changed path in the ledger entry; the legacy credential line still counts as opted in during the migration window, so upgrading will not silently stop the driver.
@@ -59,6 +61,20 @@ The driver is the commander; the 27 upstream workflow skills
 install all 28 together. Driver-only runs on built-in speed notes with weaker
 discipline.
 
+npm (recommended; one command on Windows / macOS / Linux, driver + upstream
+together):
+
+```bash
+npm install -g automatt
+```
+
+This gives you an `automatt` command that installs the driver and the upstream
+workflow skills into your user-level skills directory (default
+`~/.agents/skills/`, plus your detected harness dir). If it lands wrong:
+`automatt install --dry-run` to preview, `automatt install` to redo,
+`automatt doctor` to see the state, `automatt uninstall` to remove; `--slim`
+installs the driver only, `--refresh` pulls the newest upstream snapshot.
+
 bash (macOS / Linux / Git Bash):
 
 ```bash
@@ -82,6 +98,9 @@ zcode|all), `--dry-run`, `--slim`, `--dir`, `--uninstall`.
 <details>
 <summary>Advanced: other methods (npx / marketplace / manual)</summary>
 
+- npm (recommended): `npm install -g automatt` — cross-platform; installs the
+  driver and the 27 upstream workflow skills together. Run `automatt doctor`
+  afterwards to see where they landed.
 - `npx skills`: `npx skills@latest add zkkk9555/automatt-skill -g -a zcode -y`
   (`-a`: claude-code|codex|cursor), then `npx skills@latest add
   mattpocock/skills -g -a zcode --skill '*' -y` for upstream. It installs
