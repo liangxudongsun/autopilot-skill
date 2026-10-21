@@ -7,3 +7,5 @@
 - **档位**：默认 full；lite 五件地板（卡/车道/一个通道产物/验证一句/日志一行）缺一 = malformed；na 仅限纯理解·误触发·STOP（`self-answer.md`）。
 - **纯理解/查询轮**：不碰仓库文件；四件最小产物 = 分流行 ＋ 检索面/命中计数（含负证据口径；**不抄命中内容**）＋ 对话内检索清单（`core-triggers.md` 只读节；本 build 无日志本）。**只读轮也是任务**：T0（ask-matt tool/inline）＋卡/刷新＋收尾条，缺一 = malformed；`lane=none` 不是免记理由（V2.036）。
 - **收尾两件**：`Skills called:` 按调用序 ＋ 本轮 trace 三行（产物/deviation/审计；本 build 无日志本）；删标记（单轮开闭照旧记豁免行）。
+
+**你读到的正文可能不是最新版（V2.047）**：harness 加载的是**安装副本**（`~/.dsh/skills/<skill>`、`~/.codex/skills/<skill>`），不是开发仓里的源目录——两者不同步时，你会按旧规则干活却不自知。开发/验收语境下，开工前核对**本轮实际加载的正文版本行**与源仓 `VERSION`：不一致先同步（或明确记 deviation）。自检脚本：`node evals/check-install.mjs`（有安装副本落后即退出码 1）。

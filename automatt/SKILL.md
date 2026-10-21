@@ -29,6 +29,9 @@ files; this build ships no logbook or self-upgrade loop). Version notes v10–v4
 in `CHANGELOG.md`; rule details live in `references/` (§0–§5 split files).
 
 
+**V2.047: installed-copy-parity (check the body you actually loaded; relative logbook pointers resolve against the workspace).**
+Same V2.046 behaviour, plus: bootstrap also checks that the body it is running matches the source repo's `VERSION` — the harness loads an **installed copy** (`~/.dsh/skills/<name>`, `~/.codex/skills/<name>`), so a lagging install means you are running stale rules (V2.047 field: the installed copy was V2.045 while the repo was already V2.046). Helper: `evals/check-install.mjs` exits non-zero when any installed copy lags. A relative logbook pointer resolves against **this round's workspace**, never the shell's default directory. Detail in `references/usage-log.md`.
+
 **V2.046: delete-granularity (what counts as "deleting data" — unrecoverable deletions stop and ask; tracked, named, enumerable, recoverable deletions are done with a written list of what was removed).**
 Same V2.045 behaviour, plus: the STOP list's "删数据" means deletions that **cannot be recovered from version control** (untracked local data, credentials, user output, anything outside the repo) → write `.scratch/<slug>/NEEDS-HUMAN.md` and stop. Deleting **version-controlled files the user explicitly named, whose scope you can enumerate and can recover from git** is allowed to proceed — but you must list every deleted path in the ledger entry/receipt and note the collateral edits (emptied directories, doc sections that only pointed at the removed files). If you cannot tell which side of the line a request is on, stop and ask. Detail in `references/delivery-check.md`.
 
