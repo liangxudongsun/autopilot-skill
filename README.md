@@ -4,7 +4,7 @@
 
 > **改名说明**：本 skill 原名 `autopilot`，现更名为 `automatt`（同名易记、避免与其他 skill 撞名）；命令、启用凭据 `automatt: on` 与安装器同步改名。
 >
-> **升级后不用你手改**：V2.049 起，driver 会**自动把项目里残留的旧名引用改成新名**（启用凭据行 `autopilot: on` → `automatt: on`、文档/脚本里的旧名、旧命令 `/autopilot`、旧本名 `autopilot-USAGE-LOG.md`、旧指针目录 `.autopilot/`），并在条目里逐条列出改了哪些路径；迁移期内旧凭据行仍算已接入，所以升级后**不会突然不工作**。
+> **升级后不用你手改**：V2.054 起，driver 只换**接入点**、不留过渡期——项目 `AGENTS.md` 里指向本 skill 的旧名（启用凭据行 `autopilot: on`、调用指引里的 `autopilot`）与 driver 自己的指针目录 `.autopilot/` 会在那一轮换成新名，并在条目里逐条列出改了哪些路径；**`AGENTS.md` 之外的项目文件（README/docs/脚本/配置）一律不动**（那是你的文字，我们不替你改），也不会因此新建第二本日志本。旧凭据行**不算已接入**——命中就换掉，换完照常干活。
 
 **点一次，说句人话，剩下的全自动。** 一个包着 [mattpocock/skills](https://github.com/mattpocock/skills) 工作流（27 个子 skill）的全自动 driver：用户说一句日常人话（中英文都行），它就把整个任务自己做完——分流、打磨、写 spec、拆票、实现、红绿测试、双轴评审、验证交付，中途不需要人参与。
 
@@ -36,7 +36,7 @@
 <details>
 <summary>进阶：前置说明与一键命令</summary>
 
-本 driver 是指挥官，真正干活的是上游 27 个工作流 skill（[mattpocock/skills](https://github.com/mattpocock/skills)）。必须连上游一起装（driver + 上游 27 个核心共 28 个必需，上游新增照单全收，少必需项才是残的）；只装 driver 也能跑（内置速记版兜底），但过程纪律会打折。
+本 driver 是指挥官，真正干活的是上游 27 个工作流 skill（[mattpocock/skills](https://github.com/mattpocock/skills)，MIT）。**从 V2.054 起，上游那 27 个已经随本仓一起分发**（`skills/` 目录，许可声明见 `THIRD-PARTY-NOTICES.md`）——你只需要去**一个仓库**拿齐 driver + 上游共 28 个，不用再去上游仓自己拼。上游更新时我们同步这一份快照即可。
 
 bash（macOS / Linux / Git Bash）：
 
@@ -50,17 +50,17 @@ Windows PowerShell（若报执行策略错误，先跑 `Set-ExecutionPolicy -Sco
 & ([scriptblock]::Create((irm https://raw.githubusercontent.com/zkkk9555/automatt-skill/main/install.ps1)))
 ```
 
-默认装到 `~/.agents/skills/`；脚本会自动探测当前 harness，命中且唯一时多写一份。装完**必须去工具里确认 skill 列表出现了 automatt**。常用变体：`--harness zcode` 指定 harness，`--dry-run` 预览，`--slim` 只要 driver，`--dir` 自定义目录，`--uninstall` 卸载。怕装错？先 `--dry-run` 预览。
+默认装到 `~/.agents/skills/`（DeepSeek Harness 读这个目录）；脚本会自动探测当前 harness，命中且唯一时多写一份（支持 claude / codex / cursor / opencode / zcode / dsh / workbuddy）。装完**必须去工具里确认 skill 列表出现了 automatt**。常用变体：`--harness dsh` 指定 harness，`--ref V2.054` 装指定版本（**默认就钉在当前版本 tag 上**，所以「我装的是哪一版」有答案），`--dry-run` 预览，`--slim` 只要 driver，`--dir` 自定义目录，`--uninstall` 卸载。怕装错？先 `--dry-run` 预览。
 
 </details>
 
 <details>
 <summary>进阶：其他装法（npx / 插件市场 / 手动）</summary>
 
-- `npx skills`（备选）：`npx skills@latest add zkkk9555/automatt-skill -g -a zcode -y`（`-a` 换 claude-code|codex|cursor），再 `npx skills@latest add mattpocock/skills -g -a zcode --skill '*' -y` 装上游。注意它按 harness 分目录装。
-- Claude Code 插件市场：`/plugin marketplace add zkkk9555/automatt-skill` 后 `/plugin install automatt`。
-- 手动（未知 harness）：找你的 skills 目录 → clone 两仓库 → `automatt/` 拷过去，上游 `skills/*/*/` 按最后一级目录名装平 → 验证 28 个 → 重启说“切换按钮失效了，去检查修一下”。
-- 目录对照：`~/.agents/skills/`（ZCode/Cursor/OpenCode 等）|`~/.zcode/skills/`（ZCode）|`~/.claude/skills/`（Claude Code）|`~/.codex/skills/`（Codex）|`<项目>/.agents/skills/`（仅当前项目）。没有任何目录是全宇宙通用的，装完必须确认。
+- `npx skills`（备选）：`npx skills@latest add zkkk9555/automatt-skill -g -a zcode -y`（`-a` 换 claude-code|codex|cursor）。上游 27 个已在本仓 `skills/` 里，按需一并取。注意它按 harness 分目录装。
+- Claude Code 插件市场：`/plugin marketplace add zkkk9555/automatt-skill` 后 `/plugin install automatt`（**只含 driver**；上游 27 个请用上面的安装脚本补齐）。
+- 手动（未知 harness）：找你的 skills 目录 → clone 本仓 → `automatt/` 与 `skills/*` 各自拷过去（`skills/` 下每个子目录就是一个 skill）→ 验证 28 个 → 重启说“切换按钮失效了，去检查修一下”。
+- 目录对照：`~/.agents/skills/`（ZCode/Cursor/OpenCode/DeepSeek Harness 等）|`~/.dsh/skills/`（DeepSeek Harness）|`~/.zcode/skills/`（ZCode）|`~/.claude/skills/`（Claude Code）|`~/.codex/skills/`（Codex）|`<项目>/.agents/skills/`（仅当前项目）。没有任何目录是全宇宙通用的，装完必须确认。
 
 </details>
 

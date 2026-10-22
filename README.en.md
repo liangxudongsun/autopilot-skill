@@ -4,7 +4,7 @@ English | [简体中文](./README.md)
 
 > **Rename note**: this skill was previously named `autopilot` and is now named `automatt` (easier to remember, and it no longer collides with other skills). The command, the `automatt: on` opt-in credential and the installer were renamed accordingly.
 >
-> **Nothing to migrate by hand**: since V2.049 the driver **rewrites leftover old-name references inside your project** (the credential line `autopilot: on` → `automatt: on`, old names in docs/scripts, the old `/autopilot` command, the old `autopilot-USAGE-LOG.md` book name, the old `.autopilot/` pointer dir) and lists every changed path in the ledger entry; the legacy credential line still counts as opted in during the migration window, so upgrading will not silently stop the driver.
+> **Nothing to migrate by hand**: since V2.054 the driver converts **only the opt-in point**, with no grace window — old names **pointing at this skill** inside your project's `AGENTS.md` (the credential line `autopilot: on`, the invocation line) and the driver's own pointer dir `.autopilot/` become the new name in that round, and every changed path is listed in the ledger entry. **Files outside `AGENTS.md` are never touched** (your README/docs/scripts/config are your text — we do not rewrite them), and they never justify creating a second logbook. The legacy credential line does **not** count as opted in: when the driver sees it, it converts it and then drives normally.
 
 **One invocation, full auto-drive.** A driver skill wrapping the
 [mattpocock/skills](https://github.com/mattpocock/skills) workflow (27
@@ -55,9 +55,11 @@ discipline" into "quality by process":
 <summary>Advanced: one-command + variants</summary>
 
 The driver is the commander; the 27 upstream workflow skills
-([mattpocock/skills](https://github.com/mattpocock/skills)) do the work —
-install all 28 together. Driver-only runs on built-in speed notes with weaker
-discipline.
+([mattpocock/skills](https://github.com/mattpocock/skills), MIT) do the work.
+**Since V2.054 those 27 ship with this repository** (the `skills/` directory;
+see `THIRD-PARTY-NOTICES.md`) — one repository gives you the driver plus the
+upstream skills, all 28 items; there is no second repository to fetch.
+Driver-only runs on built-in speed notes with weaker discipline.
 
 bash (macOS / Linux / Git Bash):
 
@@ -72,10 +74,13 @@ Windows PowerShell (if execution policy blocks, run
 & ([scriptblock]::Create((irm https://raw.githubusercontent.com/zkkk9555/automatt-skill/main/install.ps1)))
 ```
 
-Default target is `~/.agents/skills/`; the script also writes to your detected
-harness dir when unambiguous. **Verify in your tool that the skill list shows
-automatt.** Variants: `--harness zcode` (auto|claude|codex|cursor|opencode|
-zcode|all), `--dry-run`, `--slim`, `--dir`, `--uninstall`.
+Default target is `~/.agents/skills/` (DeepSeek Harness reads that
+directory); the script also writes to your detected harness dir when
+unambiguous (claude / codex / cursor / opencode / zcode / dsh / workbuddy).
+**Verify in your tool that the skill list shows automatt.** Variants:
+`--harness dsh`, `--ref V2.054` (install a pinned version — the default is
+already pinned to the current version tag, so "which version did I install"
+has an answer), `--dry-run`, `--slim`, `--dir`, `--uninstall`.
 
 </details>
 
@@ -83,18 +88,20 @@ zcode|all), `--dry-run`, `--slim`, `--dir`, `--uninstall`.
 <summary>Advanced: other methods (npx / marketplace / manual)</summary>
 
 - `npx skills`: `npx skills@latest add zkkk9555/automatt-skill -g -a zcode -y`
-  (`-a`: claude-code|codex|cursor), then `npx skills@latest add
-  mattpocock/skills -g -a zcode --skill '*' -y` for upstream. It installs
-  per-harness directories.
+  (`-a`: claude-code|codex|cursor). The 27 upstream skills live in this repo's
+  `skills/` directory now — take them from there. It installs per-harness
+  directories.
 - Claude Code marketplace: `/plugin marketplace add zkkk9555/automatt-skill`,
-  then `/plugin install automatt`.
-- Manual (unknown harness): find your skills dir → clone both repos → driver
-  `automatt/` over, upstream `skills/*/*/` flattened by last segment →
-  verify 28+ → restart and say "The sidebar toggle stopped working — check
-  and fix it."
-- Directory map: `~/.agents/skills/` (ZCode/Cursor/OpenCode…)
-  | `~/.zcode/skills/` (ZCode) | `~/.claude/skills/` (Claude Code)
-  | `~/.codex/skills/` (Codex) | `<project>/.agents/skills/` (project only).
+  then `/plugin install automatt` (**driver only** — add the 27 upstream skills
+  with the installer above).
+- Manual (unknown harness): find your skills dir → clone this repo → copy
+  `automatt/` over and every directory under `skills/` (one directory = one
+  skill) → verify 28 → restart and say "The sidebar toggle stopped working —
+  check and fix it."
+- Directory map: `~/.agents/skills/` (ZCode/Cursor/OpenCode/DeepSeek Harness…)
+  | `~/.dsh/skills/` (DeepSeek Harness) | `~/.zcode/skills/` (ZCode)
+  | `~/.claude/skills/` (Claude Code) | `~/.codex/skills/` (Codex)
+  | `<project>/.agents/skills/` (project only).
   Nothing is universal — always verify.
 
 </details>

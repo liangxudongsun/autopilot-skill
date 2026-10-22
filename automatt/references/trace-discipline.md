@@ -23,7 +23,7 @@
   closes (delivered/STOP/BLOCKED with the delivery-check triple handed over). The
   marker count is for continuity only. setup
   (`setup-matt-pocock-skills`) adds one standing line to the project's
-  AGENTS.md: 若 `.scratch/WORKFLOW-ACTIVE.md` 存在 → 先调 automatt（V2.049 改名宽限：项目 AGENTS.md 里的旧凭据行 `autopilot: on` 在迁移期内同样有效 —— 认到它就照常驱动，并把旧名引用在本轮改掉）
+  AGENTS.md: 若 `.scratch/WORKFLOW-ACTIVE.md` 存在 → 先调 automatt（V2.054 改名迁移：旧凭据行 `autopilot: on` **不算已接入**、无宽限期 —— 认到它就**先换接入点**（那一行 → `automatt: on`，指针目录 `.autopilot/` → `.automatt/`）再照常驱动；只读轮不换，给一行迁移提示）
   再继续；新任务开局拿不准走哪条路时 → 也先调它分流 — this is how a fresh window re-invokes the driver without the
   user asking, and how an unsure opening routes through T0 without re-reading
   the whole driver (a dozen words, not 8k tokens). **Single-round open-close
