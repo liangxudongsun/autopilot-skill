@@ -20,6 +20,9 @@
 
 **最多探一次**：同一个 skill 在同一会话最多试一次工具；被拒后直接用缓存的面，后续轮次不再试。已知 harness 会拒绝（如 DSH）时可以直接读正文、连探都不探；探过再探 = 空转，记 deviation。**已安装但被拒 ≠ `missing`**：目录里有正文就必须 inline 读，**不得用 bundled fallback 代替**（V2.034 现场：ask-matt 被拒后误记 bundled-fallback）；bundled 只在目录里确实没有正文时使用。
 
+**读安装副本正文的路径（V2.052，别自己拼）**：用**安装目录路径原样读** —— `~/.dsh/skills/<name>/SKILL.md`（或 `~/.codex/skills/<name>/SKILL.md`）。这两个是 junction，**不要自己去解析它的目标再拼路径**（现场：某轮读了 junction 目标后**把路径少拼了一层仓根** —— 拼到家目录底下去 → 文件不存在 → 一行红字；真身（自用库里的那本）一直是好的）。**读不到就换另一条已验证路径再试一次**（先换同名的另一个 harness 目录，再换自用库路径），别停在报错上 —— 那不是 skill 坏了。
+**用哪个工具读（V2.053）**：`read` 能穿过 junction 读到安装副本；`ops_inspect_local_file` 对同一路径会报 `PATH_RESTRICTED`（那是沙箱读策略，**不是文件不存在**）⇒ 读安装副本一律用 `read`，别拿 `PATH_RESTRICTED` 当「没装」。
+
 ## 痕迹格式（机器可查）
 
 开工卡/卡刷新加一行（只列本轮要用的 skill，别列 27 个）：

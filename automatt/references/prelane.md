@@ -16,6 +16,8 @@ publish / submit / upload / release / spend / credential / store / compliance
 `.scratch/<slug>/NEEDS-HUMAN.md`, end the turn. "Draft only, won't submit"
 counts as a release-artifact change — same STOP. No spec/map/ticket first.
 
+**STOP 停的是「对外动作」，不是「准备工作」（V2.053，与规则④对齐）**：被 shield 命中时，**工作区内**产出人可执行件是允许的 —— 打包清单/tarball（落 `.scratch/<slug>/dist/`）、发布向导脚本（默认只演练、真发要显式 flag + 再次确认）、`NEEDS-HUMAN.md`（写清要人拍板的项）、以及**只读核实事实**（包名是否被占、有没有凭据、构建能不能过）。不允许的只有三件：①代替人执行外部动作（登录、上传、发布、付钱）②改工作区之外的仓 ③改动凭据。**判据一句话：产物留在工作区 = 合法；动作发生在外部 = 停手交人。**
+
 **改动边界：项目工作区之外，harness/宿主只读（V2.042）。** 本轮能改的只有**当前项目工作区**（cwd 及其项目内路径）。**禁止改动** harness/宿主/用户 profile 的一切位置：`~/.dsh/`、`~/.codex/`、`~/.claude/`、全局 `node_modules/`、插件目录、`app.asar`、注册表、`cordis.patch.yml` 等宿主配置。理由：本仓的用户只让你在**这个项目**里干活；改宿主 = 改用户环境，超出请求且不易回滚。
 - **歧义消解**：用户说「加个按钮 / 改界面 / 加个功能」默认指**当前项目**里的界面与代码；只有用户**点名宿主**（GUI / 插件 / 宿主 / harness）才允许动宿主，且即便如此也要走 STOP（写 `.scratch/<slug>/NEEDS-HUMAN.md` 交人决定），不许自答「我帮你装上」。
 - **判定**：交付物落在项目外 = 本轮 malformed：仓内零改动、无中央条 = 落本缺失；且越界改动**必须回滚**（删掉自己建的插件/配置/链接、恢复被改文件）并在条目 `deviation:` 记明（V2.042 现场：s2 把「加个小按钮」做成 DSH 客户端插件——写 `~/.dsh/profiles/desktop/cordis.patch.yml`、建插件目录与 junction，项目仓零改动、无中央条；已由父会话回滚）。
